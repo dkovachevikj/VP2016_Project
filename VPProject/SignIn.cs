@@ -19,11 +19,14 @@ namespace VPProject
         {
             Users = users;
             InitializeComponent();
+            lblNajava.Parent = pictureBox1;
+            lblPassword.Parent = pictureBox1;
+            lblUsername.Parent = pictureBox1;
         }
 
         private void tbName_Validating(object sender, CancelEventArgs e)
         {
-            if(tbName.Text.Trim().Length == 0)
+            if (tbName.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbName, "Полињата се задолжителни");
@@ -36,7 +39,7 @@ namespace VPProject
 
         private void tbPassword_Validating(object sender, CancelEventArgs e)
         {
-            if(tbPassword.Text.Trim().Length == 0)
+            if (tbPassword.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbPassword, "Полињата се задолжителни");
@@ -49,7 +52,7 @@ namespace VPProject
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if(!Users.ContainsKey(tbName.Text))
+            if (!Users.ContainsKey(tbName.Text))
             {
                 MessageBox.Show("Не постои корисник со даденото име!");
                 tbName.ResetText();
@@ -59,7 +62,7 @@ namespace VPProject
             {
                 User user = null;
                 Users.TryGetValue(tbName.Text, out user);
-                if(!tbPassword.Text.Equals(user.Password))
+                if (!tbPassword.Text.Equals(user.Password))
                 {
                     MessageBox.Show("Погрешна лозинка!");
                     tbPassword.ResetText();
@@ -75,6 +78,26 @@ namespace VPProject
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void tbName_Enter(object sender, EventArgs e)
+        {
+            tbName.BackColor = Color.FromArgb(255, 255, 230);
+        }
+
+        private void tbName_Leave(object sender, EventArgs e)
+        {
+            tbName.BackColor = Color.White;
+        }
+
+        private void tbPassword_Enter(object sender, EventArgs e)
+        {
+            tbPassword.BackColor = Color.FromArgb(255, 255, 230);
+        }
+
+        private void tbPassword_Leave(object sender, EventArgs e)
+        {
+            tbPassword.BackColor = Color.White;
         }
     }
 }

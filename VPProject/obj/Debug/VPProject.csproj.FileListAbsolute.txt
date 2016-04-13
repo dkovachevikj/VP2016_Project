@@ -11,3 +11,16 @@ D:\Visual Studio Projects\Vizuelno programiranje\VPProject\VPProject\bin\Debug\M
 D:\Visual Studio Projects\Vizuelno programiranje\VPProject\VPProject\obj\Debug\VPProject.SignIn.resources
 D:\Visual Studio Projects\Vizuelno programiranje\VPProject\VPProject\obj\Debug\VPProject.SignUp.resources
 D:\Visual Studio Projects\Vizuelno programiranje\VPProject\VPProject\obj\Debug\VPProject.AddMovie.resources
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\bin\Debug\VPProject.exe.config
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.exe
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.pdb
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\bin\Debug\VPProject.exe
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\bin\Debug\VPProject.pdb
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\bin\Debug\MySql.Data.dll
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.csprojResolveAssemblyReference.cache
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.AddMovie.resources
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.SignUp.resources
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.Form1.resources
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.Properties.Resources.resources
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.SignIn.resources
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.csproj.GenerateResource.Cache
