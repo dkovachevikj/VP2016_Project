@@ -13,11 +13,9 @@ namespace VPProject
     partial class SignIn : Form
     {
         public User User { get; set; }
-        public Dictionary<string, User> Users { get; set; }
 
-        public SignIn(Dictionary<string, User> users)
+        public SignIn()
         {
-            Users = users;
             InitializeComponent();
             lblNajava.Parent = pictureBox1;
             lblPassword.Parent = pictureBox1;
@@ -28,25 +26,20 @@ namespace VPProject
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (!Users.ContainsKey(tbName.Text))
+            User = SqlConn.SignIn(tbName.Text);
+            if (User == null)
             {
-                MessageBox.Show("Не постои корисник со даденото име!");
-                tbName.ResetText();
-                tbPassword.ResetText();
+                MessageBox.Show("Ne postoi takov username!");
             }
             else
             {
-                User user = null;
-                Users.TryGetValue(tbName.Text, out user);
-                if (!tbPassword.Text.Equals(user.Password))
+                if (User.Password == tbPassword.Text)
                 {
-                    MessageBox.Show("Погрешна лозинка!");
-                    tbPassword.ResetText();
+                    DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    User = user;
-                    DialogResult = DialogResult.OK;
+                    MessageBox.Show("Pogresena lozinka!");
                 }
             }
         }
