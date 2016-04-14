@@ -22,32 +22,9 @@ namespace VPProject
             lblNajava.Parent = pictureBox1;
             lblPassword.Parent = pictureBox1;
             lblUsername.Parent = pictureBox1;
-        }
+            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
+            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
 
-        private void tbName_Validating(object sender, CancelEventArgs e)
-        {
-            if (tbName.Text.Trim().Length == 0)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(tbName, "Полињата се задолжителни");
-            }
-            else
-            {
-                errorProvider1.SetError(tbName, null);
-            }
-        }
-
-        private void tbPassword_Validating(object sender, CancelEventArgs e)
-        {
-            if (tbPassword.Text.Trim().Length == 0)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(tbPassword, "Полињата се задолжителни");
-            }
-            else
-            {
-                errorProvider1.SetError(tbPassword, null);
-            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
