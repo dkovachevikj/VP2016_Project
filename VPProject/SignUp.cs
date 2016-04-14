@@ -24,7 +24,7 @@ namespace VPProject
             if (tbName.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbName, "Името е задолжително");
+                errorProvider1.SetError(tbName, "Името е задолжително!");
             }
             else
             {
@@ -37,7 +37,7 @@ namespace VPProject
             if (tbPassword.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbPassword, "Лозинката е задолжителна");
+                errorProvider1.SetError(tbPassword, "Лозинката е задолжителна!");
             }
             else if (tbPassword.Text.Trim().Length > 10)
             {
@@ -52,7 +52,7 @@ namespace VPProject
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            User = new User(tbName.Text, tbPassword.Text);
+            User = new User(tbUsername.Text,tbPassword.Text,tbName.Text,tbPrezime.Text,tbEmail.Text,"");
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -60,6 +60,19 @@ namespace VPProject
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void tbPrezime_Validating(object sender, CancelEventArgs e)
+        {
+            if (tbPrezime.Text.Trim().Length == 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbPrezime, "Презимето е задолжително!");
+            }
+            else
+            {
+                errorProvider1.SetError(tbPrezime, null);
+            }
         }
     }
 }
