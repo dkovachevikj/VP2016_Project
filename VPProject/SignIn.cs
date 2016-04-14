@@ -22,6 +22,8 @@ namespace VPProject
             lblNajava.Parent = pictureBox1;
             lblPassword.Parent = pictureBox1;
             lblUsername.Parent = pictureBox1;
+            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
+            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
         }
 
         private void tbName_Validating(object sender, CancelEventArgs e)

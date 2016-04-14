@@ -64,6 +64,8 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(341, 220);
             this.btnCancel.Name = "btnCancel";
@@ -76,6 +78,9 @@
             // btnOK
             // 
             this.btnOK.BackColor = System.Drawing.Color.Transparent;
+            this.btnOK.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
+            this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Info;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOK.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOK.Location = new System.Drawing.Point(522, 220);
             this.btnOK.Name = "btnOK";
@@ -168,6 +173,7 @@
             this.MaximumSize = new System.Drawing.Size(724, 347);
             this.MinimumSize = new System.Drawing.Size(724, 347);
             this.Name = "SignIn";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Најави се";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
