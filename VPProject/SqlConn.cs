@@ -21,12 +21,13 @@ namespace VPProject
                 {
                     connection.Open();
                 }
-                MySqlCommand commandInsert = new MySqlCommand("INSERT INTO Users(Username,Password,Movie1,Movie2,Movie3) VALUES(@username,@password,@movie1,@movie2,@movie3)", connection);
+                MySqlCommand commandInsert = new MySqlCommand("INSERT INTO Users(Username,Password,Ime,Prezime,Email,Movies) VALUES(@username,@password,@ime,@prezime,@email,@movies)", connection);
                 commandInsert.Parameters.AddWithValue("@username", user.Username);
                 commandInsert.Parameters.AddWithValue("@password", user.Password);
-                commandInsert.Parameters.AddWithValue("@movie1", "");
-                commandInsert.Parameters.AddWithValue("@movie2", "");
-                commandInsert.Parameters.AddWithValue("@movie3", "");
+                commandInsert.Parameters.AddWithValue("@ime", user.Ime);
+                commandInsert.Parameters.AddWithValue("@prezime", user.Prezime);
+                commandInsert.Parameters.AddWithValue("@email", user.Email);
+                commandInsert.Parameters.AddWithValue("@movies", "");
                 commandInsert.ExecuteNonQuery();
                 commandInsert.Parameters.Clear();
                 MessageBox.Show("Успешно се регистриравте!");
@@ -56,7 +57,7 @@ namespace VPProject
                 if (dataReader.Read() == false) user = null;
                 else
                 {
-                    user = new User(dataReader[1].ToString(), dataReader[2].ToString());
+                    user = new User(dataReader[1].ToString(), dataReader[2].ToString(), dataReader[3].ToString(), dataReader[4].ToString(), dataReader[5].ToString(), dataReader[6].ToString());
                 }
 
             }

@@ -111,5 +111,14 @@ namespace VPProject
                 panelUser.Hide();
             }
         }
+
+        private void lblUsername_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Име: "+LoggedUser.Ime+"\n");
+            sb.Append("Презиме: "+LoggedUser.Prezime+"\n");
+            sb.Append("Е-маил: "+LoggedUser.Email+"\n");
+            MessageBox.Show(sb.ToString());
+        }
     }
 }
