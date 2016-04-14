@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignIn));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -39,10 +38,8 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblNajava = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -100,7 +97,6 @@
             this.tbPassword.TabIndex = 12;
             this.tbPassword.Enter += new System.EventHandler(this.tbPassword_Enter);
             this.tbPassword.Leave += new System.EventHandler(this.tbPassword_Leave);
-            this.tbPassword.Validating += new System.ComponentModel.CancelEventHandler(this.tbPassword_Validating);
             // 
             // tbName
             // 
@@ -111,7 +107,6 @@
             this.tbName.TabIndex = 11;
             this.tbName.Enter += new System.EventHandler(this.tbName_Enter);
             this.tbName.Leave += new System.EventHandler(this.tbName_Leave);
-            this.tbName.Validating += new System.ComponentModel.CancelEventHandler(this.tbName_Validating);
             // 
             // lblPassword
             // 
@@ -158,10 +153,6 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
-            // 
             // SignIn
             // 
             this.AcceptButton = this.btnOK;
@@ -169,7 +160,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(708, 308);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximumSize = new System.Drawing.Size(724, 347);
             this.MinimumSize = new System.Drawing.Size(724, 347);
             this.Name = "SignIn";
@@ -178,7 +171,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -193,6 +185,5 @@
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblNajava;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
