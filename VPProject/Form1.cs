@@ -19,7 +19,6 @@ namespace VPProject
         public Form1()
         {
             InitializeComponent();
-            panelMovie.Hide();
             btnDeleteMovie.Enabled = false;
             Movies = new List<Movie>();
             Users = SqlConn.getUsers();
@@ -63,15 +62,10 @@ namespace VPProject
             {
                 btnDeleteMovie.Enabled = true;
                 Movie movie = lbMovies.SelectedItem as Movie;
-                lblMovieTitle.Text = movie.Title;
-                lblMovieYear.Text = movie.Year.ToString();
-                lblMovieDesc.Text = movie.Description;
-                panelMovie.Show();
             }
             else
             {
                 btnDeleteMovie.Enabled = false;
-                panelMovie.Hide();
             }
         }
 

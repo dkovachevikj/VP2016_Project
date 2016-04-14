@@ -33,13 +33,13 @@
             this.panelUser = new System.Windows.Forms.Panel();
             this.btnSignUp = new System.Windows.Forms.Button();
             this.btnSignIn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.lbMovies = new System.Windows.Forms.ListBox();
-            this.btnAddMovie = new System.Windows.Forms.Button();
-            this.btnDeleteMovie = new System.Windows.Forms.Button();
             this.lblBorder = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbSort = new System.Windows.Forms.ComboBox();
+            this.btnDeleteMovie = new System.Windows.Forms.Button();
+            this.btnAddMovie = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblMovieTitle = new System.Windows.Forms.Label();
             this.lblMovieDesc = new System.Windows.Forms.Label();
             this.lblMovieYear = new System.Windows.Forms.Label();
@@ -103,47 +103,15 @@
             this.btnSignIn.UseVisualStyleBackColor = true;
             this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
             // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 57);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Филмови";
-            // 
             // lbMovies
             // 
             this.lbMovies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbMovies.FormattingEnabled = true;
             this.lbMovies.Location = new System.Drawing.Point(16, 75);
             this.lbMovies.Name = "lbMovies";
-            this.lbMovies.Size = new System.Drawing.Size(203, 368);
+            this.lbMovies.Size = new System.Drawing.Size(203, 342);
             this.lbMovies.TabIndex = 1;
             this.lbMovies.SelectedIndexChanged += new System.EventHandler(this.lbMovies_SelectedIndexChanged);
-            // 
-            // btnAddMovie
-            // 
-            this.btnAddMovie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddMovie.Location = new System.Drawing.Point(16, 449);
-            this.btnAddMovie.Name = "btnAddMovie";
-            this.btnAddMovie.Size = new System.Drawing.Size(203, 23);
-            this.btnAddMovie.TabIndex = 2;
-            this.btnAddMovie.Text = "Додади филм";
-            this.btnAddMovie.UseVisualStyleBackColor = true;
-            this.btnAddMovie.Click += new System.EventHandler(this.btnAddMovie_Click);
-            // 
-            // btnDeleteMovie
-            // 
-            this.btnDeleteMovie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDeleteMovie.Location = new System.Drawing.Point(16, 478);
-            this.btnDeleteMovie.Name = "btnDeleteMovie";
-            this.btnDeleteMovie.Size = new System.Drawing.Size(203, 23);
-            this.btnDeleteMovie.TabIndex = 3;
-            this.btnDeleteMovie.Text = "Избриши филм";
-            this.btnDeleteMovie.UseVisualStyleBackColor = true;
-            this.btnDeleteMovie.Click += new System.EventHandler(this.btnDeleteMovie_Click);
             // 
             // lblBorder
             // 
@@ -174,6 +142,38 @@
             this.cbSort.Size = new System.Drawing.Size(132, 21);
             this.cbSort.TabIndex = 8;
             this.cbSort.SelectedIndexChanged += new System.EventHandler(this.cbSort_SelectedIndexChanged);
+            // 
+            // btnDeleteMovie
+            // 
+            this.btnDeleteMovie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDeleteMovie.Location = new System.Drawing.Point(16, 478);
+            this.btnDeleteMovie.Name = "btnDeleteMovie";
+            this.btnDeleteMovie.Size = new System.Drawing.Size(203, 23);
+            this.btnDeleteMovie.TabIndex = 3;
+            this.btnDeleteMovie.Text = "Избриши филм";
+            this.btnDeleteMovie.UseVisualStyleBackColor = true;
+            this.btnDeleteMovie.Click += new System.EventHandler(this.btnDeleteMovie_Click);
+            // 
+            // btnAddMovie
+            // 
+            this.btnAddMovie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddMovie.Location = new System.Drawing.Point(16, 449);
+            this.btnAddMovie.Name = "btnAddMovie";
+            this.btnAddMovie.Size = new System.Drawing.Size(203, 23);
+            this.btnAddMovie.TabIndex = 2;
+            this.btnAddMovie.Text = "Додади филм";
+            this.btnAddMovie.UseVisualStyleBackColor = true;
+            this.btnAddMovie.Click += new System.EventHandler(this.btnAddMovie_Click);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 57);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Филмови";
             // 
             // lblMovieTitle
             // 
@@ -250,13 +250,13 @@
         private System.Windows.Forms.Panel panelUser;
         private System.Windows.Forms.Button btnSignUp;
         private System.Windows.Forms.Button btnSignIn;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox lbMovies;
-        private System.Windows.Forms.Button btnAddMovie;
-        private System.Windows.Forms.Button btnDeleteMovie;
         private System.Windows.Forms.Label lblBorder;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbSort;
+        private System.Windows.Forms.Button btnDeleteMovie;
+        private System.Windows.Forms.Button btnAddMovie;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblMovieTitle;
         private System.Windows.Forms.Label lblMovieDesc;
         private System.Windows.Forms.Label lblMovieYear;
