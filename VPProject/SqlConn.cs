@@ -30,9 +30,9 @@ namespace VPProject
                 commandInsert.ExecuteNonQuery();
                 commandInsert.Parameters.Clear();
                 MessageBox.Show("Успешно се регистриравте!");
-                
+
             }
-            catch(MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -42,25 +42,25 @@ namespace VPProject
             }
         }
 
-        static public Dictionary<string, User> getUsers()
+        static public User SignIn(string username)
         {
-            Dictionary<string, User> users = new Dictionary<string, User>();
+            User user = null;
             try
             {
-                if(connection.State == ConnectionState.Closed)
+                if (connection.State == ConnectionState.Closed)
                 {
                     connection.Open();
                 }
-                MySqlCommand command = new MySqlCommand("SELECT * FROM Users", connection);
+                MySqlCommand command = new MySqlCommand("SELECT * FROM Users WHERE Username='" + username + "'", connection);
                 MySqlDataReader dataReader = command.ExecuteReader();
-                while(dataReader.Read())
+                if (dataReader.Read() == false) user = null;
+                else
                 {
-                    users.Add(dataReader[1].ToString(), new User(dataReader[1].ToString(), dataReader[2].ToString()));
+                    user = new User(dataReader[1].ToString(), dataReader[2].ToString());
                 }
-                return users;
 
             }
-            catch(MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
@@ -69,6 +69,7 @@ namespace VPProject
             {
                 connection.Close();
             }
+            return user;
         }
 
     }

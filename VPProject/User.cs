@@ -10,13 +10,11 @@ namespace VPProject
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public List<Movie> RentedMovies { get; set; }
 
         public User(string username, string password)
         {
             Username = username;
             Password = password;
-            RentedMovies = new List<Movie>();
         }
 
     }
