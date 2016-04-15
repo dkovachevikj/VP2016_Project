@@ -29,166 +29,289 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbName = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbPassword = new System.Windows.Forms.TextBox();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbPrezime = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tbEmail = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignUp));
+            this.lblName = new System.Windows.Forms.Label();
             this.tbUsername = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lblSurname = new System.Windows.Forms.Label();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.lblEmail = new System.Windows.Forms.Label();
+            this.tbSurname = new System.Windows.Forms.TextBox();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.tbEmail = new System.Windows.Forms.TextBox();
+            this.lblRepeatPassword = new System.Windows.Forms.Label();
+            this.tbRepeatPassword = new System.Windows.Forms.TextBox();
+            this.lblRegister = new System.Windows.Forms.Label();
+            this.lblMandatory = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 17);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Име:";
+            this.lblName.AutoSize = true;
+            this.lblName.BackColor = System.Drawing.Color.Transparent;
+            this.lblName.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblName.Location = new System.Drawing.Point(31, 131);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(43, 19);
+            this.lblName.TabIndex = 13;
+            this.lblName.Text = "Име:";
             // 
-            // tbName
+            // tbUsername
             // 
-            this.tbName.Location = new System.Drawing.Point(137, 12);
-            this.tbName.Margin = new System.Windows.Forms.Padding(4);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(241, 22);
-            this.tbName.TabIndex = 1;
-            this.tbName.Validating += new System.ComponentModel.CancelEventHandler(this.tbName_Validating);
+            this.tbUsername.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbUsername.Location = new System.Drawing.Point(184, 240);
+            this.tbUsername.Name = "tbUsername";
+            this.tbUsername.Size = new System.Drawing.Size(182, 24);
+            this.tbUsername.TabIndex = 2;
+            this.tbUsername.Enter += new System.EventHandler(this.tbUsername_Enter);
+            this.tbUsername.Leave += new System.EventHandler(this.tbUsername_Leave);
+            this.tbUsername.Validating += new System.ComponentModel.CancelEventHandler(this.tbUsername_Validating);
             // 
-            // label2
+            // lblPassword
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 175);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 17);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Password:";
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.BackColor = System.Drawing.Color.Transparent;
+            this.lblPassword.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblPassword.Location = new System.Drawing.Point(31, 351);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(73, 19);
+            this.lblPassword.TabIndex = 9;
+            this.lblPassword.Text = "Лозинка:";
             // 
             // tbPassword
             // 
-            this.tbPassword.Location = new System.Drawing.Point(137, 170);
-            this.tbPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.tbPassword.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPassword.Location = new System.Drawing.Point(184, 351);
             this.tbPassword.Name = "tbPassword";
-            this.tbPassword.Size = new System.Drawing.Size(241, 22);
-            this.tbPassword.TabIndex = 3;
+            this.tbPassword.Size = new System.Drawing.Size(182, 24);
+            this.tbPassword.TabIndex = 4;
+            this.tbPassword.Enter += new System.EventHandler(this.tbPassword_Enter);
+            this.tbPassword.Leave += new System.EventHandler(this.tbPassword_Leave);
             this.tbPassword.Validating += new System.ComponentModel.CancelEventHandler(this.tbPassword_Validating);
-            // 
-            // btnOK
-            // 
-            this.btnOK.Location = new System.Drawing.Point(234, 234);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(175, 28);
-            this.btnOK.TabIndex = 4;
-            this.btnOK.Text = "Регистрирајте се";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.CausesValidation = false;
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(24, 234);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(175, 28);
-            this.btnCancel.TabIndex = 5;
-            this.btnCancel.Text = "Откажи";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // label3
+            // lblSurname
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 55);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 17);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Презиме:";
+            this.lblSurname.AutoSize = true;
+            this.lblSurname.BackColor = System.Drawing.Color.Transparent;
+            this.lblSurname.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSurname.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblSurname.Location = new System.Drawing.Point(31, 174);
+            this.lblSurname.Name = "lblSurname";
+            this.lblSurname.Size = new System.Drawing.Size(74, 19);
+            this.lblSurname.TabIndex = 12;
+            this.lblSurname.Text = "Презиме:";
             // 
-            // tbPrezime
+            // tbName
             // 
-            this.tbPrezime.Location = new System.Drawing.Point(137, 55);
-            this.tbPrezime.Margin = new System.Windows.Forms.Padding(4);
-            this.tbPrezime.Name = "tbPrezime";
-            this.tbPrezime.Size = new System.Drawing.Size(241, 22);
-            this.tbPrezime.TabIndex = 7;
-            this.tbPrezime.Validating += new System.ComponentModel.CancelEventHandler(this.tbPrezime_Validating);
+            this.tbName.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbName.Location = new System.Drawing.Point(184, 131);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(182, 24);
+            this.tbName.TabIndex = 0;
+            this.tbName.Enter += new System.EventHandler(this.tbName_Enter);
+            this.tbName.Leave += new System.EventHandler(this.tbName_Leave);
+            this.tbName.Validating += new System.ComponentModel.CancelEventHandler(this.tbName_Validating);
             // 
-            // label4
+            // lblEmail
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(21, 97);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 17);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Е-маил:";
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.BackColor = System.Drawing.Color.Transparent;
+            this.lblEmail.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmail.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblEmail.Location = new System.Drawing.Point(31, 283);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(74, 19);
+            this.lblEmail.TabIndex = 10;
+            this.lblEmail.Text = "Е-Пошта:";
+            // 
+            // tbSurname
+            // 
+            this.tbSurname.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSurname.Location = new System.Drawing.Point(184, 174);
+            this.tbSurname.Name = "tbSurname";
+            this.tbSurname.Size = new System.Drawing.Size(182, 24);
+            this.tbSurname.TabIndex = 1;
+            this.tbSurname.Enter += new System.EventHandler(this.tbSurname_Enter);
+            this.tbSurname.Leave += new System.EventHandler(this.tbSurname_Leave);
+            this.tbSurname.Validating += new System.ComponentModel.CancelEventHandler(this.tbSurname_Validating);
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.BackColor = System.Drawing.Color.Transparent;
+            this.lblUsername.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblUsername.Location = new System.Drawing.Point(31, 240);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(128, 19);
+            this.lblUsername.TabIndex = 11;
+            this.lblUsername.Text = "Корисничко име:";
             // 
             // tbEmail
             // 
-            this.tbEmail.Location = new System.Drawing.Point(137, 97);
-            this.tbEmail.Margin = new System.Windows.Forms.Padding(4);
+            this.tbEmail.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEmail.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.tbEmail.Location = new System.Drawing.Point(184, 283);
             this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(241, 22);
-            this.tbEmail.TabIndex = 9;
+            this.tbEmail.Size = new System.Drawing.Size(182, 24);
+            this.tbEmail.TabIndex = 3;
+            this.tbEmail.Text = "user@example.com";
+            this.tbEmail.Enter += new System.EventHandler(this.tbEmail_Enter);
+            this.tbEmail.Leave += new System.EventHandler(this.tbEmail_Leave);
+            this.tbEmail.Validating += new System.ComponentModel.CancelEventHandler(this.tbEmail_Validating);
             // 
-            // label5
+            // lblRepeatPassword
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 134);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 17);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Username:";
+            this.lblRepeatPassword.AutoSize = true;
+            this.lblRepeatPassword.BackColor = System.Drawing.Color.Transparent;
+            this.lblRepeatPassword.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRepeatPassword.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lblRepeatPassword.Location = new System.Drawing.Point(31, 394);
+            this.lblRepeatPassword.Name = "lblRepeatPassword";
+            this.lblRepeatPassword.Size = new System.Drawing.Size(135, 19);
+            this.lblRepeatPassword.TabIndex = 8;
+            this.lblRepeatPassword.Text = "Повтори лозинка:";
             // 
-            // tbUsername
+            // tbRepeatPassword
             // 
-            this.tbUsername.Location = new System.Drawing.Point(137, 134);
-            this.tbUsername.Margin = new System.Windows.Forms.Padding(4);
-            this.tbUsername.Name = "tbUsername";
-            this.tbUsername.Size = new System.Drawing.Size(241, 22);
-            this.tbUsername.TabIndex = 11;
+            this.tbRepeatPassword.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbRepeatPassword.Location = new System.Drawing.Point(184, 394);
+            this.tbRepeatPassword.Name = "tbRepeatPassword";
+            this.tbRepeatPassword.Size = new System.Drawing.Size(182, 24);
+            this.tbRepeatPassword.TabIndex = 5;
+            this.tbRepeatPassword.Enter += new System.EventHandler(this.tbRepeatPassword_Enter);
+            this.tbRepeatPassword.Leave += new System.EventHandler(this.tbRepeatPassword_Leave);
+            this.tbRepeatPassword.Validating += new System.ComponentModel.CancelEventHandler(this.tbRepeatPassword_Validating);
+            // 
+            // lblRegister
+            // 
+            this.lblRegister.AutoSize = true;
+            this.lblRegister.BackColor = System.Drawing.Color.Transparent;
+            this.lblRegister.Font = new System.Drawing.Font("Sitka Small", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRegister.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lblRegister.Location = new System.Drawing.Point(116, 32);
+            this.lblRegister.Name = "lblRegister";
+            this.lblRegister.Size = new System.Drawing.Size(172, 31);
+            this.lblRegister.TabIndex = 15;
+            this.lblRegister.Text = "Регистрација";
+            // 
+            // lblMandatory
+            // 
+            this.lblMandatory.AutoSize = true;
+            this.lblMandatory.BackColor = System.Drawing.Color.Transparent;
+            this.lblMandatory.Font = new System.Drawing.Font("Sitka Small", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMandatory.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lblMandatory.Location = new System.Drawing.Point(89, 76);
+            this.lblMandatory.Name = "lblMandatory";
+            this.lblMandatory.Size = new System.Drawing.Size(229, 19);
+            this.lblMandatory.TabIndex = 14;
+            this.lblMandatory.Text = "Сите полиња се задолжителни!";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.CausesValidation = false;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Location = new System.Drawing.Point(35, 450);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(143, 32);
+            this.btnCancel.TabIndex = 7;
+            this.btnCancel.Text = "Откажи";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnOK
+            // 
+            this.btnOK.BackColor = System.Drawing.Color.Transparent;
+            this.btnOK.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
+            this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Info;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOK.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOK.Location = new System.Drawing.Point(223, 450);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(143, 32);
+            this.btnOK.TabIndex = 6;
+            this.btnOK.Text = "Регистрирај се";
+            this.btnOK.UseVisualStyleBackColor = false;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(408, 509);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 18;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Location = new System.Drawing.Point(12, 216);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(384, 2);
+            this.label1.TabIndex = 19;
+            // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.Location = new System.Drawing.Point(12, 332);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(384, 2);
+            this.label2.TabIndex = 20;
             // 
             // SignUp
             // 
             this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(459, 294);
-            this.Controls.Add(this.tbUsername);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbEmail);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.tbPrezime);
-            this.Controls.Add(this.label3);
+            this.ClientSize = new System.Drawing.Size(408, 509);
+            this.ControlBox = false;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.tbPassword);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblMandatory);
+            this.Controls.Add(this.lblRegister);
+            this.Controls.Add(this.tbRepeatPassword);
+            this.Controls.Add(this.lblRepeatPassword);
+            this.Controls.Add(this.tbEmail);
+            this.Controls.Add(this.lblUsername);
+            this.Controls.Add(this.tbSurname);
+            this.Controls.Add(this.lblEmail);
             this.Controls.Add(this.tbName);
-            this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Controls.Add(this.lblSurname);
+            this.Controls.Add(this.tbPassword);
+            this.Controls.Add(this.lblPassword);
+            this.Controls.Add(this.tbUsername);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SignUp";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Регистрирај се";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,18 +319,25 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbPassword;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox tbUsername;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.TextBox tbPassword;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.TextBox tbEmail;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbPrezime;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.TextBox tbSurname;
+        private System.Windows.Forms.Label lblEmail;
+        private System.Windows.Forms.TextBox tbName;
+        private System.Windows.Forms.Label lblSurname;
+        private System.Windows.Forms.TextBox tbRepeatPassword;
+        private System.Windows.Forms.Label lblRepeatPassword;
+        private System.Windows.Forms.Label lblMandatory;
+        private System.Windows.Forms.Label lblRegister;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
