@@ -36,3 +36,6 @@ C:\Users\Nacev\Desktop\Dime_Stabilna\VPProject\obj\Debug\VPProject.Form1.resourc
 C:\Users\Nacev\Desktop\Dime_Stabilna\VPProject\obj\Debug\VPProject.Properties.Resources.resources
 C:\Users\Nacev\Desktop\Dime_Stabilna\VPProject\obj\Debug\VPProject.SignIn.resources
 C:\Users\Nacev\Desktop\Dime_Stabilna\VPProject\obj\Debug\VPProject.csproj.GenerateResource.Cache
+C:\Users\Nacev\Documents\GIT_Proektna\VPProject\bin\Debug\VPProject.exe.config
+C:\Users\Nacev\Documents\GIT_Proektna\VPProject\obj\Debug\VPProject.exe
+C:\Users\Nacev\Documents\GIT_Proektna\VPProject\obj\Debug\VPProject.pdb
