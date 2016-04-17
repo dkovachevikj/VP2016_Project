@@ -43,9 +43,8 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.panelMovie = new System.Windows.Forms.TableLayoutPanel();
             this.lblMovieTitle = new System.Windows.Forms.Label();
-            this.pbPoster = new System.Windows.Forms.PictureBox();
             this.lblDescription = new System.Windows.Forms.Label();
-            this.btnWatchTrailer = new System.Windows.Forms.Button();
+            this.pbPoster = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelUser.SuspendLayout();
             this.panelMovie.SuspendLayout();
@@ -193,7 +192,6 @@
             this.panelMovie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.panelMovie.Controls.Add(this.lblMovieTitle, 0, 0);
             this.panelMovie.Controls.Add(this.lblDescription, 0, 2);
-            this.panelMovie.Controls.Add(this.btnWatchTrailer, 0, 3);
             this.panelMovie.Controls.Add(this.pbPoster, 0, 1);
             this.panelMovie.Location = new System.Drawing.Point(322, 78);
             this.panelMovie.Name = "panelMovie";
@@ -215,15 +213,6 @@
             this.lblMovieTitle.TabIndex = 0;
             this.lblMovieTitle.Text = "Title";
             // 
-            // pbPoster
-            // 
-            this.pbPoster.Location = new System.Drawing.Point(3, 37);
-            this.pbPoster.Name = "pbPoster";
-            this.pbPoster.Size = new System.Drawing.Size(170, 233);
-            this.pbPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbPoster.TabIndex = 4;
-            this.pbPoster.TabStop = false;
-            // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
@@ -234,16 +223,14 @@
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "Description";
             // 
-            // btnWatchTrailer
+            // pbPoster
             // 
-            this.btnWatchTrailer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnWatchTrailer.Location = new System.Drawing.Point(3, 442);
-            this.btnWatchTrailer.Name = "btnWatchTrailer";
-            this.btnWatchTrailer.Size = new System.Drawing.Size(128, 37);
-            this.btnWatchTrailer.TabIndex = 5;
-            this.btnWatchTrailer.Text = "Watch Trailer >";
-            this.btnWatchTrailer.UseVisualStyleBackColor = true;
-            this.btnWatchTrailer.Click += new System.EventHandler(this.btnWatchTrailer_Click);
+            this.pbPoster.Location = new System.Drawing.Point(3, 37);
+            this.pbPoster.Name = "pbPoster";
+            this.pbPoster.Size = new System.Drawing.Size(170, 233);
+            this.pbPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbPoster.TabIndex = 4;
+            this.pbPoster.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -305,7 +292,6 @@
         private System.Windows.Forms.Label lblMovieTitle;
         private System.Windows.Forms.PictureBox pbPoster;
         private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.Button btnWatchTrailer;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
