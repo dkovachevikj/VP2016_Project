@@ -5,23 +5,37 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.TMDb;
 
 namespace VPProject
 {
     public partial class Form1 : Form
     {
-        private List<Movie> Movies { get; }
         private User LoggedUser { get; set; }
+        private string TrailerPath { get; set; }
+        private List<CustomMovie> beginMovies { get; set; }
 
         public Form1()
         {
             InitializeComponent();
             panelMovie.Hide();
-            btnDeleteMovie.Enabled = false;
-            Movies = new List<Movie>();
             panelUser.Hide();
+            loadMovies();
+            TrailerPath = "";
+            beginMovies = new List<CustomMovie>();
+        }
+
+        private async void loadMovies()
+        {
+            var movies = await LoadMovies.TopRated(new CancellationToken());
+            foreach (CustomMovie cm in movies)
+            {
+                lbMovies.Items.Add(cm);
+                beginMovies.Add(cm);
+            }
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
@@ -44,63 +58,38 @@ namespace VPProject
             }
         }
 
-        private void btnAddMovie_Click(object sender, EventArgs e)
-        {
-            AddMovie newMovie = new AddMovie();
-            if (newMovie.ShowDialog() == DialogResult.OK)
-            {
-                Movies.Add(newMovie.Movie);
-                lbMovies.Items.Add(newMovie.Movie);
-            }
-        }
-
         private void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbMovies.SelectedIndex != -1)
             {
-                btnDeleteMovie.Enabled = true;
-                Movie movie = lbMovies.SelectedItem as Movie;
-                lblMovieTitle.Text = movie.Title;
-                lblMovieYear.Text = movie.Year.ToString();
-                lblMovieDesc.Text = movie.Description;
+                CustomMovie cm = lbMovies.SelectedItem as CustomMovie;
+                lblMovieTitle.Text = string.Format("{0} ({1:0.00})", cm.Movie.Title, cm.Movie.VoteAverage);
+                pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + cm.Movie.Poster;
+                lblDescription.Text = cm.Movie.Overview;
+                if(cm.Movie.Videos.Results.Count() > 0)
+                {
+                    foreach (Video v in cm.Movie.Videos.Results)
+                    {
+                        TrailerPath = "https://youtube.com/v/" + v.Key;
+                        break;
+                    }
+                    btnWatchTrailer.Enabled = true;
+                }
+                else
+                {
+                    btnWatchTrailer.Enabled = false;
+                }
                 panelMovie.Show();
             }
             else
             {
-                btnDeleteMovie.Enabled = false;
                 panelMovie.Hide();
-            }
-        }
-
-        private void btnDeleteMovie_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Дали сте сигурни дека сакате да го избришете филмот?", "Избриши филм", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                Movies.Remove(lbMovies.SelectedItem as Movie);
-                lbMovies.Items.Remove(lbMovies.SelectedItem);
-
             }
         }
 
         private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lbMovies.Items.Clear();
-            if (cbSort.SelectedIndex == 0)
-            {
-                Movies.Sort();
-                foreach (Movie m in Movies)
-                {
-                    lbMovies.Items.Add(m);
-                }
-            }
-            if (cbSort.SelectedIndex == 1)
-            {
-                Movies.Sort(new MovieYearComparer());
-                foreach (Movie m in Movies)
-                {
-                    lbMovies.Items.Add(m);
-                }
-            }
+
         }
 
         private void lbSignOut_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -119,6 +108,33 @@ namespace VPProject
             sb.Append("Презиме: "+LoggedUser.Prezime+"\n");
             sb.Append("Е-маил: "+LoggedUser.Email+"\n");
             MessageBox.Show(sb.ToString());
+        }
+
+        private void btnWatchTrailer_Click(object sender, EventArgs e)
+        {
+            WatchTrailer wt = new WatchTrailer(TrailerPath);
+            wt.ShowDialog();
+        }
+
+        private async void btnSearch_Click(object sender, EventArgs e)
+        {
+            lbMovies.Items.Clear();
+            if(tbSearch.Text.Trim().Length == 0)
+            {
+                foreach(CustomMovie cm in beginMovies)
+                {
+                    lbMovies.Items.Add(cm);
+                }
+            }
+            else
+            {
+                panelMovie.Hide();
+                var movies = await LoadMovies.SearchMovies(tbSearch.Text, new CancellationToken());
+                foreach(CustomMovie cm in movies)
+                {
+                    lbMovies.Items.Add(cm);
+                }
+            }
         }
     }
 }
