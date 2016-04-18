@@ -63,7 +63,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(341, 220);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(143, 32);
@@ -78,7 +78,7 @@
             this.btnOK.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Info;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOK.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOK.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOK.Location = new System.Drawing.Point(522, 220);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(143, 32);
@@ -89,21 +89,21 @@
             // 
             // tbPassword
             // 
-            this.tbPassword.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPassword.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPassword.Location = new System.Drawing.Point(505, 161);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
-            this.tbPassword.Size = new System.Drawing.Size(160, 26);
+            this.tbPassword.Size = new System.Drawing.Size(160, 27);
             this.tbPassword.TabIndex = 12;
             this.tbPassword.Enter += new System.EventHandler(this.tbPassword_Enter);
             this.tbPassword.Leave += new System.EventHandler(this.tbPassword_Leave);
             // 
             // tbName
             // 
-            this.tbName.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbName.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbName.Location = new System.Drawing.Point(505, 110);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(160, 26);
+            this.tbName.Size = new System.Drawing.Size(160, 27);
             this.tbName.TabIndex = 11;
             this.tbName.Enter += new System.EventHandler(this.tbName_Enter);
             this.tbName.Leave += new System.EventHandler(this.tbName_Leave);
@@ -112,10 +112,10 @@
             // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.BackColor = System.Drawing.Color.Transparent;
-            this.lblPassword.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.Location = new System.Drawing.Point(337, 161);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(83, 23);
+            this.lblPassword.Size = new System.Drawing.Size(71, 20);
             this.lblPassword.TabIndex = 10;
             this.lblPassword.Text = "Лозинка:";
             // 
@@ -123,10 +123,10 @@
             // 
             this.lblUsername.AutoSize = true;
             this.lblUsername.BackColor = System.Drawing.Color.Transparent;
-            this.lblUsername.Font = new System.Drawing.Font("Sitka Small", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsername.Location = new System.Drawing.Point(337, 110);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(147, 23);
+            this.lblUsername.Size = new System.Drawing.Size(129, 20);
             this.lblUsername.TabIndex = 9;
             this.lblUsername.Text = "Корисничко име:";
             // 
@@ -134,11 +134,11 @@
             // 
             this.lblNajava.AutoSize = true;
             this.lblNajava.BackColor = System.Drawing.Color.Transparent;
-            this.lblNajava.Font = new System.Drawing.Font("Sitka Small", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNajava.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNajava.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.lblNajava.Location = new System.Drawing.Point(427, 29);
             this.lblNajava.Name = "lblNajava";
-            this.lblNajava.Size = new System.Drawing.Size(119, 40);
+            this.lblNajava.Size = new System.Drawing.Size(107, 37);
             this.lblNajava.TabIndex = 8;
             this.lblNajava.Text = "Најава";
             // 
