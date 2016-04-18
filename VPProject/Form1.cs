@@ -66,19 +66,6 @@ namespace VPProject
                 lblMovieTitle.Text = string.Format("{0} ({1:0.00})", cm.Movie.Title, cm.Movie.VoteAverage);
                 pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + cm.Movie.Poster;
                 lblDescription.Text = cm.Movie.Overview;
-                if(cm.Movie.Videos.Results.Count() > 0)
-                {
-                    foreach (Video v in cm.Movie.Videos.Results)
-                    {
-                        TrailerPath = "https://youtube.com/v/" + v.Key;
-                        break;
-                    }
-                    btnWatchTrailer.Enabled = true;
-                }
-                else
-                {
-                    btnWatchTrailer.Enabled = false;
-                }
                 panelMovie.Show();
             }
             else
@@ -108,12 +95,6 @@ namespace VPProject
             sb.Append("Презиме: "+LoggedUser.Prezime+"\n");
             sb.Append("Е-маил: "+LoggedUser.Email+"\n");
             MessageBox.Show(sb.ToString());
-        }
-
-        private void btnWatchTrailer_Click(object sender, EventArgs e)
-        {
-            WatchTrailer wt = new WatchTrailer(TrailerPath);
-            wt.ShowDialog();
         }
 
         private async void btnSearch_Click(object sender, EventArgs e)

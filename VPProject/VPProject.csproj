@@ -88,12 +88,6 @@
     <Compile Include="SqlConn.cs" />
     <Compile Include="TitleMovieComparer.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="WatchTrailer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WatchTrailer.Designer.cs">
-      <DependentUpon>WatchTrailer.cs</DependentUpon>
-    </Compile>
     <Compile Include="YearMovieComparer.cs" />
     <EmbeddedResource Include="SignUp.resx">
       <DependentUpon>SignUp.cs</DependentUpon>
@@ -112,9 +106,6 @@
     </Compile>
     <EmbeddedResource Include="SignIn.resx">
       <DependentUpon>SignIn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WatchTrailer.resx">
-      <DependentUpon>WatchTrailer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
