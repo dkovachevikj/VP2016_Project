@@ -17,6 +17,10 @@ namespace VPProject
         private User LoggedUser { get; set; }
         private string TrailerPath { get; set; }
         private List<CustomMovie> beginMovies { get; set; }
+        private string currentSearchText { get; set; }
+        private bool searchChanged { get; set; }
+        private string currentGenre { get; set; }
+        private bool genreChanged { get; set; }
 
         public Form1()
         {
@@ -26,8 +30,20 @@ namespace VPProject
             loadMovies();
             TrailerPath = "";
             beginMovies = new List<CustomMovie>();
+            setGenres();
         }
 
+        private async void setGenres()
+        {
+            List<CustomGenre> genres = await LoadMovies.GetGenres(new CancellationToken());
+            foreach(CustomGenre cg in genres)
+            {
+                cbGenre.Items.Add(cg);
+            }
+            cbGenre.SelectedIndex = 0;
+            currentGenre = "All";
+            genreChanged = false;
+        }
         private async void loadMovies()
         {
             var movies = await LoadMovies.TopRated(new CancellationToken());
@@ -36,6 +52,8 @@ namespace VPProject
                 lbMovies.Items.Add(cm);
                 beginMovies.Add(cm);
             }
+            currentSearchText = "";
+            searchChanged = false;
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
@@ -58,25 +76,34 @@ namespace VPProject
             }
         }
 
-        private void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
+        private async void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbMovies.SelectedIndex != -1)
             {
                 CustomMovie cm = lbMovies.SelectedItem as CustomMovie;
-                lblMovieTitle.Text = string.Format("{0} ({1:0.00})", cm.Movie.Title, cm.Movie.VoteAverage);
-                pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + cm.Movie.Poster;
-                lblDescription.Text = cm.Movie.Overview;
+                Movie movie = await LoadMovies.GetMovie(cm, new CancellationToken());
+                lblMovieTitle.Text = string.Format("{0} ({1:0.00})", movie.Title, movie.VoteAverage);
+                pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
+                lblDescription.Text = movie.Overview;
+                if(movie.Videos.Results.Count() > 0)
+                {
+                    foreach (Video v in movie.Videos.Results)
+                    {
+                        TrailerPath = "https://www.youtube.com/watch?v=" + v.Key;
+                        break;
+                    }
+                    btnWatchTrailer.Enabled = true;
+                }
+                else
+                {
+                    btnWatchTrailer.Enabled = false;
+                }
                 panelMovie.Show();
             }
             else
             {
                 panelMovie.Hide();
             }
-        }
-
-        private void cbSort_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void lbSignOut_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -97,25 +124,156 @@ namespace VPProject
             MessageBox.Show(sb.ToString());
         }
 
+        private void btnWatchTrailer_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(TrailerPath);
+        }
+
         private async void btnSearch_Click(object sender, EventArgs e)
         {
-            lbMovies.Items.Clear();
-            if(tbSearch.Text.Trim().Length == 0)
+            if(!cbGenre.SelectedItem.ToString().Equals("All"))
             {
-                foreach(CustomMovie cm in beginMovies)
+                if(cbGenre.SelectedItem.ToString().Equals(currentGenre))
                 {
-                    lbMovies.Items.Add(cm);
+                    if(searchChanged)
+                    {
+                        tbSearch.ResetText();
+                        lbMovies.Items.Clear();
+                        List<CustomMovie> movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
+                        foreach (CustomMovie cm in movies)
+                        {
+                            lbMovies.Items.Add(cm);
+                        }
+                        currentGenre = cbGenre.SelectedItem.ToString();
+                        genreChanged = true;
+                        searchChanged = false;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    tbSearch.ResetText();
+                    lbMovies.Items.Clear();
+                    List<CustomMovie> movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
+                    foreach (CustomMovie cm in movies)
+                    {
+                        lbMovies.Items.Add(cm);
+                    }
+                    currentGenre = cbGenre.SelectedItem.ToString();
+                    genreChanged = true;
+                    searchChanged = false;
                 }
             }
             else
             {
-                panelMovie.Hide();
-                var movies = await LoadMovies.SearchMovies(tbSearch.Text, new CancellationToken());
-                foreach(CustomMovie cm in movies)
+                if(tbSearch.Text.Trim().Equals(currentSearchText))
                 {
-                    lbMovies.Items.Add(cm);
+                    if(genreChanged)
+                    {
+                        lbMovies.Items.Clear();
+                        if (tbSearch.Text.Trim() == "")
+                        {
+                            foreach (CustomMovie cm in beginMovies)
+                            {
+                                lbMovies.Items.Add(cm);
+                            }
+                        }
+                        else
+                        {
+                            var movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
+                            foreach (CustomMovie cm in movies)
+                            {
+                                lbMovies.Items.Add(cm);
+                            }
+                        }
+                        currentSearchText = tbSearch.Text.Trim();
+                        searchChanged = true;
+                        genreChanged = false;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    lbMovies.Items.Clear();
+                    if (tbSearch.Text.Trim() == "")
+                    {
+                        foreach (CustomMovie cm in beginMovies)
+                        {
+                            lbMovies.Items.Add(cm);
+                        }
+                    }
+                    else
+                    {
+                        var movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
+                        foreach (CustomMovie cm in movies)
+                        {
+                            lbMovies.Items.Add(cm);
+                        }
+                    }
+                    currentSearchText = tbSearch.Text.Trim();
+                    searchChanged = true;
+                    genreChanged = false;
                 }
             }
         }
+
+        private async void btnLoadMore_Click(object sender, EventArgs e)
+        {
+            bool topRated = false;
+            List<CustomMovie> movies = null;
+            if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
+            {
+                movies = await LoadMovies.TopRated(new CancellationToken());
+                topRated = true;
+            }
+            else if (!cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
+            {
+                movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
+            }
+            else if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length > 0)
+            {
+                movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
+            }
+            else
+            {
+                return;
+            }
+            foreach(CustomMovie cm in movies)
+            {
+                if(topRated)
+                {
+                    beginMovies.Add(cm);
+                }
+                lbMovies.Items.Add(cm);
+            }
+        }
+
+        private void tbSearch_Enter(object sender, EventArgs e)
+        {
+            tbSearch.BackColor = Color.FromArgb(255, 255, 230);
+            cbGenre.SelectedIndex = 0;
+        }
+
+        private void tbSearch_Leave(object sender, EventArgs e)
+        {
+            tbSearch.BackColor = Color.White;
+        }
+
+        private void cbGenre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbSearch_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
     }
 }
