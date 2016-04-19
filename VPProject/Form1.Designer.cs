@@ -46,10 +46,14 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblMovieTitle = new System.Windows.Forms.Label();
             this.cbGenre = new System.Windows.Forms.ComboBox();
+            this.lblCast = new System.Windows.Forms.Label();
+            this.panelTitleInfo = new System.Windows.Forms.Panel();
+            this.lblInfo = new System.Windows.Forms.Label();
             this.panelUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelMovie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPoster)).BeginInit();
+            this.panelTitleInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbSignOut
@@ -83,7 +87,7 @@
             this.panelUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelUser.Controls.Add(this.lblUsername);
             this.panelUser.Controls.Add(this.lbSignOut);
-            this.panelUser.Location = new System.Drawing.Point(755, 4);
+            this.panelUser.Location = new System.Drawing.Point(758, 4);
             this.panelUser.Name = "panelUser";
             this.panelUser.Size = new System.Drawing.Size(300, 42);
             this.panelUser.TabIndex = 12;
@@ -92,7 +96,7 @@
             // 
             this.btnSignUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSignUp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSignUp.Location = new System.Drawing.Point(827, 12);
+            this.btnSignUp.Location = new System.Drawing.Point(830, 12);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(105, 23);
             this.btnSignUp.TabIndex = 10;
@@ -104,7 +108,7 @@
             // 
             this.btnSignIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSignIn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSignIn.Location = new System.Drawing.Point(938, 12);
+            this.btnSignIn.Location = new System.Drawing.Point(941, 12);
             this.btnSignIn.Name = "btnSignIn";
             this.btnSignIn.Size = new System.Drawing.Size(105, 23);
             this.btnSignIn.TabIndex = 11;
@@ -132,7 +136,7 @@
             this.lblBorder.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblBorder.Location = new System.Drawing.Point(0, 59);
             this.lblBorder.Name = "lblBorder";
-            this.lblBorder.Size = new System.Drawing.Size(1055, 2);
+            this.lblBorder.Size = new System.Drawing.Size(1058, 2);
             this.lblBorder.TabIndex = 4;
             // 
             // tbSearch
@@ -145,7 +149,6 @@
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(232, 23);
             this.tbSearch.TabIndex = 14;
-            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
             this.tbSearch.Enter += new System.EventHandler(this.tbSearch_Enter);
             this.tbSearch.Leave += new System.EventHandler(this.tbSearch_Leave);
             // 
@@ -174,7 +177,7 @@
             // 
             this.btnLoadMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLoadMore.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoadMore.Location = new System.Drawing.Point(16, 531);
+            this.btnLoadMore.Location = new System.Drawing.Point(16, 534);
             this.btnLoadMore.Name = "btnLoadMore";
             this.btnLoadMore.Size = new System.Drawing.Size(294, 32);
             this.btnLoadMore.TabIndex = 17;
@@ -192,26 +195,28 @@
             this.panelMovie.ColumnCount = 2;
             this.panelMovie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.panelMovie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.panelMovie.Controls.Add(this.btnWatchTrailer, 0, 2);
             this.panelMovie.Controls.Add(this.pbPoster, 0, 1);
             this.panelMovie.Controls.Add(this.lblDescription, 1, 1);
-            this.panelMovie.Controls.Add(this.lblMovieTitle, 0, 0);
+            this.panelMovie.Controls.Add(this.btnWatchTrailer, 0, 3);
+            this.panelMovie.Controls.Add(this.lblCast, 0, 2);
+            this.panelMovie.Controls.Add(this.panelTitleInfo, 0, 0);
             this.panelMovie.Location = new System.Drawing.Point(330, 75);
-            this.panelMovie.MinimumSize = new System.Drawing.Size(500, 385);
+            this.panelMovie.MinimumSize = new System.Drawing.Size(500, 443);
             this.panelMovie.Name = "panelMovie";
-            this.panelMovie.RowCount = 3;
-            this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.panelMovie.RowCount = 4;
+            this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
+            this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 305F));
             this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.panelMovie.Size = new System.Drawing.Size(713, 493);
+            this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.panelMovie.Size = new System.Drawing.Size(716, 491);
             this.panelMovie.TabIndex = 5;
             // 
             // btnWatchTrailer
             // 
             this.btnWatchTrailer.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnWatchTrailer.Location = new System.Drawing.Point(3, 450);
+            this.btnWatchTrailer.Location = new System.Drawing.Point(3, 452);
             this.btnWatchTrailer.Name = "btnWatchTrailer";
-            this.btnWatchTrailer.Size = new System.Drawing.Size(128, 37);
+            this.btnWatchTrailer.Size = new System.Drawing.Size(128, 36);
             this.btnWatchTrailer.TabIndex = 5;
             this.btnWatchTrailer.Text = "Watch Trailer >";
             this.btnWatchTrailer.UseVisualStyleBackColor = true;
@@ -219,9 +224,9 @@
             // 
             // pbPoster
             // 
-            this.pbPoster.Location = new System.Drawing.Point(3, 33);
+            this.pbPoster.Location = new System.Drawing.Point(3, 66);
             this.pbPoster.Name = "pbPoster";
-            this.pbPoster.Size = new System.Drawing.Size(194, 302);
+            this.pbPoster.Size = new System.Drawing.Size(194, 286);
             this.pbPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbPoster.TabIndex = 4;
             this.pbPoster.TabStop = false;
@@ -229,21 +234,20 @@
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(203, 30);
+            this.lblDescription.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.Location = new System.Drawing.Point(203, 63);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(67, 15);
+            this.lblDescription.Size = new System.Drawing.Size(74, 17);
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "Description";
             // 
             // lblMovieTitle
             // 
             this.lblMovieTitle.AutoSize = true;
-            this.panelMovie.SetColumnSpan(this.lblMovieTitle, 2);
-            this.lblMovieTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMovieTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMovieTitle.Location = new System.Drawing.Point(3, 0);
             this.lblMovieTitle.Name = "lblMovieTitle";
-            this.lblMovieTitle.Size = new System.Drawing.Size(39, 21);
+            this.lblMovieTitle.Size = new System.Drawing.Size(44, 21);
             this.lblMovieTitle.TabIndex = 0;
             this.lblMovieTitle.Text = "Title";
             // 
@@ -258,14 +262,46 @@
             this.cbGenre.Name = "cbGenre";
             this.cbGenre.Size = new System.Drawing.Size(232, 21);
             this.cbGenre.TabIndex = 18;
-            this.cbGenre.SelectedIndexChanged += new System.EventHandler(this.cbGenre_SelectedIndexChanged);
+            // 
+            // lblCast
+            // 
+            this.lblCast.AutoSize = true;
+            this.panelMovie.SetColumnSpan(this.lblCast, 2);
+            this.lblCast.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCast.Location = new System.Drawing.Point(3, 368);
+            this.lblCast.Name = "lblCast";
+            this.lblCast.Size = new System.Drawing.Size(30, 15);
+            this.lblCast.TabIndex = 6;
+            this.lblCast.Text = "Cast";
+            // 
+            // panelTitleInfo
+            // 
+            this.panelMovie.SetColumnSpan(this.panelTitleInfo, 2);
+            this.panelTitleInfo.Controls.Add(this.lblInfo);
+            this.panelTitleInfo.Controls.Add(this.lblMovieTitle);
+            this.panelTitleInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTitleInfo.Location = new System.Drawing.Point(3, 3);
+            this.panelTitleInfo.Name = "panelTitleInfo";
+            this.panelTitleInfo.Size = new System.Drawing.Size(710, 57);
+            this.panelTitleInfo.TabIndex = 7;
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfo.Location = new System.Drawing.Point(3, 27);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(28, 15);
+            this.lblInfo.TabIndex = 1;
+            this.lblInfo.Text = "Info";
             // 
             // Form1
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1055, 580);
+            this.ClientSize = new System.Drawing.Size(1058, 583);
+            this.Controls.Add(this.panelUser);
             this.Controls.Add(this.cbGenre);
             this.Controls.Add(this.panelMovie);
             this.Controls.Add(this.btnLoadMore);
@@ -276,7 +312,6 @@
             this.Controls.Add(this.btnSignUp);
             this.Controls.Add(this.lblBorder);
             this.Controls.Add(this.lbMovies);
-            this.Controls.Add(this.panelUser);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Видеотека";
@@ -286,6 +321,8 @@
             this.panelMovie.ResumeLayout(false);
             this.panelMovie.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPoster)).EndInit();
+            this.panelTitleInfo.ResumeLayout(false);
+            this.panelTitleInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,6 +347,9 @@
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lblMovieTitle;
         private System.Windows.Forms.ComboBox cbGenre;
+        private System.Windows.Forms.Label lblCast;
+        private System.Windows.Forms.Panel panelTitleInfo;
+        private System.Windows.Forms.Label lblInfo;
     }
 }
 
