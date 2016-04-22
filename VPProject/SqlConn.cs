@@ -82,7 +82,7 @@ namespace VPProject
                     connection.Open();
                 }
 
-                user.Movies = user.Movies +" "+ movie.Movie.OriginalTitle;
+                user.Movies = user.Movies +">"+ movie.Movie.OriginalTitle;
                 MySqlCommand command = new MySqlCommand("UPDATE Users SET Movies='"+user.Movies+"' WHERE Username='" + user.Username + "'", connection);
                     command.ExecuteNonQuery();
 

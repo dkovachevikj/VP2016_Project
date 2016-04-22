@@ -121,11 +121,15 @@ namespace VPProject
 
         private void lblUsername_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Име: "+LoggedUser.Ime+"\n");
-            sb.Append("Презиме: "+LoggedUser.Prezime+"\n");
-            sb.Append("Е-маил: "+LoggedUser.Email+"\n");
-            MessageBox.Show(sb.ToString());
+            UserDetail forma = new UserDetail(LoggedUser);
+            if (forma.ShowDialog() == DialogResult.OK)
+            {
+                /*StringBuilder sb = new StringBuilder();
+                sb.Append("Име: " + LoggedUser.Ime + "\n");
+                sb.Append("Презиме: " + LoggedUser.Prezime + "\n");
+                sb.Append("Е-маил: " + LoggedUser.Email + "\n");
+                MessageBox.Show(sb.ToString());*/
+            }
         }
 
         private void btnWatchTrailer_Click(object sender, EventArgs e)

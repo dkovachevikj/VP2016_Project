@@ -90,9 +90,9 @@ C:\Users\Nacev\Documents\GIT_Proekt\VPProject\bin\Debug\Hasseware.Net.TMDb.xml
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\bin\Debug\RestSharp.xml
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\bin\Debug\TMDbLib.pdb
-C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.csprojResolveAssemblyReference.cache
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.SignUp.resources
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.Form1.resources
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.Properties.Resources.resources
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.SignIn.resources
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.csproj.GenerateResource.Cache
+C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.UserDetail.resources
