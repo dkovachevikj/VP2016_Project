@@ -73,5 +73,34 @@ namespace VPProject
             return user;
         }
 
+        static public void AddShoppingCart(User user,CustomMovie movie)
+        {
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                user.Movies = user.Movies +" "+ movie.Movie.OriginalTitle;
+                MySqlCommand command = new MySqlCommand("UPDATE Users SET Movies='"+user.Movies+"' WHERE Username='" + user.Username + "'", connection);
+                    command.ExecuteNonQuery();
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
+        private static string CONCAT(object movies, string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

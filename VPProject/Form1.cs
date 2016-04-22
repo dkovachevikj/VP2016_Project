@@ -63,6 +63,8 @@ namespace VPProject
             {
                 LoggedUser = signIn.User;
                 panelUser.Show();
+                btnSignIn.Visible = false;
+                btnSignUp.Visible = false;
                 lblUsername.Text = LoggedUser.Username;
             }
         }
@@ -111,6 +113,8 @@ namespace VPProject
             if (MessageBox.Show("Дали сте сигурни дека сакате да се одјавите?", "Одјави се", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 LoggedUser = null;
+                btnSignIn.Visible = true;
+                btnSignUp.Visible = true;
                 panelUser.Hide();
             }
         }
@@ -275,5 +279,13 @@ namespace VPProject
             
         }
 
+        private void btnDodadiKosnicka_Click(object sender, EventArgs e)
+        {
+            if (lbMovies.SelectedItem != null&&LoggedUser!=null)
+            {
+                CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
+                SqlConn.AddShoppingCart(LoggedUser, selectedMovie);
+            }
+        }
     }
 }

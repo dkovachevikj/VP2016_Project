@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace VPProject
 {
-    class CustomMovie
+    public class CustomMovie
     {
         public Movie Movie { get; set; }
 
