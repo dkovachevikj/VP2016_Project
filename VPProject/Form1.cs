@@ -54,6 +54,7 @@ namespace VPProject
             }
             currentSearchText = "";
             searchChanged = false;
+            lbMovies.SelectedIndex = 0;
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
@@ -87,7 +88,38 @@ namespace VPProject
                 lblMovieTitle.Text = string.Format("{0} ({1:0.00})", movie.Title, movie.VoteAverage);
                 pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
                 lblDescription.Text = movie.Overview;
-                if(movie.Videos.Results.Count() > 0)
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Cast:  ");
+                if (movie.Credits.Cast.Count<MediaCast>() == 0)
+                {
+                    sb.Append("Not available");
+                    lblCast.Text = sb.ToString();
+                }
+                else
+                {
+                    int maxCast = 0;
+                    foreach (MediaCast mc in movie.Credits.Cast)
+                    {
+                        if (maxCast > 10)
+                        {
+                            break;
+                        }
+                        sb.Append(mc.Name + ", ");
+                        maxCast++;
+                    }
+                    lblCast.Text = sb.ToString().Substring(0, sb.ToString().Length - 2);
+                }
+                if (movie.Runtime > 60)
+                {
+                    int hr = (int)movie.Runtime / 60;
+                    int min = (int)movie.Runtime % 60;
+                    lblInfo.Text = string.Format("{0} h {1} min", hr, min);
+                }
+                else
+                {
+                    lblInfo.Text = movie.Runtime.ToString() + " min";
+                }
+                if (movie.Videos.Results.Count() > 0)
                 {
                     foreach (Video v in movie.Videos.Results)
                     {
@@ -137,7 +169,7 @@ namespace VPProject
             System.Diagnostics.Process.Start(TrailerPath);
         }
 
-        private async void btnSearch_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
             if(!cbGenre.SelectedItem.ToString().Equals("All"))
             {
@@ -145,16 +177,7 @@ namespace VPProject
                 {
                     if(searchChanged)
                     {
-                        tbSearch.ResetText();
-                        lbMovies.Items.Clear();
-                        List<CustomMovie> movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
-                        foreach (CustomMovie cm in movies)
-                        {
-                            lbMovies.Items.Add(cm);
-                        }
-                        currentGenre = cbGenre.SelectedItem.ToString();
-                        genreChanged = true;
-                        searchChanged = false;
+                        loadGenre();
                     }
                     else
                     {
@@ -163,16 +186,7 @@ namespace VPProject
                 }
                 else
                 {
-                    tbSearch.ResetText();
-                    lbMovies.Items.Clear();
-                    List<CustomMovie> movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
-                    foreach (CustomMovie cm in movies)
-                    {
-                        lbMovies.Items.Add(cm);
-                    }
-                    currentGenre = cbGenre.SelectedItem.ToString();
-                    genreChanged = true;
-                    searchChanged = false;
+                    loadGenre();
                 }
             }
             else
@@ -181,25 +195,7 @@ namespace VPProject
                 {
                     if(genreChanged)
                     {
-                        lbMovies.Items.Clear();
-                        if (tbSearch.Text.Trim() == "")
-                        {
-                            foreach (CustomMovie cm in beginMovies)
-                            {
-                                lbMovies.Items.Add(cm);
-                            }
-                        }
-                        else
-                        {
-                            var movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
-                            foreach (CustomMovie cm in movies)
-                            {
-                                lbMovies.Items.Add(cm);
-                            }
-                        }
-                        currentSearchText = tbSearch.Text.Trim();
-                        searchChanged = true;
-                        genreChanged = false;
+                        loadSearch();
                     }
                     else
                     {
@@ -208,25 +204,7 @@ namespace VPProject
                 }
                 else
                 {
-                    lbMovies.Items.Clear();
-                    if (tbSearch.Text.Trim() == "")
-                    {
-                        foreach (CustomMovie cm in beginMovies)
-                        {
-                            lbMovies.Items.Add(cm);
-                        }
-                    }
-                    else
-                    {
-                        var movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
-                        foreach (CustomMovie cm in movies)
-                        {
-                            lbMovies.Items.Add(cm);
-                        }
-                    }
-                    currentSearchText = tbSearch.Text.Trim();
-                    searchChanged = true;
-                    genreChanged = false;
+                    loadSearch();
                 }
             }
         }
@@ -273,15 +251,6 @@ namespace VPProject
             tbSearch.BackColor = Color.White;
         }
 
-        private void cbGenre_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbSearch_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
 
         private void btnDodadiKosnicka_Click(object sender, EventArgs e)
         {
@@ -289,6 +258,51 @@ namespace VPProject
             {
                 CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
                 SqlConn.AddShoppingCart(LoggedUser, selectedMovie);
+            }
+        }
+
+        private async void loadGenre()
+        {
+            tbSearch.ResetText();
+            lbMovies.Items.Clear();
+            List<CustomMovie> movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
+            foreach (CustomMovie cm in movies)
+            {
+                lbMovies.Items.Add(cm);
+            }
+            currentGenre = cbGenre.SelectedItem.ToString();
+            genreChanged = true;
+            searchChanged = false;
+            if (lbMovies.Items.Count > 0)
+            {
+                lbMovies.SelectedIndex = 0;
+            }
+        }
+
+        private async void loadSearch()
+        {
+            lbMovies.Items.Clear();
+            if (tbSearch.Text.Trim() == "")
+            {
+                foreach (CustomMovie cm in beginMovies)
+                {
+                    lbMovies.Items.Add(cm);
+                }
+            }
+            else
+            {
+                var movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
+                foreach (CustomMovie cm in movies)
+                {
+                    lbMovies.Items.Add(cm);
+                }
+            }
+            currentSearchText = tbSearch.Text.Trim();
+            searchChanged = true;
+            genreChanged = false;
+            if (lbMovies.Items.Count > 0)
+            {
+                lbMovies.SelectedIndex = 0;
             }
         }
     }

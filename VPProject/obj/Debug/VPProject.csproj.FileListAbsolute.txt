@@ -122,3 +122,4 @@ C:\Users\User\Desktop\GIT_Proekt\VPProject\obj\Debug\VPProject.Properties.Resour
 C:\Users\User\Desktop\GIT_Proekt\VPProject\obj\Debug\VPProject.SignIn.resources
 C:\Users\User\Desktop\GIT_Proekt\VPProject\obj\Debug\VPProject.UserDetail.resources
 C:\Users\User\Desktop\GIT_Proekt\VPProject\obj\Debug\VPProject.csproj.GenerateResource.Cache
+D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.UserDetail.resources
