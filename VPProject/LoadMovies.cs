@@ -18,18 +18,26 @@ namespace VPProject
         static private int genrePage = 1;
         static private string currSearchTitle = "";
         static private int searchPage = 1;
+        static public int topRatedCount = 0;
+        static public int genreCount = 0;
+        static public int topRatedTotal = 0;
+        static public int genreTotal = 0;
+        static public int searchTotal = 0;
+        static public int searchCount = 0;
 
         static public async Task<List<CustomMovie>> TopRated(CancellationToken cancellationToken)
         {
             using (var client = new ServiceClient(Key))
             {
                 var movies = await client.Movies.GetTopRatedAsync(null, topRatedPage, cancellationToken);
+                topRatedTotal = movies.TotalCount;
                 List<CustomMovie> returnList = new List<CustomMovie>();
                 foreach (Movie m in movies.Results)
                 {
                     returnList.Add(new CustomMovie(m));
                 }
                 topRatedPage++;
+                topRatedCount += returnList.Count;
                 return returnList;
             }
         }
@@ -42,14 +50,23 @@ namespace VPProject
                 {
                     currSearchTitle = searchString;
                     searchPage = 1;
+                    searchTotal = 0;
+                    searchCount = 0;
                 }
                 var movies = await client.Movies.SearchAsync(currSearchTitle, null, false, searchPage, cancellationToken);
+                if (searchTotal == 0)
+                    searchTotal = movies.TotalCount;
                 List<CustomMovie> returnList = new List<CustomMovie>();
                 foreach (Movie m in movies.Results)
                 {
                     returnList.Add(new CustomMovie(m));
                 }
+                searchCount += returnList.Count;
                 searchPage++;
+                genrePage = 1;
+                currGenreName = "#fffff";
+                genreTotal = 0;
+                genreCount = 0;
                 return returnList;
             }
         }
@@ -59,6 +76,15 @@ namespace VPProject
             using (var client = new ServiceClient(Key))
             {
                 Movie movie = await client.Movies.GetAsync(cm.Movie.Id, null, true, cancellationToken);
+                return movie;
+            }
+        }
+
+        static public async Task<Movie> GetMovie(int id, CancellationToken cancellationToken)
+        {
+            using (var client = new ServiceClient(Key))
+            {
+                Movie movie = await client.Movies.GetAsync(id, null, true, cancellationToken);
                 return movie;
             }
         }
@@ -86,15 +112,24 @@ namespace VPProject
                 {
                     genrePage = 1;
                     currGenreName = genreName;
+                    genreTotal = 0;
+                    genreCount = 0;
                 }
                 var genres = await client.Genres.GetAsync(DataInfoType.Movie, new CancellationToken());
                 var selectedGenre = genres.Where(g => g.Name.Contains(genreName)).FirstOrDefault();
                 var detailedMovies = await client.Movies.DiscoverAsync(null, false, null, null, null, null, null, selectedGenre.Id.ToString(), "", genrePage, cancellationToken);
-                foreach(Movie m in detailedMovies.Results)
+                if (genreTotal == 0)
+                    genreTotal = detailedMovies.TotalCount;
+                foreach (Movie m in detailedMovies.Results)
                 {
                     returnList.Add(new CustomMovie(m));
                 }
+                genreCount += returnList.Count;
                 genrePage++;
+                currSearchTitle = "#ffffff";
+                searchPage = 1;
+                searchTotal = 0;
+                searchCount = 0;
                 return returnList;
             }
         }

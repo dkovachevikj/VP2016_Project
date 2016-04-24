@@ -87,7 +87,6 @@
       <DependentUpon>SignIn.cs</DependentUpon>
     </Compile>
     <Compile Include="SqlConn.cs" />
-    <Compile Include="TitleMovieComparer.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserDetail.cs">
       <SubType>Form</SubType>
@@ -95,7 +94,6 @@
     <Compile Include="UserDetail.Designer.cs">
       <DependentUpon>UserDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="YearMovieComparer.cs" />
     <EmbeddedResource Include="SignUp.resx">
       <DependentUpon>SignUp.cs</DependentUpon>
     </EmbeddedResource>

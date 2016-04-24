@@ -81,12 +81,14 @@ namespace VPProject
                 {
                     connection.Open();
                 }
-
-                user.Movies = user.Movies +">"+ movie.Movie.OriginalTitle;
-                MySqlCommand command = new MySqlCommand("UPDATE Users SET Movies='"+user.Movies+"' WHERE Username='" + user.Username + "'", connection);
+                StringBuilder sb = new StringBuilder();
+                foreach(string s in user.Movies)
+                {
+                    sb.Append(s + ">");
+                }
+                MySqlCommand command = new MySqlCommand("UPDATE Users SET Movies='"+sb.ToString().Substring(0, sb.ToString().Length - 1) + "' WHERE Username='" + user.Username + "'", connection);
                     command.ExecuteNonQuery();
                 MessageBox.Show(string.Format("{0} was successfully rented", movie.Movie.Title));
-
             }
             catch (MySqlException ex)
             {

@@ -65,6 +65,7 @@ namespace VPProject
             currentGenre = "All";
             genreChanged = false;
         }
+
         private async void loadMovies()
         {
             var movies = await LoadMovies.TopRated(new CancellationToken());
@@ -76,6 +77,7 @@ namespace VPProject
             currentSearchText = "";
             searchChanged = false;
             lbMovies.SelectedIndex = 0;
+            toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
@@ -134,19 +136,31 @@ namespace VPProject
                     }
                     lblCast.Text = sb.ToString().Substring(0, sb.ToString().Length - 2);
                 }
-                if(movie.ReleaseDate.HasValue)
+                lblInfo.Text = "Not available";
+                if (movie.ReleaseDate.HasValue)
                 {
-                        lblInfo.Text = movie.ReleaseDate.Value.ToString("dd MMMM yyyy") + "  |  ";
+                    lblInfo.Text = movie.ReleaseDate.Value.ToString("dd MMMM yyyy");
+                    if (movie.ReleaseDate.Value.Year > DateTime.Now.Year)
+                        btnRent.Enabled = false;
+                    else
+                        btnRent.Enabled = true;
                 }
                 if (movie.Runtime > 60)
                 {
                     int hr = (int)movie.Runtime / 60;
                     int min = (int)movie.Runtime % 60;
-                    lblInfo.Text += string.Format("{0} h {1} min", hr, min);
+                    if (min > 0)
+                        lblInfo.Text += string.Format("  |  {0} h {1} min", hr, min);
+                    else
+                        lblInfo.Text += string.Format("  |  {0} h", hr);
+                }
+                else if (movie.Runtime > 0)
+                {
+                    lblInfo.Text += "  |  " + movie.Runtime.ToString() + " min";
                 }
                 else
                 {
-                    lblInfo.Text = movie.Runtime.ToString() + " min";
+                    lblInfo.Text += " ";
                 }
                 if(movie.Genres.Count<Genre>() > 0)
                 {
@@ -262,6 +276,8 @@ namespace VPProject
         private async void btnLoadMore_Click(object sender, EventArgs e)
         {
             bool topRated = false;
+            bool search = false;
+            bool genre = false;
             List<CustomMovie> movies = null;
             if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
             {
@@ -271,10 +287,12 @@ namespace VPProject
             else if (!cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
             {
                 movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
+                genre = true;
             }
             else if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length > 0)
             {
                 movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
+                search = true;
             }
             else
             {
@@ -288,6 +306,12 @@ namespace VPProject
                 }
                 lbMovies.Items.Add(cm);
             }
+            if (topRated)
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
+            else if (search)
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
+            else if (genre)
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
         }
 
         private void tbSearch_Enter(object sender, EventArgs e)
@@ -317,6 +341,7 @@ namespace VPProject
             {
                 lbMovies.SelectedIndex = 0;
             }
+            toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
         }
 
         private async void loadSearch()
@@ -328,6 +353,7 @@ namespace VPProject
                 {
                     lbMovies.Items.Add(cm);
                 }
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
             }
             else
             {
@@ -336,6 +362,7 @@ namespace VPProject
                 {
                     lbMovies.Items.Add(cm);
                 }
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
             }
             currentSearchText = tbSearch.Text.Trim();
             searchChanged = true;
@@ -351,6 +378,12 @@ namespace VPProject
             if (lbMovies.SelectedItem != null && LoggedUser != null)
             {
                 CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
+                if (LoggedUser.Movies.Contains(selectedMovie.Movie.Id.ToString()))
+                {
+                    MessageBox.Show(string.Format("{0} is already rented!", selectedMovie.Movie.Title));
+                    return;
+                }
+                LoggedUser.Movies.Add(selectedMovie.Movie.Id.ToString());
                 SqlConn.AddShoppingCart(LoggedUser, selectedMovie);
             }
         }
@@ -408,5 +441,6 @@ namespace VPProject
 
             e.DrawFocusRectangle();
         }
+
     }
 }

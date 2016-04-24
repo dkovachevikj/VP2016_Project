@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.TMDb;
+using System.Threading;
 
 namespace VPProject
 {
@@ -21,12 +23,8 @@ namespace VPProject
             lblPrezime.Text += " " + user.Prezime;
             lblEmail.Text += " " + user.Email;
             lbKosnicka.Items.Clear();
-            char[] separatingChars = { '>' };
-            string [] parts=user.Movies.Split(separatingChars);
-            for(int i=1;i<parts.Length;i++)
-            {
-                lbKosnicka.Items.Add(parts[i]);
-            }
+            if (user.Movies.Count > 0)
+                loadRentedMovies();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -37,6 +35,16 @@ namespace VPProject
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private async void loadRentedMovies()
+        {
+            Movie movie = null;
+            foreach (string s in user.Movies)
+            {
+                movie = await LoadMovies.GetMovie(int.Parse(s), new CancellationToken());
+                lbKosnicka.Items.Add(new CustomMovie(movie));
+            }
         }
     }
 }

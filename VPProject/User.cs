@@ -13,7 +13,7 @@ namespace VPProject
         public string Ime { set; get; }
         public string Prezime { get; set; }
         public string Email { get; set; }
-        public string Movies { get; set; }
+        public HashSet<string> Movies { get; set; }
 
         public User(string username, string password,string ime,string prezime,string email,string movies)
         {
@@ -22,7 +22,14 @@ namespace VPProject
             Ime = ime;
             Prezime = prezime;
             Email = email;
-            Movies = movies;
+            Movies = new HashSet<string>();
+            if(movies.Length > 0)
+            {
+                char[] pattern = { '>' };
+                string[] splitMovies = movies.Split(pattern);
+                foreach (string s in splitMovies)
+                    Movies.Add(s);
+            }
         }
 
     }
