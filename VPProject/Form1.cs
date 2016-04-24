@@ -298,9 +298,9 @@ namespace VPProject
             {
                 return;
             }
-            foreach(CustomMovie cm in movies)
+            foreach (CustomMovie cm in movies)
             {
-                if(topRated)
+                if (topRated)
                 {
                     beginMovies.Add(cm);
                 }
