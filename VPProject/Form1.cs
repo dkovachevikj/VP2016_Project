@@ -17,6 +17,7 @@ namespace VPProject
         private User LoggedUser { get; set; }
         private string TrailerPath { get; set; }
         private List<CustomMovie> beginMovies { get; set; }
+        private Dictionary<int, Genre> Genres;
         private string currentSearchText { get; set; }
         private bool searchChanged { get; set; }
         private string currentGenre { get; set; }
@@ -30,7 +31,26 @@ namespace VPProject
             loadMovies();
             TrailerPath = "";
             beginMovies = new List<CustomMovie>();
+            Genres = new Dictionary<int, Genre>();
             setGenres();
+            btnRent.Enabled = false;
+            setColors();
+        }
+
+        private void setColors()
+        {
+            btnLoadMore.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnLoadMore.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnSearch.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnSearch.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnWatchTrailer.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnWatchTrailer.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnRent.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnRent.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnSignUp.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnSignUp.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnSignIn.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnSignIn.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
         }
 
         private async void setGenres()
@@ -39,6 +59,7 @@ namespace VPProject
             foreach(CustomGenre cg in genres)
             {
                 cbGenre.Items.Add(cg);
+                Genres.Add(cg.Genre.Id, cg.Genre);
             }
             cbGenre.SelectedIndex = 0;
             currentGenre = "All";
@@ -67,6 +88,7 @@ namespace VPProject
                 btnSignIn.Visible = false;
                 btnSignUp.Visible = false;
                 lblUsername.Text = LoggedUser.Username;
+                btnRent.Enabled = true;
             }
         }
 
@@ -85,7 +107,12 @@ namespace VPProject
             {
                 CustomMovie cm = lbMovies.SelectedItem as CustomMovie;
                 Movie movie = await LoadMovies.GetMovie(cm, new CancellationToken());
-                lblMovieTitle.Text = string.Format("{0} ({1:0.00})", movie.Title, movie.VoteAverage);
+                if (movie.ReleaseDate.HasValue)
+                    lblMovieTitle.Text = string.Format("{0} ({1})", movie.Title, movie.ReleaseDate.Value.Year.ToString());
+                else
+                    lblMovieTitle.Text = movie.Title;
+                lblRating.Text = movie.VoteAverage.ToString("0.00");
+                lblVotes.Text = movie.VoteCount.ToString();
                 pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
                 lblDescription.Text = movie.Overview;
                 StringBuilder sb = new StringBuilder();
@@ -101,23 +128,44 @@ namespace VPProject
                     foreach (MediaCast mc in movie.Credits.Cast)
                     {
                         if (maxCast > 10)
-                        {
                             break;
-                        }
                         sb.Append(mc.Name + ", ");
                         maxCast++;
                     }
                     lblCast.Text = sb.ToString().Substring(0, sb.ToString().Length - 2);
                 }
+                if(movie.ReleaseDate.HasValue)
+                {
+                        lblInfo.Text = movie.ReleaseDate.Value.ToString("dd MMMM yyyy") + "  |  ";
+                }
                 if (movie.Runtime > 60)
                 {
                     int hr = (int)movie.Runtime / 60;
                     int min = (int)movie.Runtime % 60;
-                    lblInfo.Text = string.Format("{0} h {1} min", hr, min);
+                    lblInfo.Text += string.Format("{0} h {1} min", hr, min);
                 }
                 else
                 {
                     lblInfo.Text = movie.Runtime.ToString() + " min";
+                }
+                if(movie.Genres.Count<Genre>() > 0)
+                {
+                    sb.Clear();
+                    sb.Append("  |  ");
+                    int count = 0;
+                    Genre tempGenre = null;
+                    foreach(Genre g in movie.Genres)
+                    {
+                        if (count >= 3)
+                            break;
+                        if(Genres.ContainsKey(g.Id))
+                        {
+                            Genres.TryGetValue(g.Id, out tempGenre);
+                            sb.Append(tempGenre.Name + ", ");
+                            count++;
+                        }
+                    }
+                    lblInfo.Text += sb.ToString().Substring(0, sb.ToString().Length - 2);
                 }
                 if (movie.Videos.Results.Count() > 0)
                 {
@@ -148,12 +196,14 @@ namespace VPProject
                 btnSignIn.Visible = true;
                 btnSignUp.Visible = true;
                 panelUser.Hide();
+                btnRent.Enabled = false;
             }
         }
 
         private void lblUsername_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             UserDetail forma = new UserDetail(LoggedUser);
+            forma.Text = lblUsername.Text;
             if (forma.ShowDialog() == DialogResult.OK)
             {
                 /*StringBuilder sb = new StringBuilder();
@@ -251,16 +301,6 @@ namespace VPProject
             tbSearch.BackColor = Color.White;
         }
 
-
-        private void btnDodadiKosnicka_Click(object sender, EventArgs e)
-        {
-            if (lbMovies.SelectedItem != null&&LoggedUser!=null)
-            {
-                CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
-                SqlConn.AddShoppingCart(LoggedUser, selectedMovie);
-            }
-        }
-
         private async void loadGenre()
         {
             tbSearch.ResetText();
@@ -304,6 +344,69 @@ namespace VPProject
             {
                 lbMovies.SelectedIndex = 0;
             }
+        }
+
+        private void btnRent_Click(object sender, EventArgs e)
+        {
+            if (lbMovies.SelectedItem != null && LoggedUser != null)
+            {
+                CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
+                SqlConn.AddShoppingCart(LoggedUser, selectedMovie);
+            }
+        }
+
+        private void cbGenre_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            ComboBox combo = sender as ComboBox;
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(214, 214, 194)),
+                                         e.Bounds);
+            else
+                e.Graphics.FillRectangle(new SolidBrush(combo.BackColor),
+                                         e.Bounds);
+
+            e.Graphics.DrawString(combo.Items[e.Index].ToString(), e.Font,
+                                  new SolidBrush(combo.ForeColor),
+                                  new Point(e.Bounds.X, e.Bounds.Y));
+
+            e.DrawFocusRectangle();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cbGenre.DrawMode = DrawMode.OwnerDrawFixed;
+            lbMovies.DrawMode = DrawMode.OwnerDrawFixed;
+        }
+
+        private void lbMovies_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+
+            bool isItemSelected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
+            int itemIndex = e.Index;
+            if (itemIndex >= 0 && itemIndex < lbMovies.Items.Count)
+            {
+                Graphics g = e.Graphics;
+
+                // Background Color
+                SolidBrush backgroundColorBrush = new SolidBrush((isItemSelected) ? Color.FromArgb(194, 194, 163) : SystemColors.WindowFrame);
+                g.FillRectangle(backgroundColorBrush, e.Bounds);
+
+                // Set text color
+                string itemText = lbMovies.Items[itemIndex].ToString();
+
+                SolidBrush itemTextColorBrush = (isItemSelected) ? new SolidBrush(Color.Black) : new SolidBrush(Color.White);
+                g.DrawString(itemText, e.Font, itemTextColorBrush, lbMovies.GetItemRectangle(itemIndex).Location);
+
+                // Clean up
+                backgroundColorBrush.Dispose();
+                itemTextColorBrush.Dispose();
+            }
+
+            e.DrawFocusRectangle();
         }
     }
 }

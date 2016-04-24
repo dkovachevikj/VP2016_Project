@@ -85,6 +85,7 @@ namespace VPProject
                 user.Movies = user.Movies +">"+ movie.Movie.OriginalTitle;
                 MySqlCommand command = new MySqlCommand("UPDATE Users SET Movies='"+user.Movies+"' WHERE Username='" + user.Username + "'", connection);
                     command.ExecuteNonQuery();
+                MessageBox.Show(string.Format("{0} was successfully rented", movie.Movie.Title));
 
             }
             catch (MySqlException ex)

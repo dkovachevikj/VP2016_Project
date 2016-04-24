@@ -159,10 +159,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(708, 308);
+            this.ClientSize = new System.Drawing.Size(724, 347);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximumSize = new System.Drawing.Size(724, 347);
             this.MinimumSize = new System.Drawing.Size(724, 347);
             this.Name = "SignIn";

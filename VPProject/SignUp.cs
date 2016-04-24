@@ -17,8 +17,10 @@ namespace VPProject
         public SignUp()
         {
             InitializeComponent();
-            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
-            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
+            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnOK.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnCancel.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
             lblEmail.Parent = pictureBox1;
             lblMandatory.Parent = pictureBox1;
             lblName.Parent = pictureBox1;

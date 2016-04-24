@@ -20,8 +20,10 @@ namespace VPProject
             lblNajava.Parent = pictureBox1;
             lblPassword.Parent = pictureBox1;
             lblUsername.Parent = pictureBox1;
-            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
-            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 230, 218);
+            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnOK.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnCancel.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
