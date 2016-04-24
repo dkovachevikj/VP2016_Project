@@ -76,6 +76,7 @@ namespace VPProject
             currentSearchText = "";
             searchChanged = false;
             lbMovies.SelectedIndex = 0;
+            toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
@@ -262,6 +263,8 @@ namespace VPProject
         private async void btnLoadMore_Click(object sender, EventArgs e)
         {
             bool topRated = false;
+            bool search = false;
+            bool genre = false;
             List<CustomMovie> movies = null;
             if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
             {
@@ -271,10 +274,12 @@ namespace VPProject
             else if (!cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
             {
                 movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString(), new CancellationToken());
+                genre = true;
             }
             else if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length > 0)
             {
                 movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim(), new CancellationToken());
+                search = true;
             }
             else
             {
@@ -288,6 +293,14 @@ namespace VPProject
                 }
                 lbMovies.Items.Add(cm);
             }
+            if (topRated)
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
+            else if (search)
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
+            else if (genre)
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
+
+
         }
 
         private void tbSearch_Enter(object sender, EventArgs e)
@@ -317,6 +330,7 @@ namespace VPProject
             {
                 lbMovies.SelectedIndex = 0;
             }
+            toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
         }
 
         private async void loadSearch()
@@ -328,6 +342,7 @@ namespace VPProject
                 {
                     lbMovies.Items.Add(cm);
                 }
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
             }
             else
             {
@@ -336,6 +351,7 @@ namespace VPProject
                 {
                     lbMovies.Items.Add(cm);
                 }
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
             }
             currentSearchText = tbSearch.Text.Trim();
             searchChanged = true;
