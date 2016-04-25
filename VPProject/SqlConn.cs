@@ -82,7 +82,7 @@ namespace VPProject
                     connection.Open();
                 }
                 StringBuilder sb = new StringBuilder();
-                foreach(string s in user.Movies)
+                foreach(string s in user.mID)
                 {
                     sb.Append(s + ">");
                 }

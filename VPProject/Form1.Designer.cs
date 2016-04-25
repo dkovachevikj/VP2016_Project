@@ -395,7 +395,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 621);
-            this.Controls.Add(this.panelUser);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.cbGenre);
             this.Controls.Add(this.panelMovie);
@@ -407,6 +406,7 @@
             this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.lblBorder);
             this.Controls.Add(this.lbMovies);
+            this.Controls.Add(this.panelUser);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Видеотека";

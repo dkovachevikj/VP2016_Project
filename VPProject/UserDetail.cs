@@ -19,12 +19,7 @@ namespace VPProject
         {
             InitializeComponent();
             this.user = user;
-            lblIme.Text += " " + user.Ime;
-            lblPrezime.Text += " " + user.Prezime;
-            lblEmail.Text += " " + user.Email;
-            lbKosnicka.Items.Clear();
-            if (user.Movies.Count > 0)
-                loadRentedMovies();
+            fillControls();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -37,14 +32,17 @@ namespace VPProject
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private async void loadRentedMovies()
+        private void fillControls()
         {
-            Movie movie = null;
-            foreach (string s in user.Movies)
-            {
-                movie = await LoadMovies.GetMovie(int.Parse(s), new CancellationToken());
-                lbKosnicka.Items.Add(new CustomMovie(movie));
-            }
+            lblIme.Text += " " + user.Ime;
+            lblPrezime.Text += " " + user.Prezime;
+            lblEmail.Text += " " + user.Email;
+            lbKosnicka.Items.Clear();
+            if(user.Movies.Count > 0)
+                foreach(CustomMovie cm in user.Movies)
+                {
+                    lbKosnicka.Items.Add(cm);
+                }
         }
     }
 }

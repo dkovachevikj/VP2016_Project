@@ -140,10 +140,13 @@ namespace VPProject
                 if (movie.ReleaseDate.HasValue)
                 {
                     lblInfo.Text = movie.ReleaseDate.Value.ToString("dd MMMM yyyy");
-                    if (movie.ReleaseDate.Value.Year > DateTime.Now.Year)
-                        btnRent.Enabled = false;
-                    else
-                        btnRent.Enabled = true;
+                    if(LoggedUser != null)
+                    {
+                        if (movie.ReleaseDate.Value.CompareTo(DateTime.Now) > 0)
+                            btnRent.Enabled = false;
+                        else
+                            btnRent.Enabled = true;
+                    }
                 }
                 if (movie.Runtime > 60)
                 {
@@ -373,17 +376,18 @@ namespace VPProject
             }
         }
 
-        private void btnRent_Click(object sender, EventArgs e)
+        private async void btnRent_Click(object sender, EventArgs e)
         {
             if (lbMovies.SelectedItem != null && LoggedUser != null)
             {
                 CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
-                if (LoggedUser.Movies.Contains(selectedMovie.Movie.Id.ToString()))
+                if (LoggedUser.mID.Contains(selectedMovie.Movie.Id.ToString()))
                 {
                     MessageBox.Show(string.Format("{0} is already rented!", selectedMovie.Movie.Title));
                     return;
                 }
-                LoggedUser.Movies.Add(selectedMovie.Movie.Id.ToString());
+                LoggedUser.mID.Add(selectedMovie.Movie.Id.ToString());
+                LoggedUser.Movies.Add(new CustomMovie(await LoadMovies.GetMovie(selectedMovie, new CancellationToken())));
                 SqlConn.AddShoppingCart(LoggedUser, selectedMovie);
             }
         }

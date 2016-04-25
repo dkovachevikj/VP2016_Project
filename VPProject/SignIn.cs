@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.TMDb;
+using System.Threading;
 
 namespace VPProject
 {
@@ -37,6 +39,7 @@ namespace VPProject
             {
                 if (User.Password == tbPassword.Text)
                 {
+                    loadRentedMovies();
                     DialogResult = DialogResult.OK;
                 }
                 else
@@ -69,6 +72,16 @@ namespace VPProject
         private void tbPassword_Leave(object sender, EventArgs e)
         {
             tbPassword.BackColor = Color.White;
+        }
+
+        private async void loadRentedMovies()
+        {
+            Movie movie = null;
+            foreach (string s in User.mID)
+            {
+                movie = await LoadMovies.GetMovie(int.Parse(s), new CancellationToken());
+                User.Movies.Add(new CustomMovie(movie));
+            }
         }
     }
 }
