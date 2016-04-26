@@ -133,5 +133,17 @@ namespace VPProject
                 return returnList;
             }
         }
+
+        static public void resetParams()
+        {
+            genrePage = 1;
+            currGenreName = "#fffffff";
+            genreTotal = 0;
+            genreCount = 0;
+            currSearchTitle = "#ffffffff";
+            searchPage = 1;
+            searchTotal = 0;
+            searchCount = 0;
+        }
     }
 }

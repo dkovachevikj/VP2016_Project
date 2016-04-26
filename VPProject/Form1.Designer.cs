@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lbSignOut = new System.Windows.Forms.LinkLabel();
             this.lblUsername = new System.Windows.Forms.LinkLabel();
@@ -55,6 +56,22 @@
             this.cbGenre = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toopStripLblSearchResults = new System.Windows.Forms.ToolStripStatusLabel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadMoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.signInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCheckStatusBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolBtnRent = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.movieCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.panelUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelMovie.SuspendLayout();
@@ -62,6 +79,7 @@
             this.panelTitleInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbSignOut
@@ -95,7 +113,7 @@
             this.panelUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelUser.Controls.Add(this.lblUsername);
             this.panelUser.Controls.Add(this.lbSignOut);
-            this.panelUser.Location = new System.Drawing.Point(881, 12);
+            this.panelUser.Location = new System.Drawing.Point(881, 33);
             this.panelUser.Name = "panelUser";
             this.panelUser.Size = new System.Drawing.Size(242, 42);
             this.panelUser.TabIndex = 12;
@@ -106,7 +124,7 @@
             this.btnSignUp.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnSignUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSignUp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSignUp.Location = new System.Drawing.Point(895, 12);
+            this.btnSignUp.Location = new System.Drawing.Point(900, 33);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(105, 31);
             this.btnSignUp.TabIndex = 10;
@@ -120,7 +138,7 @@
             this.btnSignIn.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnSignIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSignIn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSignIn.Location = new System.Drawing.Point(1018, 12);
+            this.btnSignIn.Location = new System.Drawing.Point(1011, 33);
             this.btnSignIn.Name = "btnSignIn";
             this.btnSignIn.Size = new System.Drawing.Size(105, 31);
             this.btnSignIn.TabIndex = 11;
@@ -137,9 +155,9 @@
             this.lbMovies.ForeColor = System.Drawing.Color.White;
             this.lbMovies.FormattingEnabled = true;
             this.lbMovies.ItemHeight = 17;
-            this.lbMovies.Location = new System.Drawing.Point(16, 139);
+            this.lbMovies.Location = new System.Drawing.Point(16, 156);
             this.lbMovies.Name = "lbMovies";
-            this.lbMovies.Size = new System.Drawing.Size(294, 412);
+            this.lbMovies.Size = new System.Drawing.Size(294, 429);
             this.lbMovies.TabIndex = 1;
             this.lbMovies.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbMovies_DrawItem);
             this.lbMovies.SelectedIndexChanged += new System.EventHandler(this.lbMovies_SelectedIndexChanged);
@@ -149,7 +167,7 @@
             this.lblBorder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblBorder.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblBorder.Location = new System.Drawing.Point(0, 59);
+            this.lblBorder.Location = new System.Drawing.Point(0, 81);
             this.lblBorder.Name = "lblBorder";
             this.lblBorder.Size = new System.Drawing.Size(1135, 2);
             this.lblBorder.TabIndex = 4;
@@ -160,7 +178,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tbSearch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSearch.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.tbSearch.Location = new System.Drawing.Point(16, 80);
+            this.tbSearch.Location = new System.Drawing.Point(16, 98);
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(232, 23);
             this.tbSearch.TabIndex = 14;
@@ -172,7 +190,7 @@
             this.btnSearch.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(254, 81);
+            this.btnSearch.Location = new System.Drawing.Point(254, 98);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(56, 52);
             this.btnSearch.TabIndex = 15;
@@ -183,7 +201,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(16, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 26);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(294, 52);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -196,7 +214,7 @@
             this.btnLoadMore.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnLoadMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadMore.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoadMore.Location = new System.Drawing.Point(16, 557);
+            this.btnLoadMore.Location = new System.Drawing.Point(16, 594);
             this.btnLoadMore.Name = "btnLoadMore";
             this.btnLoadMore.Size = new System.Drawing.Size(294, 36);
             this.btnLoadMore.TabIndex = 17;
@@ -220,7 +238,7 @@
             this.panelMovie.Controls.Add(this.btnWatchTrailer, 0, 3);
             this.panelMovie.Controls.Add(this.lblCast, 0, 2);
             this.panelMovie.Controls.Add(this.btnRent, 1, 3);
-            this.panelMovie.Location = new System.Drawing.Point(330, 80);
+            this.panelMovie.Location = new System.Drawing.Point(330, 98);
             this.panelMovie.MinimumSize = new System.Drawing.Size(500, 443);
             this.panelMovie.Name = "panelMovie";
             this.panelMovie.RowCount = 4;
@@ -228,7 +246,7 @@
             this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 308F));
             this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.panelMovie.Size = new System.Drawing.Size(793, 516);
+            this.panelMovie.Size = new System.Drawing.Size(793, 535);
             this.panelMovie.TabIndex = 5;
             // 
             // pbPoster
@@ -323,7 +341,7 @@
             this.btnWatchTrailer.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnWatchTrailer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnWatchTrailer.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnWatchTrailer.Location = new System.Drawing.Point(3, 477);
+            this.btnWatchTrailer.Location = new System.Drawing.Point(3, 496);
             this.btnWatchTrailer.Name = "btnWatchTrailer";
             this.btnWatchTrailer.Size = new System.Drawing.Size(128, 36);
             this.btnWatchTrailer.TabIndex = 5;
@@ -350,7 +368,7 @@
             this.btnRent.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRent.Image = ((System.Drawing.Image)(resources.GetObject("btnRent.Image")));
             this.btnRent.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnRent.Location = new System.Drawing.Point(681, 477);
+            this.btnRent.Location = new System.Drawing.Point(681, 496);
             this.btnRent.Name = "btnRent";
             this.btnRent.Size = new System.Drawing.Size(109, 36);
             this.btnRent.TabIndex = 8;
@@ -366,18 +384,19 @@
             this.cbGenre.FormattingEnabled = true;
             this.cbGenre.Items.AddRange(new object[] {
             "All"});
-            this.cbGenre.Location = new System.Drawing.Point(16, 110);
+            this.cbGenre.Location = new System.Drawing.Point(16, 127);
             this.cbGenre.MaxDropDownItems = 100;
             this.cbGenre.Name = "cbGenre";
             this.cbGenre.Size = new System.Drawing.Size(232, 23);
             this.cbGenre.TabIndex = 18;
             this.cbGenre.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbGenre_DrawItem);
+            this.cbGenre.SelectedIndexChanged += new System.EventHandler(this.cbGenre_SelectedIndexChanged);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toopStripLblSearchResults});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 599);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 636);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1135, 22);
             this.statusStrip1.TabIndex = 19;
@@ -389,27 +408,155 @@
             this.toopStripLblSearchResults.Size = new System.Drawing.Size(82, 17);
             this.toopStripLblSearchResults.Text = "Search Results";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.toolsToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1135, 24);
+            this.menuStrip1.TabIndex = 20;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.searchToolStripMenuItem1,
+            this.loadMoreToolStripMenuItem,
+            this.toolStripSeparator,
+            this.signInToolStripMenuItem,
+            this.registerToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // searchToolStripMenuItem1
+            // 
+            this.searchToolStripMenuItem1.Name = "searchToolStripMenuItem1";
+            this.searchToolStripMenuItem1.Size = new System.Drawing.Size(159, 22);
+            this.searchToolStripMenuItem1.Text = "Search movies...";
+            this.searchToolStripMenuItem1.Click += new System.EventHandler(this.searchToolStripMenuItem1_Click);
+            // 
+            // loadMoreToolStripMenuItem
+            // 
+            this.loadMoreToolStripMenuItem.Name = "loadMoreToolStripMenuItem";
+            this.loadMoreToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.loadMoreToolStripMenuItem.Text = "Load More";
+            this.loadMoreToolStripMenuItem.Click += new System.EventHandler(this.loadMoreToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(156, 6);
+            // 
+            // signInToolStripMenuItem
+            // 
+            this.signInToolStripMenuItem.Name = "signInToolStripMenuItem";
+            this.signInToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.signInToolStripMenuItem.Text = "Sign in";
+            this.signInToolStripMenuItem.Click += new System.EventHandler(this.signInToolStripMenuItem_Click);
+            // 
+            // registerToolStripMenuItem
+            // 
+            this.registerToolStripMenuItem.Name = "registerToolStripMenuItem";
+            this.registerToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.registerToolStripMenuItem.Text = "Register";
+            this.registerToolStripMenuItem.Click += new System.EventHandler(this.registerToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(156, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolCheckStatusBar});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // toolCheckStatusBar
+            // 
+            this.toolCheckStatusBar.Checked = true;
+            this.toolCheckStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolCheckStatusBar.Name = "toolCheckStatusBar";
+            this.toolCheckStatusBar.Size = new System.Drawing.Size(157, 22);
+            this.toolCheckStatusBar.Text = "Show status bar";
+            this.toolCheckStatusBar.Click += new System.EventHandler(this.toolCheckStatusBar_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolBtnRent});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // toolBtnRent
+            // 
+            this.toolBtnRent.Name = "toolBtnRent";
+            this.toolBtnRent.Size = new System.Drawing.Size(134, 22);
+            this.toolBtnRent.Text = "Rent Movie";
+            this.toolBtnRent.Click += new System.EventHandler(this.toolBtnRent_Click);
+            this.toolBtnRent.EnabledChanged += new System.EventHandler(this.toolBtnRent_EnabledChanged);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Text = "&About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // movieCheckTimer
+            // 
+            this.movieCheckTimer.Interval = 1000;
+            this.movieCheckTimer.Tick += new System.EventHandler(this.movieCheckTimer_Tick);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1135, 621);
+            this.ClientSize = new System.Drawing.Size(1135, 658);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.cbGenre);
-            this.Controls.Add(this.panelMovie);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.btnSignUp);
+            this.Controls.Add(this.cbGenre);
+            this.Controls.Add(this.btnSignIn);
+            this.Controls.Add(this.panelMovie);
             this.Controls.Add(this.btnLoadMore);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.tbSearch);
-            this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.lblBorder);
             this.Controls.Add(this.lbMovies);
             this.Controls.Add(this.panelUser);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Видеотека";
+            this.Text = "Video library";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelUser.ResumeLayout(false);
             this.panelUser.PerformLayout();
@@ -422,6 +569,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,6 +604,22 @@
         private System.Windows.Forms.Label lblVotes;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toopStripLblSearchResults;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem loadMoreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem signInToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem registerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolCheckStatusBar;
+        private System.Windows.Forms.ToolStripMenuItem toolBtnRent;
+        private System.Windows.Forms.Timer movieCheckTimer;
     }
 }
 

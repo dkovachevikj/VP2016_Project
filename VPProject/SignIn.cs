@@ -33,18 +33,17 @@ namespace VPProject
             User = SqlConn.SignIn(tbName.Text);
             if (User == null)
             {
-                MessageBox.Show("Ne postoi takov username!");
+                MessageBox.Show("Username doesn't exist", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 if (User.Password == tbPassword.Text)
                 {
-                    loadRentedMovies();
                     DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    MessageBox.Show("Pogresena lozinka!");
+                    MessageBox.Show("Invalid password!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -74,14 +73,5 @@ namespace VPProject
             tbPassword.BackColor = Color.White;
         }
 
-        private async void loadRentedMovies()
-        {
-            Movie movie = null;
-            foreach (string s in User.mID)
-            {
-                movie = await LoadMovies.GetMovie(int.Parse(s), new CancellationToken());
-                User.Movies.Add(new CustomMovie(movie));
-            }
-        }
     }
 }

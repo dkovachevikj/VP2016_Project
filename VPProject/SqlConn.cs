@@ -50,7 +50,14 @@ namespace VPProject
             {
                 if (connection.State == ConnectionState.Closed)
                 {
-                    connection.Open();
+                    try
+                    {
+                        connection.Open();
+                    }
+                    catch (TimeoutException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Database timeout", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
                 MySqlCommand command = new MySqlCommand("SELECT * FROM Users WHERE Username='" + username + "'", connection);
                 MySqlDataReader dataReader = command.ExecuteReader();
@@ -73,7 +80,7 @@ namespace VPProject
             return user;
         }
 
-        static public void AddShoppingCart(User user,CustomMovie movie)
+        static public void UpdateCart(User user,CustomMovie movie)
         {
             try
             {
@@ -81,14 +88,23 @@ namespace VPProject
                 {
                     connection.Open();
                 }
-                StringBuilder sb = new StringBuilder();
-                foreach(string s in user.mID)
+                MySqlCommand command = null;
+                if(user.Movies.Count > 0)
                 {
-                    sb.Append(s + ">");
+                    StringBuilder sb = new StringBuilder();
+                    foreach (KeyValuePair<string, string> kvp in user.Movies.AsEnumerable())
+                    {
+                        sb.Append(string.Format("{0};{1}>", kvp.Key, kvp.Value));
+                    }
+                    command = new MySqlCommand("UPDATE Users SET Movies='" + sb.ToString().Substring(0, sb.ToString().Length - 1) + "' WHERE Username='" + user.Username + "'", connection);
                 }
-                MySqlCommand command = new MySqlCommand("UPDATE Users SET Movies='"+sb.ToString().Substring(0, sb.ToString().Length - 1) + "' WHERE Username='" + user.Username + "'", connection);
+                else
+                {
+                    command = new MySqlCommand("UPDATE Users SET Movies='" + "" + "' WHERE Username='" + user.Username + "'", connection);
+                }
                     command.ExecuteNonQuery();
-                MessageBox.Show(string.Format("{0} was successfully rented", movie.Movie.Title));
+                if(movie != null)
+                    MessageBox.Show(string.Format("{0} was successfully rented", movie.Movie.Title));
             }
             catch (MySqlException ex)
             {
@@ -98,7 +114,6 @@ namespace VPProject
             {
                 connection.Close();
             }
-
         }
 
         private static string CONCAT(object movies, string v)

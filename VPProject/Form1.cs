@@ -22,6 +22,8 @@ namespace VPProject
         private bool searchChanged { get; set; }
         private string currentGenre { get; set; }
         private bool genreChanged { get; set; }
+        private DateTime tempDate;
+        private string trashMovie;
 
         public Form1()
         {
@@ -33,7 +35,7 @@ namespace VPProject
             beginMovies = new List<CustomMovie>();
             Genres = new Dictionary<int, Genre>();
             setGenres();
-            btnRent.Enabled = false;
+            toolBtnRent.Enabled = false;
             setColors();
         }
 
@@ -90,7 +92,8 @@ namespace VPProject
                 btnSignIn.Visible = false;
                 btnSignUp.Visible = false;
                 lblUsername.Text = LoggedUser.Username;
-                btnRent.Enabled = true;
+                toolBtnRent.Enabled = true;
+                movieCheckTimer.Enabled = true;
             }
         }
 
@@ -143,9 +146,9 @@ namespace VPProject
                     if(LoggedUser != null)
                     {
                         if (movie.ReleaseDate.Value.CompareTo(DateTime.Now) > 0)
-                            btnRent.Enabled = false;
+                            toolBtnRent.Enabled = false;
                         else
-                            btnRent.Enabled = true;
+                            toolBtnRent.Enabled = true;
                     }
                 }
                 if (movie.Runtime > 60)
@@ -209,11 +212,13 @@ namespace VPProject
         {
             if (MessageBox.Show("Дали сте сигурни дека сакате да се одјавите?", "Одјави се", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                SqlConn.UpdateCart(LoggedUser, null);
                 LoggedUser = null;
                 btnSignIn.Visible = true;
                 btnSignUp.Visible = true;
                 panelUser.Hide();
-                btnRent.Enabled = false;
+                toolBtnRent.Enabled = false;
+                movieCheckTimer.Enabled = false;
             }
         }
 
@@ -221,13 +226,11 @@ namespace VPProject
         {
             UserDetail forma = new UserDetail(LoggedUser);
             forma.Text = lblUsername.Text;
-            if (forma.ShowDialog() == DialogResult.OK)
+            movieCheckTimer.Enabled = false;
+            if (forma.ShowDialog() == DialogResult.Cancel)
             {
-                /*StringBuilder sb = new StringBuilder();
-                sb.Append("Име: " + LoggedUser.Ime + "\n");
-                sb.Append("Презиме: " + LoggedUser.Prezime + "\n");
-                sb.Append("Е-маил: " + LoggedUser.Email + "\n");
-                MessageBox.Show(sb.ToString());*/
+                LoggedUser = forma.user;
+                movieCheckTimer.Enabled = true;
             }
         }
 
@@ -357,6 +360,7 @@ namespace VPProject
                     lbMovies.Items.Add(cm);
                 }
                 toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
+                LoadMovies.resetParams();
             }
             else
             {
@@ -376,19 +380,25 @@ namespace VPProject
             }
         }
 
-        private async void btnRent_Click(object sender, EventArgs e)
+        private void btnRent_Click(object sender, EventArgs e)
         {
             if (lbMovies.SelectedItem != null && LoggedUser != null)
             {
                 CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
-                if (LoggedUser.mID.Contains(selectedMovie.Movie.Id.ToString()))
+                if (LoggedUser.Movies.ContainsKey(selectedMovie.Movie.Title))
                 {
-                    MessageBox.Show(string.Format("{0} is already rented!", selectedMovie.Movie.Title));
+                    MessageBox.Show(string.Format("{0} is already rented!", selectedMovie.Movie.Title), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                LoggedUser.mID.Add(selectedMovie.Movie.Id.ToString());
-                LoggedUser.Movies.Add(new CustomMovie(await LoadMovies.GetMovie(selectedMovie, new CancellationToken())));
-                SqlConn.AddShoppingCart(LoggedUser, selectedMovie);
+                else if (LoggedUser.Movies.Count() >= 5)
+                {
+                    MessageBox.Show("Maximum number of rented movies (5) reached!\nReturn a rented movie or wait for a rental to expire", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    LoggedUser.Movies.Add(selectedMovie.Movie.Title, DateTime.Now.AddMinutes(+2).ToString("dd/MM/yyyy HH:mm:ss"));
+                    MessageBox.Show(string.Format("{0} was successfully rented", selectedMovie.Movie.Title));
+                }
             }
         }
 
@@ -428,17 +438,14 @@ namespace VPProject
             {
                 Graphics g = e.Graphics;
 
-                // Background Color
                 SolidBrush backgroundColorBrush = new SolidBrush((isItemSelected) ? Color.FromArgb(194, 194, 163) : SystemColors.WindowFrame);
                 g.FillRectangle(backgroundColorBrush, e.Bounds);
 
-                // Set text color
                 string itemText = lbMovies.Items[itemIndex].ToString();
 
                 SolidBrush itemTextColorBrush = (isItemSelected) ? new SolidBrush(Color.Black) : new SolidBrush(Color.White);
                 g.DrawString(itemText, e.Font, itemTextColorBrush, lbMovies.GetItemRectangle(itemIndex).Location);
 
-                // Clean up
                 backgroundColorBrush.Dispose();
                 itemTextColorBrush.Dispose();
             }
@@ -446,5 +453,105 @@ namespace VPProject
             e.DrawFocusRectangle();
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
+
+        private void toolCheckStatusBar_Click(object sender, EventArgs e)
+        {
+            toolCheckStatusBar.Checked = !toolCheckStatusBar.Checked;
+            if(toolCheckStatusBar.Checked)
+            {
+                statusStrip1.Show();
+            }
+            else
+            {
+                statusStrip1.Hide();
+            }
+        }
+
+        private void toolBtnRent_EnabledChanged(object sender, EventArgs e)
+        {
+            if(toolBtnRent.Enabled)
+            {
+                btnRent.Enabled = true;
+            }
+            else
+            {
+                btnRent.Enabled = false;
+            }
+        }
+
+        private void toolBtnRent_Click(object sender, EventArgs e)
+        {
+            btnRent_Click(this, new EventArgs());
+        }
+
+        private void searchToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            btnSearch_Click(this, new EventArgs());
+        }
+
+        private void loadMoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnLoadMore_Click(this, new EventArgs());
+        }
+
+        private void signInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSignIn_Click(this, new EventArgs());
+        }
+
+        private void registerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSignUp_Click(this, new EventArgs());
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void movieCheckTimer_Tick(object sender, EventArgs e)
+        {
+            if(LoggedUser.Movies.Count > 0)
+            {
+                trashMovie = "";
+                foreach(KeyValuePair<string, string> kvp in LoggedUser.Movies)
+                {
+                    tempDate = DateTime.ParseExact(kvp.Value, "dd/MM/yyyy HH:mm:ss", null);
+                    if(tempDate.CompareTo(DateTime.Now) < 0)
+                    {
+                        trashMovie = kvp.Key;
+                        break;
+                    }
+                }
+                if(!trashMovie.Equals(""))
+                {
+                    LoggedUser.Movies.Remove(trashMovie);
+                    NotifyIcon icon = new NotifyIcon();
+                    icon.Visible = true;
+                    icon.Icon = SystemIcons.Information;
+                    icon.ShowBalloonTip(3000, "Cinematique", string.Format("Your rental for {0} has expired", trashMovie), ToolTipIcon.Info);
+                }
+                
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(LoggedUser != null)
+            {
+                SqlConn.UpdateCart(LoggedUser, null);
+            }
+        }
+
+        private void cbGenre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(!cbGenre.SelectedItem.ToString().Equals("All"))
+                btnSearch_Click(this, new EventArgs());
+        }
     }
 }

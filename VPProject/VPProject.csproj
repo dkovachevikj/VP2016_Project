@@ -63,9 +63,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomGenre.cs" />
     <Compile Include="CustomMovie.cs" />
     <Compile Include="LoadMovies.cs" />
+    <Compile Include="MovieLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SignUp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +103,9 @@
     <Compile Include="UserDetail.Designer.cs">
       <DependentUpon>UserDetail.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SignUp.resx">
       <DependentUpon>SignUp.cs</DependentUpon>
     </EmbeddedResource>
