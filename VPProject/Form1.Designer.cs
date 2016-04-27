@@ -67,11 +67,15 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolCheckStatusBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.showNewestMoviesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBtnRent = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.movieCheckTimer = new System.Windows.Forms.Timer(this.components);
+            this.lblUpcoming = new System.Windows.Forms.Label();
+            this.timerUpcoming = new System.Windows.Forms.Timer(this.components);
+            this.timerFade = new System.Windows.Forms.Timer(this.components);
             this.panelUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelMovie.SuspendLayout();
@@ -87,7 +91,7 @@
             this.lbSignOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbSignOut.AutoSize = true;
             this.lbSignOut.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbSignOut.Location = new System.Drawing.Point(157, 6);
+            this.lbSignOut.Location = new System.Drawing.Point(129, 16);
             this.lbSignOut.Name = "lbSignOut";
             this.lbSignOut.Size = new System.Drawing.Size(56, 17);
             this.lbSignOut.TabIndex = 1;
@@ -100,7 +104,7 @@
             this.lblUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUsername.AutoSize = true;
             this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsername.Location = new System.Drawing.Point(77, 6);
+            this.lblUsername.Location = new System.Drawing.Point(41, 16);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(65, 17);
             this.lblUsername.TabIndex = 2;
@@ -113,9 +117,9 @@
             this.panelUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelUser.Controls.Add(this.lblUsername);
             this.panelUser.Controls.Add(this.lbSignOut);
-            this.panelUser.Location = new System.Drawing.Point(881, 33);
+            this.panelUser.Location = new System.Drawing.Point(907, 27);
             this.panelUser.Name = "panelUser";
-            this.panelUser.Size = new System.Drawing.Size(242, 42);
+            this.panelUser.Size = new System.Drawing.Size(220, 52);
             this.panelUser.TabIndex = 12;
             // 
             // btnSignUp
@@ -124,7 +128,7 @@
             this.btnSignUp.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnSignUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSignUp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSignUp.Location = new System.Drawing.Point(900, 33);
+            this.btnSignUp.Location = new System.Drawing.Point(907, 37);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(105, 31);
             this.btnSignUp.TabIndex = 10;
@@ -138,7 +142,7 @@
             this.btnSignIn.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnSignIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSignIn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSignIn.Location = new System.Drawing.Point(1011, 33);
+            this.btnSignIn.Location = new System.Drawing.Point(1018, 37);
             this.btnSignIn.Name = "btnSignIn";
             this.btnSignIn.Size = new System.Drawing.Size(105, 31);
             this.btnSignIn.TabIndex = 11;
@@ -155,7 +159,7 @@
             this.lbMovies.ForeColor = System.Drawing.Color.White;
             this.lbMovies.FormattingEnabled = true;
             this.lbMovies.ItemHeight = 17;
-            this.lbMovies.Location = new System.Drawing.Point(16, 156);
+            this.lbMovies.Location = new System.Drawing.Point(16, 173);
             this.lbMovies.Name = "lbMovies";
             this.lbMovies.Size = new System.Drawing.Size(294, 429);
             this.lbMovies.TabIndex = 1;
@@ -167,7 +171,7 @@
             this.lblBorder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblBorder.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblBorder.Location = new System.Drawing.Point(0, 81);
+            this.lblBorder.Location = new System.Drawing.Point(0, 88);
             this.lblBorder.Name = "lblBorder";
             this.lblBorder.Size = new System.Drawing.Size(1135, 2);
             this.lblBorder.TabIndex = 4;
@@ -178,7 +182,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tbSearch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSearch.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.tbSearch.Location = new System.Drawing.Point(16, 98);
+            this.tbSearch.Location = new System.Drawing.Point(16, 105);
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(232, 23);
             this.tbSearch.TabIndex = 14;
@@ -190,9 +194,9 @@
             this.btnSearch.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(254, 98);
+            this.btnSearch.Location = new System.Drawing.Point(254, 105);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(56, 52);
+            this.btnSearch.Size = new System.Drawing.Size(56, 53);
             this.btnSearch.TabIndex = 15;
             this.btnSearch.Text = "Go";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -201,7 +205,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 26);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 27);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(294, 52);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -214,7 +218,7 @@
             this.btnLoadMore.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnLoadMore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadMore.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoadMore.Location = new System.Drawing.Point(16, 594);
+            this.btnLoadMore.Location = new System.Drawing.Point(16, 614);
             this.btnLoadMore.Name = "btnLoadMore";
             this.btnLoadMore.Size = new System.Drawing.Size(294, 36);
             this.btnLoadMore.TabIndex = 17;
@@ -238,7 +242,7 @@
             this.panelMovie.Controls.Add(this.btnWatchTrailer, 0, 3);
             this.panelMovie.Controls.Add(this.lblCast, 0, 2);
             this.panelMovie.Controls.Add(this.btnRent, 1, 3);
-            this.panelMovie.Location = new System.Drawing.Point(330, 98);
+            this.panelMovie.Location = new System.Drawing.Point(330, 105);
             this.panelMovie.MinimumSize = new System.Drawing.Size(500, 443);
             this.panelMovie.Name = "panelMovie";
             this.panelMovie.RowCount = 4;
@@ -246,7 +250,7 @@
             this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 308F));
             this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelMovie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.panelMovie.Size = new System.Drawing.Size(793, 535);
+            this.panelMovie.Size = new System.Drawing.Size(793, 548);
             this.panelMovie.TabIndex = 5;
             // 
             // pbPoster
@@ -341,7 +345,7 @@
             this.btnWatchTrailer.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
             this.btnWatchTrailer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnWatchTrailer.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnWatchTrailer.Location = new System.Drawing.Point(3, 496);
+            this.btnWatchTrailer.Location = new System.Drawing.Point(3, 509);
             this.btnWatchTrailer.Name = "btnWatchTrailer";
             this.btnWatchTrailer.Size = new System.Drawing.Size(128, 36);
             this.btnWatchTrailer.TabIndex = 5;
@@ -368,7 +372,7 @@
             this.btnRent.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRent.Image = ((System.Drawing.Image)(resources.GetObject("btnRent.Image")));
             this.btnRent.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnRent.Location = new System.Drawing.Point(681, 496);
+            this.btnRent.Location = new System.Drawing.Point(681, 509);
             this.btnRent.Name = "btnRent";
             this.btnRent.Size = new System.Drawing.Size(109, 36);
             this.btnRent.TabIndex = 8;
@@ -384,7 +388,7 @@
             this.cbGenre.FormattingEnabled = true;
             this.cbGenre.Items.AddRange(new object[] {
             "All"});
-            this.cbGenre.Location = new System.Drawing.Point(16, 127);
+            this.cbGenre.Location = new System.Drawing.Point(16, 135);
             this.cbGenre.MaxDropDownItems = 100;
             this.cbGenre.Name = "cbGenre";
             this.cbGenre.Size = new System.Drawing.Size(232, 23);
@@ -396,7 +400,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toopStripLblSearchResults});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 636);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 656);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1135, 22);
             this.statusStrip1.TabIndex = 19;
@@ -483,7 +487,8 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolCheckStatusBar});
+            this.toolCheckStatusBar,
+            this.showNewestMoviesToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -493,9 +498,18 @@
             this.toolCheckStatusBar.Checked = true;
             this.toolCheckStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolCheckStatusBar.Name = "toolCheckStatusBar";
-            this.toolCheckStatusBar.Size = new System.Drawing.Size(157, 22);
+            this.toolCheckStatusBar.Size = new System.Drawing.Size(184, 22);
             this.toolCheckStatusBar.Text = "Show status bar";
             this.toolCheckStatusBar.Click += new System.EventHandler(this.toolCheckStatusBar_Click);
+            // 
+            // showNewestMoviesToolStripMenuItem
+            // 
+            this.showNewestMoviesToolStripMenuItem.Checked = true;
+            this.showNewestMoviesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showNewestMoviesToolStripMenuItem.Name = "showNewestMoviesToolStripMenuItem";
+            this.showNewestMoviesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.showNewestMoviesToolStripMenuItem.Text = "Show newest movies";
+            this.showNewestMoviesToolStripMenuItem.Click += new System.EventHandler(this.showNewestMoviesToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -533,17 +547,41 @@
             this.movieCheckTimer.Interval = 1000;
             this.movieCheckTimer.Tick += new System.EventHandler(this.movieCheckTimer_Tick);
             // 
+            // lblUpcoming
+            // 
+            this.lblUpcoming.AutoSize = true;
+            this.lblUpcoming.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUpcoming.Location = new System.Drawing.Point(335, 43);
+            this.lblUpcoming.Name = "lblUpcoming";
+            this.lblUpcoming.Size = new System.Drawing.Size(82, 21);
+            this.lblUpcoming.TabIndex = 21;
+            this.lblUpcoming.Text = "Upcoming";
+            this.lblUpcoming.Click += new System.EventHandler(this.lblUpcoming_Click);
+            this.lblUpcoming.MouseEnter += new System.EventHandler(this.lblUpcoming_MouseEnter);
+            this.lblUpcoming.MouseLeave += new System.EventHandler(this.lblUpcoming_MouseLeave);
+            // 
+            // timerUpcoming
+            // 
+            this.timerUpcoming.Interval = 8000;
+            this.timerUpcoming.Tick += new System.EventHandler(this.timerUpcoming_Tick);
+            // 
+            // timerFade
+            // 
+            this.timerFade.Interval = 10;
+            this.timerFade.Tick += new System.EventHandler(this.timerFade_Tick);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1135, 658);
+            this.ClientSize = new System.Drawing.Size(1135, 678);
+            this.Controls.Add(this.lblUpcoming);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.btnSignUp);
             this.Controls.Add(this.cbGenre);
-            this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.panelMovie);
             this.Controls.Add(this.btnLoadMore);
             this.Controls.Add(this.pictureBox1);
@@ -620,6 +658,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolCheckStatusBar;
         private System.Windows.Forms.ToolStripMenuItem toolBtnRent;
         private System.Windows.Forms.Timer movieCheckTimer;
+        private System.Windows.Forms.Label lblUpcoming;
+        private System.Windows.Forms.Timer timerUpcoming;
+        private System.Windows.Forms.Timer timerFade;
+        private System.Windows.Forms.ToolStripMenuItem showNewestMoviesToolStripMenuItem;
     }
 }
 

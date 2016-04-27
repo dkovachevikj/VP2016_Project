@@ -15,15 +15,24 @@ namespace VPProject
     public partial class Form1 : Form
     {
         private User LoggedUser { get; set; }
+
         private string TrailerPath { get; set; }
         private List<CustomMovie> beginMovies { get; set; }
         private Dictionary<int, Genre> Genres;
+
         private string currentSearchText { get; set; }
         private bool searchChanged { get; set; }
         private string currentGenre { get; set; }
         private bool genreChanged { get; set; }
+
         private DateTime tempDate;
         private string trashMovie;
+
+        private List<Movie> upcoming;
+        private List<int> upcomingRGB;
+        private bool upcomingInc;
+        private Movie upcomingMovie;
+        private int upcomingMovieIndex;
 
         public Form1()
         {
@@ -37,6 +46,7 @@ namespace VPProject
             setGenres();
             toolBtnRent.Enabled = false;
             setColors();
+            setUpcoming();
         }
 
         private void setColors()
@@ -53,6 +63,7 @@ namespace VPProject
             btnSignUp.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
             btnSignIn.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
             btnSignIn.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            lblUpcoming.ForeColor = Color.FromArgb(242, 242, 242);
         }
 
         private async void setGenres()
@@ -80,6 +91,23 @@ namespace VPProject
             searchChanged = false;
             lbMovies.SelectedIndex = 0;
             toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
+        }
+
+        private async void setUpcoming()
+        {
+            upcoming = new List<Movie>();
+            var movies = await LoadMovies.getUpcoming(new CancellationToken());
+            foreach(Movie m in movies)
+            {
+                upcoming.Add(m);
+            }
+            Random tempRandom = new Random();
+            upcomingMovieIndex = tempRandom.Next(0, upcoming.Count() - 1);
+            upcomingRGB = new List<int>() { 255, 255, 255 };
+            upcomingInc = false;
+            upcomingMovie = null;
+            timerFade.Enabled = true;
+            timerUpcoming.Enabled = true;
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
@@ -552,6 +580,125 @@ namespace VPProject
         {
             if(!cbGenre.SelectedItem.ToString().Equals("All"))
                 btnSearch_Click(this, new EventArgs());
+        }
+
+        private void timerUpcoming_Tick(object sender, EventArgs e)
+        {
+            if(!timerFade.Enabled)
+                timerFade.Enabled = true;
+        }
+
+        private async void timerFade_Tick(object sender, EventArgs e)
+        {
+            if(lblUpcoming.ForeColor == Color.FromArgb(242, 242, 242))
+            {
+                lblUpcoming.Text = upcoming[upcomingMovieIndex].Title;
+                upcomingMovie = await LoadMovies.GetMovie(upcoming[upcomingMovieIndex].Id, new CancellationToken());
+                if(++upcomingMovieIndex >= upcoming.Count())
+                {
+                    upcomingMovieIndex = 0;
+                }
+                upcomingInc = false;
+                changeUpcomingRGB("decrement");
+            }
+            else if (lblUpcoming.ForeColor == Color.FromArgb(0, 0, 0))
+            {
+                if(upcomingInc)
+                {
+                    changeUpcomingRGB("increment");
+                }
+                else
+                {
+                    upcomingInc = true;
+                    timerFade.Enabled = false;
+                }
+            }
+            else
+            {
+                if(!upcomingInc)
+                {
+                    changeUpcomingRGB("decrement");
+                }
+                else
+                {
+                    changeUpcomingRGB("increment");
+                }
+            }
+            lblUpcoming.ForeColor = Color.FromArgb(upcomingRGB[0], upcomingRGB[1], upcomingRGB[2]);
+        }
+        
+        private void changeUpcomingRGB(string cmd)
+        {
+            if(cmd.Equals("increment"))
+            {
+                upcomingRGB[0] += 13;
+                upcomingRGB[1] += 13;
+                upcomingRGB[2] += 13;
+                if (upcomingRGB[0] > 242)
+                {
+                    upcomingRGB[0] = 242;
+                    upcomingRGB[1] = 242;
+                    upcomingRGB[2] = 242;
+                }
+            }
+            else
+            {
+                upcomingRGB[0] -= 13;
+                upcomingRGB[1] -= 13;
+                upcomingRGB[2] -= 13;
+                if (upcomingRGB[0] < 0)
+                {
+                    upcomingRGB[0] = 0;
+                    upcomingRGB[1] = 0;
+                    upcomingRGB[2] = 0;
+                }
+            }
+        }
+
+        private void lblUpcoming_Click(object sender, EventArgs e)
+        {
+            if(upcomingMovie.Videos.Results.Count() > 0)
+            {
+                string path = "";
+                foreach (Video v in upcomingMovie.Videos.Results)
+                {
+                    path = v.Key;
+                    break;
+                }
+                System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=" + path);
+            }
+            else
+            {
+                MessageBox.Show("Trailer not available");
+            }
+        }
+
+        private void lblUpcoming_MouseEnter(object sender, EventArgs e)
+        {
+            lblUpcoming.Cursor = Cursors.Hand;
+        }
+
+        private void lblUpcoming_MouseLeave(object sender, EventArgs e)
+        {
+            lblUpcoming.Cursor = Cursors.Default;
+        }
+
+        private void showNewestMoviesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showNewestMoviesToolStripMenuItem.Checked = !showNewestMoviesToolStripMenuItem.Checked;
+            if(!showNewestMoviesToolStripMenuItem.Checked)
+            {
+                lblUpcoming.Hide();
+                timerUpcoming.Enabled = false;
+            }
+            else
+            {
+                if(!timerUpcoming.Enabled)
+                {
+                    timerUpcoming.Enabled = true;
+                    lblUpcoming.Show();
+                }
+            }
         }
     }
 }

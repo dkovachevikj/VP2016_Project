@@ -53,7 +53,7 @@ namespace VPProject
                     searchTotal = 0;
                     searchCount = 0;
                 }
-                var movies = await client.Movies.SearchAsync(currSearchTitle, null, false, searchPage, cancellationToken);
+                var movies = await client.Movies.SearchAsync(searchString, null, false, searchPage, cancellationToken);
                 if (searchTotal == 0)
                     searchTotal = movies.TotalCount;
                 List<CustomMovie> returnList = new List<CustomMovie>();
@@ -144,6 +144,15 @@ namespace VPProject
             searchPage = 1;
             searchTotal = 0;
             searchCount = 0;
+        }
+
+        static async public Task<IEnumerable<Movie>> getUpcoming(CancellationToken cancellationToken)
+        {
+            using (var client = new ServiceClient(Key))
+            {
+                var movies = await client.Movies.GetUpcomingAsync(null, 1, cancellationToken);
+                return movies.Results;
+            }
         }
     }
 }
