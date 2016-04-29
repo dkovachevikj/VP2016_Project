@@ -29,8 +29,8 @@ namespace VPProject
         {
             InitializeComponent();
             this.user = user;
-            lblIme.Text += " " + user.Ime;
-            lblPrezime.Text += " " + user.Prezime;
+            lblIme.Text += " " + user.Name;
+            lblPrezime.Text += " " + user.Surname;
             lblEmail.Text += " " + user.Email;
             day = 9;
             fillTable();

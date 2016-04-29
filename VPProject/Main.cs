@@ -12,7 +12,7 @@ using System.Net.TMDb;
 
 namespace VPProject
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
         private User LoggedUser { get; set; }
 
@@ -34,7 +34,7 @@ namespace VPProject
         private Movie upcomingMovie;
         private int upcomingMovieIndex;
 
-        public Form1()
+        public Main()
         {
             InitializeComponent();
             panelMovie.Hide();
@@ -46,7 +46,7 @@ namespace VPProject
             setGenres();
             toolBtnRent.Enabled = false;
             setColors();
-            setUpcoming();
+            timerSafeUpcoming.Enabled = true;
         }
 
         private void setColors()
@@ -128,9 +128,98 @@ namespace VPProject
         private void btnSignUp_Click(object sender, EventArgs e)
         {
             SignUp signUp = new SignUp();
-            if (signUp.ShowDialog() == DialogResult.OK)
+            signUp.ShowDialog();
+        }
+
+        private void setCast(IEnumerable<MediaCast> cast)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Cast:  ");
+            if (cast.Count() == 0)
             {
-                SqlConn.SignUp(signUp.User);
+                sb.Append("Not available");
+                lblCast.Text = sb.ToString();
+            }
+            else
+            {
+                int maxCast = 0;
+                foreach (MediaCast mc in cast)
+                {
+                    if (maxCast > 10)
+                        break;
+                    sb.Append(mc.Name + ", ");
+                    maxCast++;
+                }
+                lblCast.Text = sb.ToString().Substring(0, sb.ToString().Length - 2);
+            }
+        }
+
+        private void setInfo(Movie movie)
+        {
+            lblInfo.Text = "Not available";
+            if (movie.ReleaseDate.HasValue)
+            {
+                lblInfo.Text = movie.ReleaseDate.Value.ToString("dd MMMM yyyy");
+                if (LoggedUser != null)
+                {
+                    if (movie.ReleaseDate.Value.CompareTo(DateTime.Now) > 0)
+                        toolBtnRent.Enabled = false;
+                    else
+                        toolBtnRent.Enabled = true;
+                }
+            }
+            if (movie.Runtime > 60)
+            {
+                int hr = (int)movie.Runtime / 60;
+                int min = (int)movie.Runtime % 60;
+                if (min > 0)
+                    lblInfo.Text += string.Format("  |  {0} h {1} min", hr, min);
+                else
+                    lblInfo.Text += string.Format("  |  {0} h", hr);
+            }
+            else if (movie.Runtime > 0)
+            {
+                lblInfo.Text += "  |  " + movie.Runtime.ToString() + " min";
+            }
+            else
+            {
+                lblInfo.Text += " ";
+            }
+            if (movie.Genres.Count() > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("  |  ");
+                int count = 0;
+                Genre tempGenre = null;
+                foreach (Genre g in movie.Genres)
+                {
+                    if (count >= 3)
+                        break;
+                    if (Genres.ContainsKey(g.Id))
+                    {
+                        Genres.TryGetValue(g.Id, out tempGenre);
+                        sb.Append(tempGenre.Name + ", ");
+                        count++;
+                    }
+                }
+                lblInfo.Text += sb.ToString().Substring(0, sb.ToString().Length - 2);
+            }
+        }
+
+        private void setTrailer(IEnumerable<Video> trailers)
+        {
+            if (trailers.Count() > 0)
+            {
+                foreach (Video v in trailers)
+                {
+                    TrailerPath = "https://www.youtube.com/watch?v=" + v.Key;
+                    break;
+                }
+                btnWatchTrailer.Enabled = true;
+            }
+            else
+            {
+                btnWatchTrailer.Enabled = false;
             }
         }
 
@@ -148,86 +237,9 @@ namespace VPProject
                 lblVotes.Text = movie.VoteCount.ToString();
                 pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
                 lblDescription.Text = movie.Overview;
-                StringBuilder sb = new StringBuilder();
-                sb.Append("Cast:  ");
-                if (movie.Credits.Cast.Count<MediaCast>() == 0)
-                {
-                    sb.Append("Not available");
-                    lblCast.Text = sb.ToString();
-                }
-                else
-                {
-                    int maxCast = 0;
-                    foreach (MediaCast mc in movie.Credits.Cast)
-                    {
-                        if (maxCast > 10)
-                            break;
-                        sb.Append(mc.Name + ", ");
-                        maxCast++;
-                    }
-                    lblCast.Text = sb.ToString().Substring(0, sb.ToString().Length - 2);
-                }
-                lblInfo.Text = "Not available";
-                if (movie.ReleaseDate.HasValue)
-                {
-                    lblInfo.Text = movie.ReleaseDate.Value.ToString("dd MMMM yyyy");
-                    if(LoggedUser != null)
-                    {
-                        if (movie.ReleaseDate.Value.CompareTo(DateTime.Now) > 0)
-                            toolBtnRent.Enabled = false;
-                        else
-                            toolBtnRent.Enabled = true;
-                    }
-                }
-                if (movie.Runtime > 60)
-                {
-                    int hr = (int)movie.Runtime / 60;
-                    int min = (int)movie.Runtime % 60;
-                    if (min > 0)
-                        lblInfo.Text += string.Format("  |  {0} h {1} min", hr, min);
-                    else
-                        lblInfo.Text += string.Format("  |  {0} h", hr);
-                }
-                else if (movie.Runtime > 0)
-                {
-                    lblInfo.Text += "  |  " + movie.Runtime.ToString() + " min";
-                }
-                else
-                {
-                    lblInfo.Text += " ";
-                }
-                if(movie.Genres.Count<Genre>() > 0)
-                {
-                    sb.Clear();
-                    sb.Append("  |  ");
-                    int count = 0;
-                    Genre tempGenre = null;
-                    foreach(Genre g in movie.Genres)
-                    {
-                        if (count >= 3)
-                            break;
-                        if(Genres.ContainsKey(g.Id))
-                        {
-                            Genres.TryGetValue(g.Id, out tempGenre);
-                            sb.Append(tempGenre.Name + ", ");
-                            count++;
-                        }
-                    }
-                    lblInfo.Text += sb.ToString().Substring(0, sb.ToString().Length - 2);
-                }
-                if (movie.Videos.Results.Count() > 0)
-                {
-                    foreach (Video v in movie.Videos.Results)
-                    {
-                        TrailerPath = "https://www.youtube.com/watch?v=" + v.Key;
-                        break;
-                    }
-                    btnWatchTrailer.Enabled = true;
-                }
-                else
-                {
-                    btnWatchTrailer.Enabled = false;
-                }
+                setCast(movie.Credits.Cast);
+                setInfo(movie);
+                setTrailer(movie.Videos.Results);
                 panelMovie.Show();
             }
             else
@@ -238,10 +250,9 @@ namespace VPProject
 
         private void lbSignOut_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (MessageBox.Show("Дали сте сигурни дека сакате да се одјавите?", "Одјави се", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to sign out?", "Sign out", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                SqlConn.UpdateCart(LoggedUser, null);
-                LoggedUser = null;
+                bwUpdateDB.RunWorkerAsync();
                 btnSignIn.Visible = true;
                 btnSignUp.Visible = true;
                 panelUser.Hide();
@@ -424,8 +435,12 @@ namespace VPProject
                 }
                 else
                 {
-                    LoggedUser.Movies.Add(selectedMovie.Movie.Title, DateTime.Now.AddMinutes(+2).ToString("dd/MM/yyyy HH:mm:ss"));
-                    MessageBox.Show(string.Format("{0} was successfully rented", selectedMovie.Movie.Title));
+                    RentTime rentTime = new RentTime();
+                    if(rentTime.ShowDialog() == DialogResult.OK)
+                    {
+                        LoggedUser.Movies.Add(selectedMovie.Movie.Title, DateTime.Now.AddDays(+rentTime.Days).ToString("dd/MM/yyyy HH:mm:ss"));
+                        MessageBox.Show(string.Format("{0} was successfully rented", selectedMovie.Movie.Title));
+                    }
                 }
             }
         }
@@ -572,7 +587,7 @@ namespace VPProject
         {
             if(LoggedUser != null)
             {
-                SqlConn.UpdateCart(LoggedUser, null);
+                SqlConn.UpdateCart(LoggedUser);
             }
         }
 
@@ -601,7 +616,7 @@ namespace VPProject
                 upcomingInc = false;
                 changeUpcomingRGB("decrement");
             }
-            else if (lblUpcoming.ForeColor == Color.FromArgb(0, 0, 0))
+            else if (lblUpcoming.ForeColor == Color.FromArgb(92, 92, 61))
             {
                 if(upcomingInc)
                 {
@@ -646,11 +661,11 @@ namespace VPProject
                 upcomingRGB[0] -= 13;
                 upcomingRGB[1] -= 13;
                 upcomingRGB[2] -= 13;
-                if (upcomingRGB[0] < 0)
+                if (upcomingRGB[0] < 92)
                 {
-                    upcomingRGB[0] = 0;
-                    upcomingRGB[1] = 0;
-                    upcomingRGB[2] = 0;
+                    upcomingRGB[0] = 92;
+                    upcomingRGB[1] = 92;
+                    upcomingRGB[2] = 61;
                 }
             }
         }
@@ -699,6 +714,37 @@ namespace VPProject
                     lblUpcoming.Show();
                 }
             }
+        }
+
+        private void bwUpdateDB_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = SqlConn.UpdateCart(LoggedUser);
+        }
+
+        private void bwUpdateDB_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if(e.Error != null)
+            {
+                MessageBox.Show("Database update error: " + e.Error.ToString());
+            }
+            else
+            {
+                bool result = (bool)e.Result;
+                if(!result)
+                {
+                    MessageBox.Show("Database update failed");
+                }
+                else
+                {
+                    LoggedUser = null;
+                }
+            }
+        }
+
+        private void timerSafeUpcoming_Tick(object sender, EventArgs e)
+        {
+            setUpcoming();
+            timerSafeUpcoming.Enabled = false;
         }
     }
 }

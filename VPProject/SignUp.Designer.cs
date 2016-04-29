@@ -50,6 +50,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.bwSignUp = new System.ComponentModel.BackgroundWorker();
+            this.bwUserExists = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -62,14 +64,14 @@
             this.lblName.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblName.Location = new System.Drawing.Point(31, 131);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(37, 17);
+            this.lblName.Size = new System.Drawing.Size(46, 17);
             this.lblName.TabIndex = 13;
-            this.lblName.Text = "Име:";
+            this.lblName.Text = "Name:";
             // 
             // tbUsername
             // 
             this.tbUsername.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbUsername.Location = new System.Drawing.Point(184, 240);
+            this.tbUsername.Location = new System.Drawing.Point(184, 237);
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.Size = new System.Drawing.Size(182, 25);
             this.tbUsername.TabIndex = 2;
@@ -85,14 +87,14 @@
             this.lblPassword.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblPassword.Location = new System.Drawing.Point(31, 351);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(61, 17);
+            this.lblPassword.Size = new System.Drawing.Size(67, 17);
             this.lblPassword.TabIndex = 9;
-            this.lblPassword.Text = "Лозинка:";
+            this.lblPassword.Text = "Password:";
             // 
             // tbPassword
             // 
             this.tbPassword.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPassword.Location = new System.Drawing.Point(184, 351);
+            this.tbPassword.Location = new System.Drawing.Point(184, 348);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(182, 25);
             this.tbPassword.TabIndex = 4;
@@ -112,14 +114,14 @@
             this.lblSurname.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblSurname.Location = new System.Drawing.Point(31, 174);
             this.lblSurname.Name = "lblSurname";
-            this.lblSurname.Size = new System.Drawing.Size(64, 17);
+            this.lblSurname.Size = new System.Drawing.Size(62, 17);
             this.lblSurname.TabIndex = 12;
-            this.lblSurname.Text = "Презиме:";
+            this.lblSurname.Text = "Surname:";
             // 
             // tbName
             // 
             this.tbName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbName.Location = new System.Drawing.Point(184, 131);
+            this.tbName.Location = new System.Drawing.Point(184, 128);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(182, 25);
             this.tbName.TabIndex = 0;
@@ -135,14 +137,14 @@
             this.lblEmail.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblEmail.Location = new System.Drawing.Point(31, 283);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(63, 17);
+            this.lblEmail.Size = new System.Drawing.Size(44, 17);
             this.lblEmail.TabIndex = 10;
-            this.lblEmail.Text = "Е-Пошта:";
+            this.lblEmail.Text = "E-mail";
             // 
             // tbSurname
             // 
             this.tbSurname.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSurname.Location = new System.Drawing.Point(184, 174);
+            this.tbSurname.Location = new System.Drawing.Point(184, 171);
             this.tbSurname.Name = "tbSurname";
             this.tbSurname.Size = new System.Drawing.Size(182, 25);
             this.tbSurname.TabIndex = 1;
@@ -158,15 +160,15 @@
             this.lblUsername.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblUsername.Location = new System.Drawing.Point(31, 240);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(110, 17);
+            this.lblUsername.Size = new System.Drawing.Size(70, 17);
             this.lblUsername.TabIndex = 11;
-            this.lblUsername.Text = "Корисничко име:";
+            this.lblUsername.Text = "Username:";
             // 
             // tbEmail
             // 
             this.tbEmail.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbEmail.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.tbEmail.Location = new System.Drawing.Point(184, 283);
+            this.tbEmail.Location = new System.Drawing.Point(184, 280);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(182, 25);
             this.tbEmail.TabIndex = 3;
@@ -183,14 +185,14 @@
             this.lblRepeatPassword.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblRepeatPassword.Location = new System.Drawing.Point(31, 394);
             this.lblRepeatPassword.Name = "lblRepeatPassword";
-            this.lblRepeatPassword.Size = new System.Drawing.Size(115, 17);
+            this.lblRepeatPassword.Size = new System.Drawing.Size(113, 17);
             this.lblRepeatPassword.TabIndex = 8;
-            this.lblRepeatPassword.Text = "Повтори лозинка:";
+            this.lblRepeatPassword.Text = "Repeat password:";
             // 
             // tbRepeatPassword
             // 
             this.tbRepeatPassword.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbRepeatPassword.Location = new System.Drawing.Point(184, 394);
+            this.tbRepeatPassword.Location = new System.Drawing.Point(184, 391);
             this.tbRepeatPassword.Name = "tbRepeatPassword";
             this.tbRepeatPassword.Size = new System.Drawing.Size(182, 25);
             this.tbRepeatPassword.TabIndex = 5;
@@ -204,11 +206,11 @@
             this.lblRegister.BackColor = System.Drawing.Color.Transparent;
             this.lblRegister.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRegister.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.lblRegister.Location = new System.Drawing.Point(119, 36);
+            this.lblRegister.Location = new System.Drawing.Point(154, 36);
             this.lblRegister.Name = "lblRegister";
-            this.lblRegister.Size = new System.Drawing.Size(146, 30);
+            this.lblRegister.Size = new System.Drawing.Size(92, 30);
             this.lblRegister.TabIndex = 15;
-            this.lblRegister.Text = "Регистрација";
+            this.lblRegister.Text = "Register";
             // 
             // lblMandatory
             // 
@@ -216,11 +218,11 @@
             this.lblMandatory.BackColor = System.Drawing.Color.Transparent;
             this.lblMandatory.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMandatory.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.lblMandatory.Location = new System.Drawing.Point(96, 76);
+            this.lblMandatory.Location = new System.Drawing.Point(130, 76);
             this.lblMandatory.Name = "lblMandatory";
-            this.lblMandatory.Size = new System.Drawing.Size(195, 17);
+            this.lblMandatory.Size = new System.Drawing.Size(138, 17);
             this.lblMandatory.TabIndex = 14;
-            this.lblMandatory.Text = "Сите полиња се задолжителни!";
+            this.lblMandatory.Text = "All fields are required!";
             // 
             // btnCancel
             // 
@@ -233,7 +235,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(143, 32);
             this.btnCancel.TabIndex = 7;
-            this.btnCancel.Text = "Откажи";
+            this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -248,7 +250,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(143, 32);
             this.btnOK.TabIndex = 6;
-            this.btnOK.Text = "Регистрирај се";
+            this.btnOK.Text = "Register";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -274,10 +276,22 @@
             // label2
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.Location = new System.Drawing.Point(12, 332);
+            this.label2.Location = new System.Drawing.Point(12, 328);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(384, 2);
             this.label2.TabIndex = 20;
+            // 
+            // bwSignUp
+            // 
+            this.bwSignUp.WorkerSupportsCancellation = true;
+            this.bwSignUp.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSignUp_DoWork);
+            this.bwSignUp.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSignUp_RunWorkerCompleted);
+            // 
+            // bwUserExists
+            // 
+            this.bwUserExists.WorkerSupportsCancellation = true;
+            this.bwUserExists.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUserExists_DoWork);
+            this.bwUserExists.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUserExists_RunWorkerCompleted);
             // 
             // SignUp
             // 
@@ -309,7 +323,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SignUp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Регистрирај се";
+            this.Text = "Register";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -339,5 +353,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.ComponentModel.BackgroundWorker bwSignUp;
+        private System.ComponentModel.BackgroundWorker bwUserExists;
     }
 }

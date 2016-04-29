@@ -75,7 +75,7 @@
             this.labelProductName.Name = "labelProductName";
             this.labelProductName.Size = new System.Drawing.Size(227, 17);
             this.labelProductName.TabIndex = 19;
-            this.labelProductName.Text = "Video library";
+            this.labelProductName.Text = "Cinematique";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelVersion

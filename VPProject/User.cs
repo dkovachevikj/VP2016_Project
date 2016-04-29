@@ -13,17 +13,17 @@ namespace VPProject
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Ime { set; get; }
-        public string Prezime { get; set; }
+        public string Name { set; get; }
+        public string Surname { get; set; }
         public string Email { get; set; }
-        public Dictionary<string, string> Movies { get; set; }
+        public IDictionary<string, string> Movies { get; set; }
 
-        public User(string username, string password,string ime,string prezime,string email,string movies)
+        public User(string username, string password, string name, string surname, string email, string movies)
         {
             Username = username;
             Password = password;
-            Ime = ime;
-            Prezime = prezime;
+            Name = name;
+            Surname = surname;
             Email = email;
             Movies = new Dictionary<string, string>();
             if(movies.Length > 0)
@@ -62,6 +62,5 @@ namespace VPProject
                 icon.ShowBalloonTip(3000, "Cinematiqe", string.Format("Your rental for {0} has expired", sbExpired.ToString().Substring(0, sbExpired.ToString().Length - 2)), ToolTipIcon.Info);
             }
         }
-
     }
 }

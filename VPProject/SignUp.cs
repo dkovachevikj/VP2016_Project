@@ -17,6 +17,11 @@ namespace VPProject
         public SignUp()
         {
             InitializeComponent();
+            setUI();
+        }
+
+        private void setUI()
+        {
             btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
             btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
             btnOK.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
@@ -33,8 +38,9 @@ namespace VPProject
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            User = new User(tbUsername.Text, tbPassword.Text, tbName.Text, tbSurname.Text, tbEmail.Text, "");
-            DialogResult = DialogResult.OK;
+            bwSignUp.RunWorkerAsync();
+            btnOK.Enabled = false;
+            btnCancel.Enabled = false;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -112,7 +118,7 @@ namespace VPProject
             if(tbName.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbName, "Името е задолжително");
+                errorProvider1.SetError(tbName, "Name is required");
             }
             else
             {
@@ -125,7 +131,7 @@ namespace VPProject
             if(tbSurname.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbSurname, "Презимето е задолжително");
+                errorProvider1.SetError(tbSurname, "Surname is required");
             }
             else
             {
@@ -133,16 +139,25 @@ namespace VPProject
             }
         }
 
-        private void tbUsername_Validating(object sender, CancelEventArgs e)
+        private async void tbUsername_Validating(object sender, CancelEventArgs e)
         {
             if(tbUsername.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbUsername, "Корисничкото име е задолжително");
+                errorProvider1.SetError(tbUsername, "Username is required");
             }
             else
             {
-                errorProvider1.SetError(tbUsername, null);
+                bool userExists = await SqlConn.userExists(tbUsername.Text);
+                if(userExists)
+                {
+                    e.Cancel = true;
+                    errorProvider1.SetError(tbUsername, "Username already exists, please try again");
+                }
+                else
+                {
+                    errorProvider1.SetError(tbUsername, null);
+                }
             }
         }
 
@@ -151,7 +166,7 @@ namespace VPProject
             if(!IsValidEmail(tbEmail.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbEmail, "Невалидна е-пошта (треба да биде во облик user@example.com)");
+                errorProvider1.SetError(tbEmail, "Invalid e-mail (it should look like user@example.com)");
             }
             else
             {
@@ -164,7 +179,7 @@ namespace VPProject
             if(tbPassword.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbPassword, "Лозинката е задолжителна! (duh)");
+                errorProvider1.SetError(tbPassword, "Password is required! (duh)");
             }
             else
             {
@@ -190,12 +205,50 @@ namespace VPProject
             if(!tbRepeatPassword.Text.Equals(tbPassword.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbRepeatPassword, "Не се совпаѓа со внесената лозинка");
+                errorProvider1.SetError(tbRepeatPassword, "Passwords don't match");
             }
             else
             {
                 errorProvider1.SetError(tbRepeatPassword, null);
             }
+        }
+
+        private void bwSignUp_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = SqlConn.SignUp(new User(tbUsername.Text, tbPassword.Text, tbName.Text, tbSurname.Text, tbEmail.Text, ""));
+        }
+
+        private void bwSignUp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show("Sign up error: " + e.Error.ToString());
+            }
+            else
+            {
+                bool result = (bool)e.Result;
+                if(result)
+                {
+                    MessageBox.Show("You have successfully registered!");
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Registration failed");
+                    btnCancel.Enabled = true;
+                    btnOK.Enabled = true;
+                }
+            }
+        }
+
+        private void bwUserExists_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void bwUserExists_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
         }
     }
 }

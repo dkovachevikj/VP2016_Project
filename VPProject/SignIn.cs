@@ -30,22 +30,9 @@ namespace VPProject
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            User = SqlConn.SignIn(tbName.Text);
-            if (User == null)
-            {
-                MessageBox.Show("Username doesn't exist", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                if (User.Password == tbPassword.Text)
-                {
-                    DialogResult = DialogResult.OK;
-                }
-                else
-                {
-                    MessageBox.Show("Invalid password!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
+            bwSignIn.RunWorkerAsync();
+            btnOK.Enabled = false;
+            btnCancel.Enabled = false;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -73,5 +60,39 @@ namespace VPProject
             tbPassword.BackColor = Color.White;
         }
 
+        private void bwSignIn_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = SqlConn.SignIn(tbName.Text);
+        }
+
+        private void bwSignIn_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnOK.Enabled = true;
+            btnCancel.Enabled = true;
+            if(e.Error != null)
+            {
+                MessageBox.Show("Sign in error: " + e.Error.ToString());
+            }
+            else
+            {
+                User tempUser = e.Result as User;
+                if (tempUser == null)
+                {
+                    MessageBox.Show("Username doesn't exist", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    if (tempUser.Password.Equals(tbPassword.Text))
+                    {
+                        User = tempUser;
+                        DialogResult = DialogResult.OK;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid password!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+        }
     }
 }

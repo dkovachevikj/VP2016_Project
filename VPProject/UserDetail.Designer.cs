@@ -56,9 +56,9 @@
             this.lblIme.Location = new System.Drawing.Point(13, 9);
             this.lblIme.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblIme.Name = "lblIme";
-            this.lblIme.Size = new System.Drawing.Size(34, 15);
+            this.lblIme.Size = new System.Drawing.Size(42, 15);
             this.lblIme.TabIndex = 0;
-            this.lblIme.Text = "Име:";
+            this.lblIme.Text = "Name:";
             // 
             // lblPrezime
             // 
@@ -68,9 +68,9 @@
             this.lblPrezime.Location = new System.Drawing.Point(13, 40);
             this.lblPrezime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPrezime.Name = "lblPrezime";
-            this.lblPrezime.Size = new System.Drawing.Size(59, 15);
+            this.lblPrezime.Size = new System.Drawing.Size(57, 15);
             this.lblPrezime.TabIndex = 2;
-            this.lblPrezime.Text = "Презиме:";
+            this.lblPrezime.Text = "Surname:";
             // 
             // lblEmail
             // 
@@ -80,9 +80,9 @@
             this.lblEmail.Location = new System.Drawing.Point(13, 71);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(59, 15);
+            this.lblEmail.Size = new System.Drawing.Size(44, 15);
             this.lblEmail.TabIndex = 4;
-            this.lblEmail.Text = "Е-Пошта:";
+            this.lblEmail.Text = "E-mail:";
             // 
             // pictureBox1
             // 

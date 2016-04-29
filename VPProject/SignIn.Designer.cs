@@ -38,6 +38,7 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblNajava = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bwSignIn = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -68,7 +69,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(143, 32);
             this.btnCancel.TabIndex = 14;
-            this.btnCancel.Text = "Откажи";
+            this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -83,7 +84,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(143, 32);
             this.btnOK.TabIndex = 13;
-            this.btnOK.Text = "Најава";
+            this.btnOK.Text = "Go";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -115,9 +116,9 @@
             this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.Location = new System.Drawing.Point(337, 161);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(71, 20);
+            this.lblPassword.Size = new System.Drawing.Size(73, 20);
             this.lblPassword.TabIndex = 10;
-            this.lblPassword.Text = "Лозинка:";
+            this.lblPassword.Text = "Password:";
             // 
             // lblUsername
             // 
@@ -126,9 +127,9 @@
             this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsername.Location = new System.Drawing.Point(337, 110);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(129, 20);
+            this.lblUsername.Size = new System.Drawing.Size(78, 20);
             this.lblUsername.TabIndex = 9;
-            this.lblUsername.Text = "Корисничко име:";
+            this.lblUsername.Text = "Username:";
             // 
             // lblNajava
             // 
@@ -138,9 +139,9 @@
             this.lblNajava.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.lblNajava.Location = new System.Drawing.Point(427, 29);
             this.lblNajava.Name = "lblNajava";
-            this.lblNajava.Size = new System.Drawing.Size(107, 37);
+            this.lblNajava.Size = new System.Drawing.Size(104, 37);
             this.lblNajava.TabIndex = 8;
-            this.lblNajava.Text = "Најава";
+            this.lblNajava.Text = "Sign in";
             // 
             // pictureBox1
             // 
@@ -152,6 +153,12 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // bwSignIn
+            // 
+            this.bwSignIn.WorkerSupportsCancellation = true;
+            this.bwSignIn.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSignIn_DoWork);
+            this.bwSignIn.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSignIn_RunWorkerCompleted);
             // 
             // SignIn
             // 
@@ -167,7 +174,7 @@
             this.MinimumSize = new System.Drawing.Size(724, 347);
             this.Name = "SignIn";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Најави се";
+            this.Text = "Sign in";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -185,5 +192,6 @@
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblNajava;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.ComponentModel.BackgroundWorker bwSignIn;
     }
 }
