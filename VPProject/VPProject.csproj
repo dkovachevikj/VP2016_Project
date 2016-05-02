@@ -103,7 +103,6 @@
       <DependentUpon>SignIn.cs</DependentUpon>
     </Compile>
     <Compile Include="SqlConn.cs" />
-    <Compile Include="StringCipher.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserDetail.cs">
       <SubType>Form</SubType>
@@ -132,6 +131,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SignIn.resx">
       <DependentUpon>SignIn.cs</DependentUpon>
@@ -171,6 +171,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

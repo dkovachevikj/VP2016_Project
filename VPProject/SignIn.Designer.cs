@@ -69,7 +69,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(143, 32);
             this.btnCancel.TabIndex = 14;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Откажи";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -84,7 +84,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(143, 32);
             this.btnOK.TabIndex = 13;
-            this.btnOK.Text = "Go";
+            this.btnOK.Text = "Најава";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -116,9 +116,9 @@
             this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.Location = new System.Drawing.Point(337, 161);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(73, 20);
+            this.lblPassword.Size = new System.Drawing.Size(71, 20);
             this.lblPassword.TabIndex = 10;
-            this.lblPassword.Text = "Password:";
+            this.lblPassword.Text = "Лозинка:";
             // 
             // lblUsername
             // 
@@ -127,9 +127,9 @@
             this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsername.Location = new System.Drawing.Point(337, 110);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(78, 20);
+            this.lblUsername.Size = new System.Drawing.Size(129, 20);
             this.lblUsername.TabIndex = 9;
-            this.lblUsername.Text = "Username:";
+            this.lblUsername.Text = "Корисничко име:";
             // 
             // lblNajava
             // 
@@ -139,9 +139,9 @@
             this.lblNajava.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.lblNajava.Location = new System.Drawing.Point(427, 29);
             this.lblNajava.Name = "lblNajava";
-            this.lblNajava.Size = new System.Drawing.Size(104, 37);
+            this.lblNajava.Size = new System.Drawing.Size(107, 37);
             this.lblNajava.TabIndex = 8;
-            this.lblNajava.Text = "Sign in";
+            this.lblNajava.Text = "Најава";
             // 
             // pictureBox1
             // 
@@ -170,11 +170,9 @@
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximumSize = new System.Drawing.Size(724, 347);
-            this.MinimumSize = new System.Drawing.Size(724, 347);
             this.Name = "SignIn";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Sign in";
+            this.Text = "Најави се";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -22,10 +22,7 @@ namespace VPProject
             lblNajava.Parent = pictureBox1;
             lblPassword.Parent = pictureBox1;
             lblUsername.Parent = pictureBox1;
-            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnOK.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
-            btnCancel.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            setColors();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -33,6 +30,14 @@ namespace VPProject
             bwSignIn.RunWorkerAsync();
             btnOK.Enabled = false;
             btnCancel.Enabled = false;
+        }
+
+        private void setColors()
+        {
+            btnOK.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnCancel.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnOK.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnCancel.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

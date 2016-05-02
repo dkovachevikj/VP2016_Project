@@ -23,7 +23,7 @@ namespace VPProject
                 {
                     MySqlCommand commandInsert = new MySqlCommand("INSERT INTO Users(Username,Password,Ime,Prezime,Email,Movies) VALUES(@username,@password,@ime,@prezime,@email,@movies)", connection);
                     commandInsert.Parameters.AddWithValue("@username", user.Username);
-                    commandInsert.Parameters.AddWithValue("@password", StringCipher.Encrypt(user.Password, user.Username));
+                    commandInsert.Parameters.AddWithValue("@password", user.Password);
                     commandInsert.Parameters.AddWithValue("@ime", user.Name);
                     commandInsert.Parameters.AddWithValue("@prezime", user.Surname);
                     commandInsert.Parameters.AddWithValue("@email", user.Email);
@@ -53,7 +53,7 @@ namespace VPProject
                     if (dataReader.Read() == false) user = null;
                     else
                     {
-                        user = new User(dataReader[1].ToString(), StringCipher.Decrypt(dataReader[2].ToString(), dataReader[1].ToString()), dataReader[3].ToString(), dataReader[4].ToString(), dataReader[5].ToString(), dataReader[6].ToString());
+                        user = new User(dataReader[1].ToString(), dataReader[2].ToString(), dataReader[3].ToString(), dataReader[4].ToString(), dataReader[5].ToString(), dataReader[6].ToString());
                     }
                     return user;
 

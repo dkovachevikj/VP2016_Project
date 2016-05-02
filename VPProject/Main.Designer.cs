@@ -78,6 +78,7 @@
             this.timerFade = new System.Windows.Forms.Timer(this.components);
             this.bwUpdateDB = new System.ComponentModel.BackgroundWorker();
             this.timerSafeUpcoming = new System.Windows.Forms.Timer(this.components);
+            this.bwMovie = new System.ComponentModel.BackgroundWorker();
             this.panelUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelMovie.SuspendLayout();
@@ -396,7 +397,6 @@
             this.cbGenre.Size = new System.Drawing.Size(232, 23);
             this.cbGenre.TabIndex = 18;
             this.cbGenre.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbGenre_DrawItem);
-            this.cbGenre.SelectedIndexChanged += new System.EventHandler(this.cbGenre_SelectedIndexChanged);
             // 
             // statusStrip1
             // 
@@ -582,7 +582,11 @@
             this.timerSafeUpcoming.Interval = 2000;
             this.timerSafeUpcoming.Tick += new System.EventHandler(this.timerSafeUpcoming_Tick);
             // 
-            // Form1
+            // bwMovie
+            // 
+            this.bwMovie.WorkerSupportsCancellation = true;
+            // 
+            // Main
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -603,7 +607,7 @@
             this.Controls.Add(this.lbMovies);
             this.Controls.Add(this.panelUser);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cinematique";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -676,6 +680,7 @@
         private System.Windows.Forms.ToolStripMenuItem showNewestMoviesToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker bwUpdateDB;
         private System.Windows.Forms.Timer timerSafeUpcoming;
+        private System.ComponentModel.BackgroundWorker bwMovie;
     }
 }
 

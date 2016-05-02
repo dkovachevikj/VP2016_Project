@@ -118,7 +118,7 @@ namespace VPProject
             if(tbName.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbName, "Name is required");
+                errorProvider1.SetError(tbName, "Името е задолжително");
             }
             else
             {
@@ -131,7 +131,7 @@ namespace VPProject
             if(tbSurname.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbSurname, "Surname is required");
+                errorProvider1.SetError(tbSurname, "Презимето е задолжително");
             }
             else
             {
@@ -144,7 +144,7 @@ namespace VPProject
             if(tbUsername.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbUsername, "Username is required");
+                errorProvider1.SetError(tbUsername, "Корисничкото име е задолжително");
             }
             else
             {
@@ -152,7 +152,7 @@ namespace VPProject
                 if(userExists)
                 {
                     e.Cancel = true;
-                    errorProvider1.SetError(tbUsername, "Username already exists, please try again");
+                    errorProvider1.SetError(tbUsername, "Корисничкото име е во употреба, внесете друго");
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace VPProject
             if(!IsValidEmail(tbEmail.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbEmail, "Invalid e-mail (it should look like user@example.com)");
+                errorProvider1.SetError(tbEmail, "Невалидна е-пошта (треба да биде во облик user@example.com)");
             }
             else
             {
@@ -179,7 +179,7 @@ namespace VPProject
             if(tbPassword.Text.Trim().Length == 0)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbPassword, "Password is required! (duh)");
+                errorProvider1.SetError(tbPassword, "Лозинката е задолжителна! (duh)");
             }
             else
             {
@@ -205,7 +205,7 @@ namespace VPProject
             if(!tbRepeatPassword.Text.Equals(tbPassword.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(tbRepeatPassword, "Passwords don't match");
+                errorProvider1.SetError(tbRepeatPassword, "Не се совпаѓа со внесената лозинка");
             }
             else
             {
@@ -222,33 +222,23 @@ namespace VPProject
         {
             if (e.Error != null)
             {
-                MessageBox.Show("Sign up error: " + e.Error.ToString());
+                MessageBox.Show("Грешка: " + e.Error.ToString());
             }
             else
             {
                 bool result = (bool)e.Result;
                 if(result)
                 {
-                    MessageBox.Show("You have successfully registered!");
+                    MessageBox.Show("Успешно се регистриравте!");
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("Registration failed");
+                    MessageBox.Show("Регистрацијата е неуспешна, обидете се повторно");
                     btnCancel.Enabled = true;
                     btnOK.Enabled = true;
                 }
             }
-        }
-
-        private void bwUserExists_DoWork(object sender, DoWorkEventArgs e)
-        {
-
-        }
-
-        private void bwUserExists_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-
         }
     }
 }

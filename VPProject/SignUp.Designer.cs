@@ -51,7 +51,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.bwSignUp = new System.ComponentModel.BackgroundWorker();
-            this.bwUserExists = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -64,9 +63,9 @@
             this.lblName.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblName.Location = new System.Drawing.Point(31, 131);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(46, 17);
+            this.lblName.Size = new System.Drawing.Size(37, 17);
             this.lblName.TabIndex = 13;
-            this.lblName.Text = "Name:";
+            this.lblName.Text = "Име:";
             // 
             // tbUsername
             // 
@@ -87,9 +86,9 @@
             this.lblPassword.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblPassword.Location = new System.Drawing.Point(31, 351);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(67, 17);
+            this.lblPassword.Size = new System.Drawing.Size(61, 17);
             this.lblPassword.TabIndex = 9;
-            this.lblPassword.Text = "Password:";
+            this.lblPassword.Text = "Лозинка:";
             // 
             // tbPassword
             // 
@@ -114,9 +113,9 @@
             this.lblSurname.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblSurname.Location = new System.Drawing.Point(31, 174);
             this.lblSurname.Name = "lblSurname";
-            this.lblSurname.Size = new System.Drawing.Size(62, 17);
+            this.lblSurname.Size = new System.Drawing.Size(64, 17);
             this.lblSurname.TabIndex = 12;
-            this.lblSurname.Text = "Surname:";
+            this.lblSurname.Text = "Презиме:";
             // 
             // tbName
             // 
@@ -137,9 +136,9 @@
             this.lblEmail.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblEmail.Location = new System.Drawing.Point(31, 283);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(44, 17);
+            this.lblEmail.Size = new System.Drawing.Size(61, 17);
             this.lblEmail.TabIndex = 10;
-            this.lblEmail.Text = "E-mail";
+            this.lblEmail.Text = "Е-пошта:";
             // 
             // tbSurname
             // 
@@ -160,9 +159,9 @@
             this.lblUsername.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblUsername.Location = new System.Drawing.Point(31, 240);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(70, 17);
+            this.lblUsername.Size = new System.Drawing.Size(110, 17);
             this.lblUsername.TabIndex = 11;
-            this.lblUsername.Text = "Username:";
+            this.lblUsername.Text = "Корисничко име:";
             // 
             // tbEmail
             // 
@@ -185,9 +184,9 @@
             this.lblRepeatPassword.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lblRepeatPassword.Location = new System.Drawing.Point(31, 394);
             this.lblRepeatPassword.Name = "lblRepeatPassword";
-            this.lblRepeatPassword.Size = new System.Drawing.Size(113, 17);
+            this.lblRepeatPassword.Size = new System.Drawing.Size(115, 17);
             this.lblRepeatPassword.TabIndex = 8;
-            this.lblRepeatPassword.Text = "Repeat password:";
+            this.lblRepeatPassword.Text = "Повтори лозинка:";
             // 
             // tbRepeatPassword
             // 
@@ -206,11 +205,11 @@
             this.lblRegister.BackColor = System.Drawing.Color.Transparent;
             this.lblRegister.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRegister.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.lblRegister.Location = new System.Drawing.Point(154, 36);
+            this.lblRegister.Location = new System.Drawing.Point(128, 36);
             this.lblRegister.Name = "lblRegister";
-            this.lblRegister.Size = new System.Drawing.Size(92, 30);
+            this.lblRegister.Size = new System.Drawing.Size(146, 30);
             this.lblRegister.TabIndex = 15;
-            this.lblRegister.Text = "Register";
+            this.lblRegister.Text = "Регистрација";
             // 
             // lblMandatory
             // 
@@ -218,11 +217,11 @@
             this.lblMandatory.BackColor = System.Drawing.Color.Transparent;
             this.lblMandatory.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMandatory.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.lblMandatory.Location = new System.Drawing.Point(130, 76);
+            this.lblMandatory.Location = new System.Drawing.Point(102, 76);
             this.lblMandatory.Name = "lblMandatory";
-            this.lblMandatory.Size = new System.Drawing.Size(138, 17);
+            this.lblMandatory.Size = new System.Drawing.Size(195, 17);
             this.lblMandatory.TabIndex = 14;
-            this.lblMandatory.Text = "All fields are required!";
+            this.lblMandatory.Text = "Сите полиња се задолжителни!";
             // 
             // btnCancel
             // 
@@ -235,7 +234,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(143, 32);
             this.btnCancel.TabIndex = 7;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Откажи";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -250,7 +249,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(143, 32);
             this.btnOK.TabIndex = 6;
-            this.btnOK.Text = "Register";
+            this.btnOK.Text = "Регистрирај се";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -287,12 +286,6 @@
             this.bwSignUp.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSignUp_DoWork);
             this.bwSignUp.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSignUp_RunWorkerCompleted);
             // 
-            // bwUserExists
-            // 
-            this.bwUserExists.WorkerSupportsCancellation = true;
-            this.bwUserExists.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwUserExists_DoWork);
-            this.bwUserExists.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwUserExists_RunWorkerCompleted);
-            // 
             // SignUp
             // 
             this.AcceptButton = this.btnOK;
@@ -323,7 +316,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SignUp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Register";
+            this.Text = "Регистрирај се";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -354,6 +347,5 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.ComponentModel.BackgroundWorker bwSignUp;
-        private System.ComponentModel.BackgroundWorker bwUserExists;
     }
 }
