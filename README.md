@@ -64,7 +64,8 @@
                 }
             }
         }
-
+```
+```c#
         /// <summary>
         /// SignIn method returns the user which is LoggedIn (Description)
         /// </summary>
@@ -96,7 +97,8 @@
                 }
             }
         }
-        
+```
+```c#        
         /// <summary>
         /// UpdateCard method updates Movies field for the User given as a parameter
         /// This method is used for Renting a Movie 
@@ -132,7 +134,8 @@
                 }
             }
         }
-
+```
+```c#
         /// <summary>
         /// This method is used for UsernameValidation (Checks for existing User with same Username) in SignIn Form
         /// </summary>
