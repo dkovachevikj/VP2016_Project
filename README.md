@@ -22,7 +22,8 @@
 ![alt text](Slika7.jpg "Слика 7. Структура на табелата Users од DB")
 Класата SqlConn служи за манипулација со податоците на корисниците на апликацијата. Секој метод од оваа класа содржи соодветно XML summary, детално објаснување. 
 
- /// <summary>
+```c#
+    /// <summary>
     /// Static class for manipulation with Users stored in our DataBase 
     /// </summary>
     static class SqlConn
@@ -95,7 +96,7 @@
                 }
             }
         }
-```c#
+        
         /// <summary>
         /// UpdateCard method updates Movies field for the User given as a parameter
         /// This method is used for Renting a Movie 
