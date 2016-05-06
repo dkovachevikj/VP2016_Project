@@ -10,11 +10,20 @@ using System.Configuration;
 
 namespace VPProject
 {
+    /// <summary>
+    /// Static class for manipulation with Users stored in our DataBase 
+    /// </summary>
     static class SqlConn
     {
+        /// <summary>
+        /// connectionString saved in App.config, which is used for establishing a connection with Database
+        /// </summary>
         private static readonly string connectionString = ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
 
-        //Method used to register a new user in the database (put his information in the table)
+
+        /// <summary>
+        /// SignUp method inserts a new record for each registered user in table Users
+        /// </summary>
         static public bool SignUp(User user)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -22,6 +31,9 @@ namespace VPProject
                 try
                 {
                     connection.Open();
+                    /// <summary>
+                    /// SqlCommand object contains SqlConnection object and queryString (INSERT command with parameters) 
+                    /// </summary>
                     MySqlCommand commandInsert = new MySqlCommand("INSERT INTO Users(Username,Password,Ime,Prezime,Email,Movies) VALUES(@username,@password,@ime,@prezime,@email,@movies)", connection);
                     commandInsert.Parameters.AddWithValue("@username", user.Username);
                     commandInsert.Parameters.AddWithValue("@password", user.Password);
@@ -41,7 +53,9 @@ namespace VPProject
             }
         }
 
-        //Gets the user whose username equals the one provided, if he exists
+        /// <summary>
+        /// SignIn method returns the user which is LoggedIn (Description)
+        /// </summary>
         static public User SignIn(string username)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -50,6 +64,9 @@ namespace VPProject
                 {
                     connection.Open();
                     User user = null;
+                    /// <summary>
+                    /// queryString = Search in table Users for all records whose username is equal with the username given as a parameter
+                    /// </summary>
                     MySqlCommand command = new MySqlCommand("SELECT * FROM Users WHERE Username='" + username + "'", connection);
                     MySqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.Read() == false) user = null;
@@ -68,7 +85,10 @@ namespace VPProject
             }
         }
 
-        //Used when the user signs out or closes the program while still logged in, updates his rented movies
+        /// <summary>
+        /// UpdateCard method updates Movies field for the User given as a parameter
+        /// This method is used for Renting a Movie 
+        /// </summary>
         static public bool UpdateCart(User user)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -101,7 +121,9 @@ namespace VPProject
             }
         }
 
-        //Used during registration to check whether a user already has the same username
+        /// <summary>
+        /// This method is used for UsernameValidation (Checks for existing User with same Username) in SignIn Form
+        /// </summary>
         public async static Task<bool> userExists(string username)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))

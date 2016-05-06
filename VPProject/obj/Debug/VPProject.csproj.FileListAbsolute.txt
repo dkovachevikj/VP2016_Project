@@ -90,7 +90,6 @@ C:\Users\Nacev\Documents\GIT_Proekt\VPProject\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\bin\Debug\RestSharp.xml
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\bin\Debug\TMDbLib.pdb
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.SignUp.resources
-C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.Form1.resources
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.Properties.Resources.resources
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.SignIn.resources
 C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.csproj.GenerateResource.Cache
@@ -125,3 +124,7 @@ D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\De
 D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.AboutBox.resources
 D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.RentTime.resources
 D:\Visual Studio Projects\Vizuelno programiranje\VP2016_Project\VPProject\obj\Debug\VPProject.Main.resources
+C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.csprojResolveAssemblyReference.cache
+C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.AboutBox.resources
+C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.RentTime.resources
+C:\Users\Nacev\Documents\GIT_Proekt\VPProject\obj\Debug\VPProject.Main.resources
