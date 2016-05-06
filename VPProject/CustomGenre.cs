@@ -7,7 +7,8 @@ using System.Net.TMDb;
 
 namespace VPProject
 {
-    class CustomGenre
+    //Class made to give proper representation of the genres in the combo box though the overriden toString() method
+    public class CustomGenre
     {
         public Genre Genre { get; set; }
 

@@ -126,8 +126,8 @@
             this.textBoxDescription.Size = new System.Drawing.Size(227, 125);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "Project for VP course @ FCSE\r\nMovie browsing enabled by TMDB API\r\nUser accounts e" +
-    "nabled by db4free.net";
+            this.textBoxDescription.Text = "Project for VP course @ FCSE\r\nMovie browsing powered by TMDB API\r\nUser accounts p" +
+    "owered by db4free.net";
             // 
             // okButton
             // 

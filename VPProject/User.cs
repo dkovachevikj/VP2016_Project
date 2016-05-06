@@ -16,6 +16,9 @@ namespace VPProject
         public string Name { set; get; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        /// <summary>
+        /// Contains a pair consisted of a movie title and rent time
+        /// </summary>
         public IDictionary<string, string> Movies { get; set; }
 
         public User(string username, string password, string name, string surname, string email, string movies)
@@ -32,6 +35,11 @@ namespace VPProject
             }
         }
 
+        /// <summary>
+        /// Get the rented movies from the database (string whose contents are movie titles and rent times)
+        /// If a rent time has passed, the user will be notified
+        /// </summary>
+        /// <param name="fromDB"></param>
         public void loadRentedMovies(string fromDB)
         {
             char[] primarySeparator = { '>' };

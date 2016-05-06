@@ -14,20 +14,37 @@ namespace VPProject
 {
     public partial class Main : Form
     {
+        /// <summary>
+        /// The user that is currently logged in (null if there is none)
+        /// </summary>
         private User LoggedUser;
 
+        /// <summary>
+        /// Keeps the URL of the trailer for the currently selected movie
+        /// </summary>
         private string TrailerPath;
+
+        /// <summary>
+        /// List that contains the top rated movies loaded when the app starts
+        /// </summary>
         private List<CustomMovie> beginMovies;
+
+        /// <summary>
+        /// Collection that contains the genres
+        /// </summary>
         private Dictionary<int, Genre> Genres;
 
+        //Fields needed for the browsing logic
         private string currentSearchText;
         private bool searchChanged;
         private string currentGenre;
         private bool genreChanged;
 
+        //Fields needed for operations with the rented movies
         private DateTime tempDate;
         private string trashMovie;
 
+        //Fields used for managing the upcoming movies and their representation
         private List<Movie> upcoming;
         private List<int> upcomingRGB;
         private bool upcomingInc;
@@ -49,27 +66,15 @@ namespace VPProject
             timerSafeUpcoming.Enabled = true;
         }
 
-        private void setColors()
-        {
-            btnLoadMore.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnLoadMore.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
-            btnSearch.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnSearch.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
-            btnWatchTrailer.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnWatchTrailer.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
-            btnRent.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnRent.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
-            btnSignUp.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnSignUp.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
-            btnSignIn.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
-            btnSignIn.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
-            lblUpcoming.ForeColor = Color.FromArgb(242, 242, 242);
-        }
+        #region Movie browsing code
 
+        /// <summary>
+        /// Load genres
+        /// </summary>
         private async void setGenres()
         {
             List<CustomGenre> genres = await LoadMovies.GetGenres();
-            foreach(CustomGenre cg in genres)
+            foreach (CustomGenre cg in genres)
             {
                 cbGenre.Items.Add(cg);
                 Genres.Add(cg.Genre.Id, cg.Genre);
@@ -78,6 +83,10 @@ namespace VPProject
             currentGenre = "All";
             genreChanged = false;
         }
+
+        /// <summary>
+        /// Load top rated movies from the first page in the API results
+        /// </summary>
 
         private async void loadMovies()
         {
@@ -93,11 +102,14 @@ namespace VPProject
             toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
         }
 
+        /// <summary>
+        /// Load one page of upcoming movies
+        /// </summary>
         private async void setUpcoming()
         {
             upcoming = new List<Movie>();
             var movies = await LoadMovies.getUpcoming();
-            foreach(Movie m in movies)
+            foreach (Movie m in movies)
             {
                 upcoming.Add(m);
             }
@@ -110,27 +122,33 @@ namespace VPProject
             timerUpcoming.Enabled = true;
         }
 
-        private void btnSignIn_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Set genreal info for the selected movie and call methods to load additional info
+        /// </summary>
+        private async void setMovieInfo()
         {
-            SignIn signIn = new SignIn();
-            if (signIn.ShowDialog() == DialogResult.OK)
-            {
-                LoggedUser = signIn.User;
-                panelUser.Show();
-                btnSignIn.Visible = false;
-                btnSignUp.Visible = false;
-                lblUsername.Text = LoggedUser.Username;
-                toolBtnRent.Enabled = true;
-                movieCheckTimer.Enabled = true;
-            }
+            pbPoster.SizeMode = PictureBoxSizeMode.CenterImage;
+            pbPoster.Image = Properties.Resources.loading;
+            CustomMovie cm = lbMovies.SelectedItem as CustomMovie;
+            Movie movie = await LoadMovies.GetMovie(cm);
+            if (movie.ReleaseDate.HasValue)
+                lblMovieTitle.Text = string.Format("{0} ({1})", movie.Title, movie.ReleaseDate.Value.Year.ToString());
+            else
+                lblMovieTitle.Text = movie.Title;
+            lblRating.Text = movie.VoteAverage.ToString("0.00");
+            lblVotes.Text = movie.VoteCount.ToString();
+            pbPoster.SizeMode = PictureBoxSizeMode.Zoom;
+            pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
+            lblDescription.Text = movie.Overview;
+            setCast(movie.Credits.Cast);
+            setInfo(movie);
+            setTrailer(movie.Videos.Results);
         }
 
-        private void btnSignUp_Click(object sender, EventArgs e)
-        {
-            SignUp signUp = new SignUp();
-            signUp.ShowDialog();
-        }
-
+        /// <summary>
+        /// Load the cast of the selected movie
+        /// </summary>
+        /// <param name="cast"></param>
         private void setCast(IEnumerable<MediaCast> cast)
         {
             StringBuilder sb = new StringBuilder();
@@ -154,6 +172,10 @@ namespace VPProject
             }
         }
 
+        /// <summary>
+        /// Load the run time, release date and genres of the selected movie
+        /// </summary>
+        /// <param name="movie"></param>
         private void setInfo(Movie movie)
         {
             lblInfo.Text = "Not available";
@@ -206,6 +228,10 @@ namespace VPProject
             }
         }
 
+        /// <summary>
+        /// Set the URL of the trailer for the selected movie
+        /// </summary>
+        /// <param name="trailers"></param>
         private void setTrailer(IEnumerable<Video> trailers)
         {
             if (trailers.Count() > 0)
@@ -223,26 +249,330 @@ namespace VPProject
             }
         }
 
-        private async void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Searches for movies by the provided keywords or by the selected genre
+        /// </summary>
+        private void search()
+        {
+            if (!cbGenre.SelectedItem.ToString().Equals("All"))
+            {
+                if (cbGenre.SelectedItem.ToString().Equals(currentGenre))
+                {
+                    if (searchChanged)
+                    {
+                        loadGenre();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    loadGenre();
+                }
+            }
+            else
+            {
+                if (tbSearch.Text.Trim().Equals(currentSearchText))
+                {
+                    if (genreChanged)
+                    {
+                        loadSearch();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    loadSearch();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Load movies from the selected genre
+        /// </summary>
+        private async void loadGenre()
+        {
+            tbSearch.ResetText();
+            lbMovies.Items.Clear();
+            List<CustomMovie> movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString());
+            foreach (CustomMovie cm in movies)
+            {
+                lbMovies.Items.Add(cm);
+            }
+            currentGenre = cbGenre.SelectedItem.ToString();
+            genreChanged = true;
+            searchChanged = false;
+            if (lbMovies.Items.Count > 0)
+            {
+                lbMovies.SelectedIndex = 0;
+            }
+            toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
+        }
+
+        /// <summary>
+        /// Load movies whose titles contain the given keywords
+        /// </summary>
+        private async void loadSearch()
+        {
+            lbMovies.Items.Clear();
+            if (tbSearch.Text.Trim() == "")
+            {
+                foreach (CustomMovie cm in beginMovies)
+                {
+                    lbMovies.Items.Add(cm);
+                }
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
+                LoadMovies.resetParams();
+            }
+            else
+            {
+                var movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim());
+                foreach (CustomMovie cm in movies)
+                {
+                    lbMovies.Items.Add(cm);
+                }
+                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
+            }
+            currentSearchText = tbSearch.Text.Trim();
+            searchChanged = true;
+            genreChanged = false;
+            if (lbMovies.Items.Count > 0)
+            {
+                lbMovies.SelectedIndex = 0;
+            }
+        }
+
+        /// <summary>
+        /// Called when the user presses the "Load more" button, it checks whether it should load more top rated movies,
+        /// <para>movies from search results or movies from the selected genre</para>
+        /// </summary>
+        private async void loadMore()
+        {
+            bool topRated = false;
+            bool search = false;
+            bool genre = false;
+            List<CustomMovie> movies = null;
+            if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
+            {
+                movies = await LoadMovies.TopRated();
+                topRated = true;
+            }
+            else if (!cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
+            {
+                movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString());
+                genre = true;
+            }
+            else if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length > 0)
+            {
+                movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim());
+                search = true;
+            }
+            else
+            {
+                return;
+            }
+            if (movies != null)
+            {
+                foreach (CustomMovie cm in movies)
+                {
+                    if (topRated)
+                    {
+                        beginMovies.Add(cm);
+                    }
+                    lbMovies.Items.Add(cm);
+                }
+                if (topRated)
+                    toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
+                else if (search)
+                    toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
+                else if (genre)
+                    toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
+            }
+        }
+
+        /// <summary>
+        /// Called when the user presses the "Rent movie" button, it first checks whether it's possible to rent a movie,
+        /// <para>and if it is, proceeds to update the list of rented movies of the logged user</para>
+        /// </summary>
+        private void rentMovie()
+        {
+            if (lbMovies.SelectedItem != null && LoggedUser != null)
+            {
+                CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
+                if (LoggedUser.Movies.ContainsKey(selectedMovie.Movie.Title))
+                {
+                    MessageBox.Show(string.Format("{0} is already rented!", selectedMovie.Movie.Title), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else if (LoggedUser.Movies.Count() >= 5)
+                {
+                    MessageBox.Show("Maximum number of rented movies (5) reached!\nReturn a rented movie or wait for a rental to expire", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    RentTime rentTime = new RentTime();
+                    if (rentTime.ShowDialog() == DialogResult.OK)
+                    {
+                        LoggedUser.Movies.Add(selectedMovie.Movie.Title, DateTime.Now.AddDays(+rentTime.Days).ToString("dd/MM/yyyy HH:mm:ss"));
+                        MessageBox.Show(string.Format("{0} was successfully rented", selectedMovie.Movie.Title));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Takes care of updating the label that shows the title of an upcoming movie, including the fade in/fade out effects
+        /// </summary>
+        private async void upcomingMoviesUpdate()
+        {
+            if (lblUpcoming.ForeColor == Color.FromArgb(242, 242, 242))
+            {
+                lblUpcoming.Text = upcoming[upcomingMovieIndex].Title;
+                upcomingMovie = await LoadMovies.GetMovie(upcoming[upcomingMovieIndex].Id);
+                if (upcomingMovie == null)
+                {
+                    lblUpcoming.Enabled = false;
+                }
+                else
+                {
+                    lblUpcoming.Enabled = true;
+                }
+                if (++upcomingMovieIndex >= upcoming.Count())
+                {
+                    upcomingMovieIndex = 0;
+                }
+                upcomingInc = false;
+                changeUpcomingRGB("decrement");
+
+            }
+            else if (lblUpcoming.ForeColor == Color.FromArgb(92, 92, 61))
+            {
+                if (upcomingInc)
+                {
+                    changeUpcomingRGB("increment");
+                }
+                else
+                {
+                    upcomingInc = true;
+                    timerFade.Enabled = false;
+                }
+            }
+            else
+            {
+                if (!upcomingInc)
+                {
+                    changeUpcomingRGB("decrement");
+                }
+                else
+                {
+                    changeUpcomingRGB("increment");
+                }
+            }
+            lblUpcoming.ForeColor = Color.FromArgb(upcomingRGB[0], upcomingRGB[1], upcomingRGB[2]);
+        }
+
+        private void changeUpcomingRGB(string cmd)
+        {
+            if (cmd.Equals("increment"))
+            {
+                upcomingRGB[0] += 13;
+                upcomingRGB[1] += 13;
+                upcomingRGB[2] += 13;
+                if (upcomingRGB[0] > 242)
+                {
+                    upcomingRGB[0] = 242;
+                    upcomingRGB[1] = 242;
+                    upcomingRGB[2] = 242;
+                }
+            }
+            else
+            {
+                upcomingRGB[0] -= 13;
+                upcomingRGB[1] -= 13;
+                upcomingRGB[2] -= 13;
+                if (upcomingRGB[0] < 92)
+                {
+                    upcomingRGB[0] = 92;
+                    upcomingRGB[1] = 92;
+                    upcomingRGB[2] = 61;
+                }
+            }
+        }
+
+        /// <summary>
+        /// When the user clicks on the label that shows the title of an upcoming movie, it takes them to the trailer for that movie
+        /// </summary>
+        private void upcomingTrailer()
+        {
+            if (upcomingMovie.Videos.Results.Count() > 0)
+            {
+                string path = "";
+                foreach (Video v in upcomingMovie.Videos.Results)
+                {
+                    path = v.Key;
+                    break;
+                }
+                System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=" + path);
+            }
+            else
+            {
+                MessageBox.Show("Trailer not available");
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Set button design
+        /// </summary>
+        private void setColors()
+        {
+            btnLoadMore.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnLoadMore.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnSearch.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnSearch.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnWatchTrailer.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnWatchTrailer.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnRent.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnRent.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnSignUp.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnSignUp.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            btnSignIn.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
+            btnSignIn.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
+            lblUpcoming.ForeColor = Color.FromArgb(242, 242, 242);
+        }
+
+        private void btnSignIn_Click(object sender, EventArgs e)
+        {
+            SignIn signIn = new SignIn();
+            if (signIn.ShowDialog() == DialogResult.OK)
+            {
+                LoggedUser = signIn.User;
+                panelUser.Show();
+                btnSignIn.Visible = false;
+                btnSignUp.Visible = false;
+                lblUsername.Text = LoggedUser.Username;
+                toolBtnRent.Enabled = true;
+                movieCheckTimer.Enabled = true;
+            }
+        }
+
+        private void btnSignUp_Click(object sender, EventArgs e)
+        {
+            SignUp signUp = new SignUp();
+            signUp.ShowDialog();
+        }
+
+        private void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbMovies.SelectedIndex != -1)
             {
-                pbPoster.SizeMode = PictureBoxSizeMode.CenterImage;
-                pbPoster.Image = Properties.Resources.loading;
-                CustomMovie cm = lbMovies.SelectedItem as CustomMovie;
-                Movie movie = await LoadMovies.GetMovie(cm);
-                if (movie.ReleaseDate.HasValue)
-                    lblMovieTitle.Text = string.Format("{0} ({1})", movie.Title, movie.ReleaseDate.Value.Year.ToString());
-                else
-                    lblMovieTitle.Text = movie.Title;
-                lblRating.Text = movie.VoteAverage.ToString("0.00");
-                lblVotes.Text = movie.VoteCount.ToString();
-                pbPoster.SizeMode = PictureBoxSizeMode.Zoom;
-                pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
-                lblDescription.Text = movie.Overview;
-                setCast(movie.Credits.Cast);
-                setInfo(movie);
-                setTrailer(movie.Videos.Results);
+                setMovieInfo();
                 panelMovie.Show();
             }
             else
@@ -283,86 +613,12 @@ namespace VPProject
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if(!cbGenre.SelectedItem.ToString().Equals("All"))
-            {
-                if(cbGenre.SelectedItem.ToString().Equals(currentGenre))
-                {
-                    if(searchChanged)
-                    {
-                        loadGenre();
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    loadGenre();
-                }
-            }
-            else
-            {
-                if(tbSearch.Text.Trim().Equals(currentSearchText))
-                {
-                    if(genreChanged)
-                    {
-                        loadSearch();
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    loadSearch();
-                }
-            }
+            search();
         }
 
-        private async void btnLoadMore_Click(object sender, EventArgs e)
+        private void btnLoadMore_Click(object sender, EventArgs e)
         {
-            bool topRated = false;
-            bool search = false;
-            bool genre = false;
-            List<CustomMovie> movies = null;
-            if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
-            {
-                movies = await LoadMovies.TopRated();
-                topRated = true;
-            }
-            else if (!cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length == 0)
-            {
-                movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString());
-                genre = true;
-            }
-            else if (cbGenre.SelectedItem.ToString().Equals("All") && tbSearch.Text.Trim().Length > 0)
-            {
-                movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim());
-                search = true;
-            }
-            else
-            {
-                return;
-            }
-            if(movies != null)
-            {
-                foreach (CustomMovie cm in movies)
-                {
-                    if (topRated)
-                    {
-                        beginMovies.Add(cm);
-                    }
-                    lbMovies.Items.Add(cm);
-                }
-                if (topRated)
-                    toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
-                else if (search)
-                    toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
-                else if (genre)
-                    toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
-            }
+            loadMore();
         }
 
         private void tbSearch_Enter(object sender, EventArgs e)
@@ -376,98 +632,27 @@ namespace VPProject
             tbSearch.BackColor = Color.White;
         }
 
-        private async void loadGenre()
-        {
-            tbSearch.ResetText();
-            lbMovies.Items.Clear();
-            List<CustomMovie> movies = await LoadMovies.GetByGenre(cbGenre.SelectedItem.ToString());
-            foreach (CustomMovie cm in movies)
-            {
-                lbMovies.Items.Add(cm);
-            }
-            currentGenre = cbGenre.SelectedItem.ToString();
-            genreChanged = true;
-            searchChanged = false;
-            if (lbMovies.Items.Count > 0)
-            {
-                lbMovies.SelectedIndex = 0;
-            }
-            toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.genreCount, LoadMovies.genreTotal);
-        }
-
-        private async void loadSearch()
-        {
-            lbMovies.Items.Clear();
-            if (tbSearch.Text.Trim() == "")
-            {
-                foreach (CustomMovie cm in beginMovies)
-                {
-                    lbMovies.Items.Add(cm);
-                }
-                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.topRatedCount, LoadMovies.topRatedTotal);
-                LoadMovies.resetParams();
-            }
-            else
-            {
-                var movies = await LoadMovies.SearchMovies(tbSearch.Text.Trim());
-                foreach (CustomMovie cm in movies)
-                {
-                    lbMovies.Items.Add(cm);
-                }
-                toopStripLblSearchResults.Text = string.Format("Showing {0} of {1} results", LoadMovies.searchCount, LoadMovies.searchTotal);
-            }
-            currentSearchText = tbSearch.Text.Trim();
-            searchChanged = true;
-            genreChanged = false;
-            if (lbMovies.Items.Count > 0)
-            {
-                lbMovies.SelectedIndex = 0;
-            }
-        }
-
         private void btnRent_Click(object sender, EventArgs e)
         {
-            if (lbMovies.SelectedItem != null && LoggedUser != null)
-            {
-                CustomMovie selectedMovie = lbMovies.SelectedItem as CustomMovie;
-                if (LoggedUser.Movies.ContainsKey(selectedMovie.Movie.Title))
-                {
-                    MessageBox.Show(string.Format("{0} is already rented!", selectedMovie.Movie.Title), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                else if (LoggedUser.Movies.Count() >= 5)
-                {
-                    MessageBox.Show("Maximum number of rented movies (5) reached!\nReturn a rented movie or wait for a rental to expire", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    RentTime rentTime = new RentTime();
-                    if(rentTime.ShowDialog() == DialogResult.OK)
-                    {
-                        LoggedUser.Movies.Add(selectedMovie.Movie.Title, DateTime.Now.AddDays(+rentTime.Days).ToString("dd/MM/yyyy HH:mm:ss"));
-                        MessageBox.Show(string.Format("{0} was successfully rented", selectedMovie.Movie.Title));
-                    }
-                }
-            }
+            rentMovie();
         }
 
         private void cbGenre_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index < 0)
+            {
                 return;
-
+            }
             ComboBox combo = sender as ComboBox;
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(214, 214, 194)),
-                                         e.Bounds);
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(214, 214, 194)), e.Bounds);
+            }
             else
-                e.Graphics.FillRectangle(new SolidBrush(combo.BackColor),
-                                         e.Bounds);
-
-            e.Graphics.DrawString(combo.Items[e.Index].ToString(), e.Font,
-                                  new SolidBrush(combo.ForeColor),
-                                  new Point(e.Bounds.X, e.Bounds.Y));
-
+            {
+                e.Graphics.FillRectangle(new SolidBrush(combo.BackColor), e.Bounds);
+            }
+            e.Graphics.DrawString(combo.Items[e.Index].ToString(), e.Font, new SolidBrush(combo.ForeColor), new Point(e.Bounds.X, e.Bounds.Y));
             e.DrawFocusRectangle();
         }
 
@@ -498,7 +683,6 @@ namespace VPProject
                 backgroundColorBrush.Dispose();
                 itemTextColorBrush.Dispose();
             }
-
             e.DrawFocusRectangle();
         }
 
@@ -511,7 +695,7 @@ namespace VPProject
         private void toolCheckStatusBar_Click(object sender, EventArgs e)
         {
             toolCheckStatusBar.Checked = !toolCheckStatusBar.Checked;
-            if(toolCheckStatusBar.Checked)
+            if (toolCheckStatusBar.Checked)
             {
                 statusStrip1.Show();
             }
@@ -523,7 +707,7 @@ namespace VPProject
 
         private void toolBtnRent_EnabledChanged(object sender, EventArgs e)
         {
-            if(toolBtnRent.Enabled)
+            if (toolBtnRent.Enabled)
             {
                 btnRent.Enabled = true;
             }
@@ -563,21 +747,24 @@ namespace VPProject
             Close();
         }
 
-        private void movieCheckTimer_Tick(object sender, EventArgs e)
+        /// <summary>
+        /// Checks if a movie rental has expired
+        /// </summary>
+        private void rentalCheck()
         {
-            if(LoggedUser.Movies.Count > 0)
+            if (LoggedUser.Movies.Count > 0)
             {
                 trashMovie = "";
-                foreach(KeyValuePair<string, string> kvp in LoggedUser.Movies)
+                foreach (KeyValuePair<string, string> kvp in LoggedUser.Movies)
                 {
                     tempDate = DateTime.ParseExact(kvp.Value, "dd/MM/yyyy HH:mm:ss", null);
-                    if(tempDate.CompareTo(DateTime.Now) < 0)
+                    if (tempDate.CompareTo(DateTime.Now) < 0)
                     {
                         trashMovie = kvp.Key;
                         break;
                     }
                 }
-                if(!trashMovie.Equals(""))
+                if (!trashMovie.Equals(""))
                 {
                     LoggedUser.Movies.Remove(trashMovie);
                     NotifyIcon icon = new NotifyIcon();
@@ -585,117 +772,36 @@ namespace VPProject
                     icon.Icon = SystemIcons.Information;
                     icon.ShowBalloonTip(3000, "Cinematique", string.Format("Your rental for {0} has expired", trashMovie), ToolTipIcon.Info);
                 }
-                
             }
+        }
+
+        private void movieCheckTimer_Tick(object sender, EventArgs e)
+        {
+            rentalCheck();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(LoggedUser != null)
+            if (LoggedUser != null)
             {
                 SqlConn.UpdateCart(LoggedUser);
             }
         }
 
-
         private void timerUpcoming_Tick(object sender, EventArgs e)
         {
-            if(!timerFade.Enabled)
+            if (!timerFade.Enabled)
                 timerFade.Enabled = true;
         }
 
-        private async void timerFade_Tick(object sender, EventArgs e)
+        private void timerFade_Tick(object sender, EventArgs e)
         {
-            if(lblUpcoming.ForeColor == Color.FromArgb(242, 242, 242))
-            {
-                lblUpcoming.Text = upcoming[upcomingMovieIndex].Title;
-                upcomingMovie = await LoadMovies.GetMovie(upcoming[upcomingMovieIndex].Id);
-                if(upcomingMovie == null)
-                {
-                    lblUpcoming.Enabled = false;
-                }
-                else
-                {
-                    lblUpcoming.Enabled = true;
-                }
-                if(++upcomingMovieIndex >= upcoming.Count())
-                {
-                    upcomingMovieIndex = 0;
-                }
-                upcomingInc = false;
-                changeUpcomingRGB("decrement");
-
-            }
-            else if (lblUpcoming.ForeColor == Color.FromArgb(92, 92, 61))
-            {
-                if(upcomingInc)
-                {
-                    changeUpcomingRGB("increment");
-                }
-                else
-                {
-                    upcomingInc = true;
-                    timerFade.Enabled = false;
-                }
-            }
-            else
-            {
-                if(!upcomingInc)
-                {
-                    changeUpcomingRGB("decrement");
-                }
-                else
-                {
-                    changeUpcomingRGB("increment");
-                }
-            }
-            lblUpcoming.ForeColor = Color.FromArgb(upcomingRGB[0], upcomingRGB[1], upcomingRGB[2]);
-        }
-        
-        private void changeUpcomingRGB(string cmd)
-        {
-            if(cmd.Equals("increment"))
-            {
-                upcomingRGB[0] += 13;
-                upcomingRGB[1] += 13;
-                upcomingRGB[2] += 13;
-                if (upcomingRGB[0] > 242)
-                {
-                    upcomingRGB[0] = 242;
-                    upcomingRGB[1] = 242;
-                    upcomingRGB[2] = 242;
-                }
-            }
-            else
-            {
-                upcomingRGB[0] -= 13;
-                upcomingRGB[1] -= 13;
-                upcomingRGB[2] -= 13;
-                if (upcomingRGB[0] < 92)
-                {
-                    upcomingRGB[0] = 92;
-                    upcomingRGB[1] = 92;
-                    upcomingRGB[2] = 61;
-                }
-            }
+            upcomingMoviesUpdate();
         }
 
         private void lblUpcoming_Click(object sender, EventArgs e)
         {
-            if(upcomingMovie.Videos.Results.Count() > 0)
-            {
-                string path = "";
-                foreach (Video v in upcomingMovie.Videos.Results)
-                {
-                    path = v.Key;
-                    break;
-                }
-                System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=" + path);
-            }
-            else
-            {
-                MessageBox.Show("Trailer not available");
-            }
+            upcomingTrailer();
         }
 
         private void lblUpcoming_MouseEnter(object sender, EventArgs e)
@@ -711,14 +817,14 @@ namespace VPProject
         private void showNewestMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showNewestMoviesToolStripMenuItem.Checked = !showNewestMoviesToolStripMenuItem.Checked;
-            if(!showNewestMoviesToolStripMenuItem.Checked)
+            if (!showNewestMoviesToolStripMenuItem.Checked)
             {
                 lblUpcoming.Hide();
                 timerUpcoming.Enabled = false;
             }
             else
             {
-                if(!timerUpcoming.Enabled)
+                if (!timerUpcoming.Enabled)
                 {
                     timerUpcoming.Enabled = true;
                     lblUpcoming.Show();
@@ -733,14 +839,14 @@ namespace VPProject
 
         private void bwUpdateDB_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if(e.Error != null)
+            if (e.Error != null)
             {
                 MessageBox.Show("Database update error: " + e.Error.ToString());
             }
             else
             {
                 bool result = (bool)e.Result;
-                if(!result)
+                if (!result)
                 {
                     MessageBox.Show("Database update failed");
                 }
@@ -751,6 +857,12 @@ namespace VPProject
             }
         }
 
+        /// <summary>
+        /// Delays the loading of upcoming movies because only a limited number of requests can be send at a given time
+        /// <para>After 3 seconds have passed, upcoming movies are loaded and the timer is permanently disabled</para>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerSafeUpcoming_Tick(object sender, EventArgs e)
         {
             setUpcoming();

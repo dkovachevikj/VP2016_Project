@@ -14,13 +14,14 @@ namespace VPProject
     {
         private static readonly string connectionString = ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
 
+        //Method used to register a new user in the database (put his information in the table)
         static public bool SignUp(User user)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                connection.Open();
                 try
                 {
+                    connection.Open();
                     MySqlCommand commandInsert = new MySqlCommand("INSERT INTO Users(Username,Password,Ime,Prezime,Email,Movies) VALUES(@username,@password,@ime,@prezime,@email,@movies)", connection);
                     commandInsert.Parameters.AddWithValue("@username", user.Username);
                     commandInsert.Parameters.AddWithValue("@password", user.Password);
@@ -40,6 +41,7 @@ namespace VPProject
             }
         }
 
+        //Gets the user whose username equals the one provided, if he exists
         static public User SignIn(string username)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -66,6 +68,7 @@ namespace VPProject
             }
         }
 
+        //Used when the user signs out or closes the program while still logged in, updates his rented movies
         static public bool UpdateCart(User user)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -98,6 +101,7 @@ namespace VPProject
             }
         }
 
+        //Used during registration to check whether a user already has the same username
         public async static Task<bool> userExists(string username)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))

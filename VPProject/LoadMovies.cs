@@ -10,23 +10,71 @@ using System.IO;
 
 namespace VPProject
 {
-    class LoadMovies
+    public static class LoadMovies
     {
+        /// <summary>
+        /// API Key
+        /// </summary>
         static private readonly string Key = "f2371afc8f5052f400222bb1834586f0";
-        static private int topRatedPage = 1;
+
+        /// <summary>
+        /// Keeps track of current genre status so that if it hasn't changed
+        /// it doesn't make an API call for the same content
+        /// </summary>
         static private string currGenreName = "";
-        static private int genrePage = 1;
+        /// <summary>
+        /// Keeps track of current search status so that if it hasn't changed
+        /// it doesn't make an API call for the same content
+        /// </summary>
         static private string currSearchTitle = "";
+
+        /// <summary>
+        /// Keeps track of current page of top rated movies
+        /// </summary>
+        static private int topRatedPage = 1;
+        /// <summary>
+        /// Keeps track of current page of movies of a particular genre
+        /// </summary>
+        static private int genrePage = 1;
+        /// <summary>
+        /// Keeps track of current page of movies whose title contains the given keywords
+        /// </summary>
         static private int searchPage = 1;
+
+        /// <summary>
+        /// Keeps track of the number of loaded top rated movies
+        /// </summary>
         static public int topRatedCount = 0;
-        static public int genreCount = 0;
+        /// <summary>
+        /// Keeps track of the total number of top rated movies
+        /// </summary>
         static public int topRatedTotal = 0;
+
+        /// <summary>
+        /// Keeps track of the number of loaded movies from a particular genre
+        /// </summary>
+        static public int genreCount = 0;
+        /// <summary>
+        /// Keeps track of the total number of movies from a particular genre
+        /// </summary>
         static public int genreTotal = 0;
+
+        /// <summary>
+        /// Keeps track of the number of loaded movies whose title contains the given keywords
+        /// </summary>
         static public int searchTotal = 0;
+        /// <summary>
+        /// Keeps track of the total number of movies whose title contains the given keywords
+        /// </summary>
         static public int searchCount = 0;
+
         static private CancellationToken token = new CancellationToken();
 
-        static public async Task<List<CustomMovie>> TopRated()
+        /// <summary>
+        /// Get the top rated movies
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<CustomMovie>> TopRated()
         {
             using (var client = new ServiceClient(Key))
             {
@@ -45,13 +93,18 @@ namespace VPProject
                 }
                 catch (ServiceRequestException)
                 {
-                    MessageBox.Show("Too may requests, please wait a few moments");
+                    MessageBox.Show("Too may requests, please wait for a few moments");
                     return null;
                 }
             }
         }
 
-        static public async Task<List<CustomMovie>> SearchMovies(string searchString)
+        /// <summary>
+        /// Get the movies that contain the given key words in their title
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
+        public static async Task<List<CustomMovie>> SearchMovies(string searchString)
         {
             using (var client = new ServiceClient(Key))
             {
@@ -88,7 +141,12 @@ namespace VPProject
             }
         }
 
-        static public async Task<Movie> GetMovie(CustomMovie cm)
+        /// <summary>
+        /// Get a Movie object that contains more info about the requested movie through a CustomMovie object
+        /// </summary>
+        /// <param name="cm"></param>
+        /// <returns></returns>
+        public static async Task<Movie> GetMovie(CustomMovie cm)
         {
             using (var client = new ServiceClient(Key))
             {
@@ -105,7 +163,12 @@ namespace VPProject
             }
         }
 
-        static public async Task<Movie> GetMovie(int id)
+        /// <summary>
+        /// Get a Movie object that contains more info about the movie directly by the movie ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static async Task<Movie> GetMovie(int id)
         {
             using (var client = new ServiceClient(Key))
             {
@@ -121,8 +184,12 @@ namespace VPProject
                 }
             }
         }
-
-        static public async Task<List<CustomGenre>> GetGenres()
+        
+        /// <summary>
+        /// Get all movie genres
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<CustomGenre>> GetGenres()
         {
             using (var client = new ServiceClient(Key))
             {
@@ -136,7 +203,12 @@ namespace VPProject
             }
         }
 
-        static public async Task<List<CustomMovie>> GetByGenre(string genreName)
+        /// <summary>
+        /// Get movies from the specified genre
+        /// </summary>
+        /// <param name="genreName"></param>
+        /// <returns></returns>
+        public static async Task<List<CustomMovie>> GetByGenre(string genreName)
         {
             using (var client = new ServiceClient(Key))
             {
@@ -175,7 +247,10 @@ namespace VPProject
             }
         }
 
-        static public void resetParams()
+        /// <summary>
+        /// Reset all parameters used for keeping track of current browsing status
+        /// </summary>
+        public static void resetParams()
         {
             genrePage = 1;
             currGenreName = "#fffffff";
@@ -187,7 +262,11 @@ namespace VPProject
             searchCount = 0;
         }
 
-        static async public Task<IEnumerable<Movie>> getUpcoming()
+        /// <summary>
+        /// Get upcoming (newest) movies
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<IEnumerable<Movie>> getUpcoming()
         {
             using (var client = new ServiceClient(Key))
             {

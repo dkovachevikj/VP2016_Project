@@ -43,6 +43,9 @@ namespace VPProject
             separator = new char[] { ':' };
         }
 
+        /// <summary>
+        /// Set button design
+        /// </summary>
         private void setBtns()
         {
             btnReturnMovies.FlatAppearance.MouseOverBackColor = Color.FromArgb(235, 235, 224);
@@ -53,6 +56,12 @@ namespace VPProject
             btnCancelReturn.FlatAppearance.MouseDownBackColor = Color.FromArgb(214, 214, 194);
         }
 
+        /// <summary>
+        /// Since there's no cancel button on the form, this method is used to check whether the user pushed the Esc key to close the form
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Escape)
@@ -64,6 +73,9 @@ namespace VPProject
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        /// <summary>
+        /// Fills the table with rented movies and the time remaining for each movie
+        /// </summary>
         private void fillTable()
         {
             tableLayoutPanel1.SuspendLayout();
@@ -102,16 +114,25 @@ namespace VPProject
             tableLayoutPanel1.ResumeLayout();
         }
 
+        
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(user.Movies.Count > 0)
+            checkTime();
+        }
+
+        /// <summary>
+        /// Checks the rental for all movies, and informs the user if a rental expired (also removes it from the collection of rented movies)
+        /// </summary>
+        private void checkTime()
+        {
+            if (user.Movies.Count > 0)
             {
                 tableLayoutPanel1.SuspendLayout();
 
-                for(int i=1; i<tableLayoutPanel1.RowCount - 1; i++)
+                for (int i = 1; i < tableLayoutPanel1.RowCount - 1; i++)
                 {
                     tempLabel = tableLayoutPanel1.GetControlFromPosition(1, i) as Label;
-                    if(!tempLabel.ForeColor.Equals(Color.Orange))
+                    if (!tempLabel.ForeColor.Equals(Color.Orange))
                     {
                         if (tempLabel.Text.Equals("00:00:00:00"))
                         {
@@ -236,6 +257,9 @@ namespace VPProject
             }
         }
 
+        /// <summary>
+        /// Update rent times
+        /// </summary>
         private void setFields()
         {
             if (day == 0)

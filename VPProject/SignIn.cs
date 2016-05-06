@@ -15,6 +15,7 @@ namespace VPProject
     partial class SignIn : Form
     {
         public User User { get; set; }
+        private PictureBox pbLoading;
 
         public SignIn()
         {
@@ -23,6 +24,18 @@ namespace VPProject
             lblPassword.Parent = pictureBox1;
             lblUsername.Parent = pictureBox1;
             setColors();
+            setLoadingPb();
+        }
+
+        private void setLoadingPb()
+        {
+            pbLoading = new PictureBox();
+            pbLoading.Width = 50;
+            pbLoading.Height = 50;
+            pbLoading.Location = new Point(570, 25);
+            pbLoading.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbLoading.BackColor = Color.Transparent;
+            pictureBox1.Controls.Add(pbLoading);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -67,11 +80,13 @@ namespace VPProject
 
         private void bwSignIn_DoWork(object sender, DoWorkEventArgs e)
         {
+            pbLoading.Image = Properties.Resources.loading;
             e.Result = SqlConn.SignIn(tbName.Text);
         }
 
         private void bwSignIn_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            pbLoading.Image = null;
             btnOK.Enabled = true;
             btnCancel.Enabled = true;
             if(e.Error != null)

@@ -13,11 +13,24 @@ namespace VPProject
     partial class SignUp : Form
     {
         public User User { get; set; }
+        private PictureBox pbLoading;
 
         public SignUp()
         {
             InitializeComponent();
             setUI();
+            setLoadingPb();
+        }
+
+        private void setLoadingPb()
+        {
+            pbLoading = new PictureBox();
+            pbLoading.Width = 40;
+            pbLoading.Height = 40;
+            pbLoading.Location = new Point(320, 42);
+            pbLoading.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbLoading.BackColor = Color.Transparent;
+            pictureBox1.Controls.Add(pbLoading);
         }
 
         private void setUI()
@@ -215,11 +228,13 @@ namespace VPProject
 
         private void bwSignUp_DoWork(object sender, DoWorkEventArgs e)
         {
+            pbLoading.Image = Properties.Resources.loading;
             e.Result = SqlConn.SignUp(new User(tbUsername.Text, tbPassword.Text, tbName.Text, tbSurname.Text, tbEmail.Text, ""));
         }
 
         private void bwSignUp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            pbLoading.Image = null;
             if (e.Error != null)
             {
                 MessageBox.Show("Грешка: " + e.Error.ToString());
