@@ -87,7 +87,6 @@ namespace VPProject
         /// <summary>
         /// Load top rated movies from the first page in the API results
         /// </summary>
-
         private async void loadMovies()
         {
             var movies = await LoadMovies.TopRated();

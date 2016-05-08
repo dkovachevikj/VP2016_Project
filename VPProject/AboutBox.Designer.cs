@@ -99,7 +99,7 @@
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(227, 17);
             this.labelCopyright.TabIndex = 21;
-            this.labelCopyright.Text = "Copyright (c) FCSE";
+            this.labelCopyright.Text = "Copyright (C) 2016 FCSE";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelCompanyName
@@ -111,7 +111,7 @@
             this.labelCompanyName.Name = "labelCompanyName";
             this.labelCompanyName.Size = new System.Drawing.Size(227, 17);
             this.labelCompanyName.TabIndex = 22;
-            this.labelCompanyName.Text = "Open Source";
+            this.labelCompanyName.Text = "GNU General Public License v3";
             this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDescription
@@ -126,8 +126,7 @@
             this.textBoxDescription.Size = new System.Drawing.Size(227, 125);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "Project for VP course @ FCSE\r\nMovie browsing powered by TMDB API\r\nUser accounts p" +
-    "owered by db4free.net";
+            this.textBoxDescription.Text = resources.GetString("textBoxDescription.Text");
             // 
             // okButton
             // 
