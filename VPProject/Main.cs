@@ -51,6 +51,11 @@ namespace VPProject
         private Movie upcomingMovie;
         private int upcomingMovieIndex;
 
+        /// <summary>
+        /// Keeps the current movie so it doesn't have to load it again if the user selects the same movie
+        /// </summary>
+        private Movie currentMovie;
+
         public Main()
         {
             InitializeComponent();
@@ -90,6 +95,7 @@ namespace VPProject
         private async void loadMovies()
         {
             var movies = await LoadMovies.TopRated();
+            currentMovie = movies[movies.Count - 1].Movie;
             foreach (CustomMovie cm in movies)
             {
                 lbMovies.Items.Add(cm);
@@ -126,22 +132,26 @@ namespace VPProject
         /// </summary>
         private async void setMovieInfo()
         {
-            pbPoster.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbPoster.Image = Properties.Resources.loading;
             CustomMovie cm = lbMovies.SelectedItem as CustomMovie;
-            Movie movie = await LoadMovies.GetMovie(cm);
-            if (movie.ReleaseDate.HasValue)
-                lblMovieTitle.Text = string.Format("{0} ({1})", movie.Title, movie.ReleaseDate.Value.Year.ToString());
-            else
-                lblMovieTitle.Text = movie.Title;
-            lblRating.Text = movie.VoteAverage.ToString("0.00");
-            lblVotes.Text = movie.VoteCount.ToString();
-            pbPoster.SizeMode = PictureBoxSizeMode.Zoom;
-            pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
-            lblDescription.Text = movie.Overview;
-            setCast(movie.Credits.Cast);
-            setInfo(movie);
-            setTrailer(movie.Videos.Results);
+            if(!cm.Movie.Title.Equals(currentMovie.Title))
+            {
+                pbPoster.SizeMode = PictureBoxSizeMode.CenterImage;
+                pbPoster.Image = Properties.Resources.loading;
+                Movie movie = await LoadMovies.GetMovie(cm);
+                if (movie.ReleaseDate.HasValue)
+                    lblMovieTitle.Text = string.Format("{0} ({1})", movie.Title, movie.ReleaseDate.Value.Year.ToString());
+                else
+                    lblMovieTitle.Text = movie.Title;
+                lblRating.Text = movie.VoteAverage.ToString("0.00");
+                lblVotes.Text = movie.VoteCount.ToString();
+                pbPoster.SizeMode = PictureBoxSizeMode.Zoom;
+                pbPoster.ImageLocation = "http://image.tmdb.org/t/p/w500" + movie.Poster;
+                lblDescription.Text = movie.Overview;
+                setCast(movie.Credits.Cast);
+                setInfo(movie);
+                setTrailer(movie.Videos.Results);
+                currentMovie = movie;
+            }
         }
 
         /// <summary>
